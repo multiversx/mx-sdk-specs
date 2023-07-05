@@ -13,15 +13,8 @@ class ApiNetworkProvider:
         calls do_get(self.url + resource_url)
     
     do get_generic_collection(resource_url: str): List[Dict[str, Any]];
-        calls do_get(self.url + resource_url)
     
     do_post_generic(resource_url: str, payload: any);
-        calls do_post(self.url + resource_url, payload)
-    
-    // methods responsible for network interaction
-    do_get(url: str): Dict[str, Any] or List[Dict[str, Any]];
-
-    do_post(url: str);
 
     // these methods use the `backing_proxy`
     get_network_config(): NetworkConfig;

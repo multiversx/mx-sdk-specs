@@ -7,20 +7,9 @@ class ProxyNetworkProvider:
 
     // generic methods
     do_get_generic(resource_url: str): Dict[str, Any];
-        calls do_get(self.url + resource_url)
-    
-    do get_generic_collection(resource_url: str): List[Dict[str, Any]];
-        calls do_get(self.url + resource_url)
     
     do_post_generic(resource_url: str, payload: any);
-        calls do_post(self.url + resource_url, payload)
     
-    // methods responsible for network interaction
-    do_get(url: str): Dict[str, Any] or List[Dict[str, Any]];
-
-    do_post(url: str);
-
-    // returns a NetworkConfig Object
     get_network_config(): NetworkConfig;
 
     get_network_gas_configs(): GasConfig;
