@@ -17,6 +17,8 @@ class TokenManagementTransactionsFactory:
         canFreeze: boolean;
         canWipe: boolean;
         canPause: boolean;
+        canMint: boolean;
+        canBurn: boolean;
         canTransferNFTCreateRole: boolean;
         canChangeOwner: boolean;
         canUpgrade: boolean;
@@ -30,6 +32,8 @@ class TokenManagementTransactionsFactory:
         canFreeze: boolean;
         canWipe: boolean;
         canPause: boolean;
+        canMint: boolean;
+        canBurn: boolean;
         canTransferNFTCreateRole: boolean;
         canChangeOwner: boolean;
         canUpgrade: boolean;
@@ -43,6 +47,8 @@ class TokenManagementTransactionsFactory:
         canFreeze: boolean;
         canWipe: boolean;
         canPause: boolean;
+        canMint: boolean;
+        canBurn: boolean;
         canTransferNFTCreateRole: boolean;
         canChangeOwner: boolean;
         canUpgrade: boolean;
