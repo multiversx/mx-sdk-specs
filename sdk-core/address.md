@@ -1,99 +1,92 @@
 ## Address
 
+Generally speaking, the `Address` type should be a `string` in all implementations.
+
+The implementing library can define type aliases, if desired, for example:
+
+```Python
+Address = string
+```
+
+```Go
+type Address = string
+```
+
+```JavaScript
+type Address = string
+```
+
+Furthermore, the implementing library is free to define a wrapper class or structure. This isn't a requirement though. Example:
+
 ```
 class Address:
-    // Should also validate the length of the provided input.
-    // Can throw:
-    // - ErrInvalidPublicKey
-    constructor(public_key: bytes, hrp: string);
-
-    // Named constructor
-    // Can throw:
-    // - ErrInvalidBech32Address
-    static new_from_bech32(value: string): Address;
-
-    // Named constructor
-    // Can throw:
-    // - ErrInvalidHexString
-    static new_from_hex(value: string, hrp: string): Address;
-
-    // Returns the address as a string (bech32).
-    // Name should be adjusted to match the language's convention.
-    to_bech32(): string;
-
-    // Returns the address as a string (hex).
-    // Name should be adjusted to match the language's convention.
-    to_hex(): string;
-
-    // Returns the underlying public key.
-    get_public_key(): bytes;
-
-    // Returns the human-readable part of the address.
-    get_hrp(): string;
-
-    // Returns true if the address is a smart contract address.
-    is_smart_contract(): bool;
+    value: string
+    to_string(): string
 ```
 
-Example of usage:
-
-```
-address = Address.new_from_bech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th")
-
-print("Address (bech32-encoded)", address.bech32())
-print("Public key (hex-encoded):", address.hex())
-```
-
-## AddressFactory
-
-```
-class AddressFactory:
-    constructor(hrp: string = "erd");
-
-    // Creates an address from a bech32 string.
-    create_from_bech32(value: string): Address;
-
-    // Creates an address from a public key.
-    create_from_public_key(public_key: bytes): Address;
-
-    // Creates an address from a hex string.
-    create_from_hex(value: string): Address;
-```
-
-Example of usage:
-
-```
-
-factory = AddressFactory("erd")
-
-address = factory.create_from_bech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th")
-address = factory.create_from_hex("0139472eff6886771a982f3083da5d421f24c29181e63888228dc81ca60d69e1")
-address = factory.create_from_public_key(bytes.fromhex("0139472eff6886771a982f3083da5d421f24c29181e63888228dc81ca60d69e1"))
-```
+Within the specs, we use `Address` and we mean `string`.
 
 ## AddressComputer
 
 ```
 class AddressComputer:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
+    // For example, it can be as follows:
+    constructor(encoding_algorithm: IAddressEncodingAlgorithm, num_shards: number);
 
-    // Note that the first input parameter is received as an interface, but the return value is a concrete type (see guidelines).
-    compute_contract_address(deployer: IAddress, deployment_nonce: number): Address;
+    is_valid_address(address: Address): boolean;
+
+    // Can throw:
+    // - ErrInvalidPublicKey
+    // Under the hood, `AddressEncodingAlgorithm` is employed.
+    compute_address_from_public_key(public_key: (IPublicKey|bytes)): string;
+
+    // Can throw:
+    // - ErrInvalidHexString
+    // Under the hood, `AddressEncodingAlgorithm` is employed.
+    compute_address_from_hex(public_key: (IPublicKey|bytes)): string;
+
+    // Can throw:
+    // - ErrInvalidAddress
+    // Under the hood, `AddressEncodingAlgorithm` is employed.
+    compute_public_key_from_address(address: Address): (IPublicKey|bytes);
+
+    // Can throw:
+    // - ErrInvalidAddress
+    // Under the hood, `AddressEncodingAlgorithm` is employed.
+    compute_contract_address(deployer: Address, deployment_nonce: number): Address;
 
     // The number of shards (necessary for computing the shard ID) would be received as a constructor parameter - constructor is not captured by specs.
-    get_shard_of_address(address: IAddress): number;
+    get_shard_of_address(address: Address): number;
 ```
 
-Above, `IAddress` should satisfy:
+Example of usage:
 
 ```
-get_public_key(): bytes;
-get_hrp(): string;
+computer = AddressComputer(Bech32EncodingAlgorithm("erd"), num_shards=3)
+
+address = computer.compute_address_from_hex("0139472eff6886771a982f3083da5d421f24c29181e63888228dc81ca60d69e1")
+ok = computer.is_valid_address("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th")
+shard = computer.get_shard_of_address("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th")
 ```
 
-OR, perhaps, it should simply satisfy:
+### Address encoding algorithm(s)
 
 ```
-// Name should be adjusted to match the language's convention.
-to_bech32(): string;
+interface IAddressEncodingAlgorithm:
+    // Can throw:
+    // - ErrInvalidPublicKey
+    encode(public_key: (IPublicKey|bytes)): string;
+
+    // Can throw:
+    // - ErrInvalidAddress
+    decode(address: string): (IPublicKey|bytes);
+
+class Bech32EncodingAlgorithm implements IAddressEncodingAlgorithm:
+    // The constructor is not captured by the specs; it's up to the implementing library to define it.
+    // For example, it can be as follows:
+    constructor(hrp: string = "erd");
+
+    // Implementation of interface.
+    ...
 ```

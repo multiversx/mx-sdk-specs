@@ -9,8 +9,8 @@ class TransferTransactionsFactory:
     // "minGasLimit", "gasLimitPerByte", "issueCost", gas limit for specific operations etc. (e.g. "gasLimitForESDTTransfer").
     
     create_transaction_for_native_token_transfer({
-        sender: IAddress;
-        receiver: IAddress;
+        sender: Address;
+        receiver: Address;
         native_amount: Amount;
     }): Transaction;
 
@@ -20,8 +20,8 @@ class TransferTransactionsFactory:
     // If multiple transfers are specified, a multi-ESDT transfer transaction should be created.
     // Bad usage should be reported.
     create_transaction_for_esdt_token_transfer({
-        sender: IAddress;
-        receiver: IAddress;
+        sender: Address;
+        receiver: Address;
         token_transfers: TokenTransfer[];
     }): Transaction;
 ```

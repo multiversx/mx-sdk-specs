@@ -2,8 +2,8 @@
 
 ```
 dto Transaction:
-    sender: string;
-    receiver: string;
+    sender: Address;
+    receiver: Address;
     gasLimit: uint32;
     chainID: string;
 
@@ -16,7 +16,7 @@ dto Transaction:
     data?: bytes;
     version?: uint32;
     options?: uint32;
-    guardian?: string;
+    guardian?: Address;
 
     signature: bytes;
     guardianSignature?: bytes;
@@ -31,8 +31,8 @@ Optionally, if desired, the implementing library can also define an incomplete r
 
 ```
 dto DraftTransaction:
-    sender: string;
-    receiver: string;
+    sender: Address;
+    receiver: Address;
     value?: string;
     data?: bytes;
     gasLimit: uint32;

@@ -8,7 +8,7 @@ class SmartContractTransactionsFactory:
     // The constructor may also be parametrized with a Codec instance, necessary to encode contract call arguments.
 
     create_transaction_for_deploy({
-        sender: IAddress;
+        sender: Address;
         bytecode: bytes OR bytecodePath: Path;
         arguments: List[object] = [];
         native_transfer_amount: Amount = 0;
@@ -20,8 +20,8 @@ class SmartContractTransactionsFactory:
     }): Transaction;
 
     create_transaction_for_execute({
-        sender: IAddress;
-        contract: IAddress;
+        sender: Address;
+        contract: Address;
         // If "function" is a reserved word in the implementing language, it should be replaced with a different name (e.g. "func" or "functionName").
         function: string;
         arguments: List[object] = [];
@@ -31,8 +31,8 @@ class SmartContractTransactionsFactory:
     }): Transaction;
 
     create_transaction_for_upgrade({
-        sender: IAddress;
-        contract: IAddress;
+        sender: Address;
+        contract: Address;
         bytecode: bytes OR bytecodePath: Path;
         arguments: List[object] = [];
         native_transfer_amount: Amount = 0;
