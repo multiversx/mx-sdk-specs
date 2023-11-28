@@ -1,46 +1,49 @@
 ## Transaction
 
 ```
-class Transaction:
-    constructor({
-        sender: IAddress;
-        receiver: IAddress;
-        gasLimit: IGasLimit;
-        chainID: IChainID;
+dto Transaction:
+    sender: string;
+    receiver: string;
+    gasLimit: uint32;
+    chainID: string;
 
-        nonce?: INonce;
-        value?: ITransactionValue;
-        senderUsername?: string;
-        receiverUsername?: string;
-        gasPrice?: IGasPrice;
+    nonce?: uint64;
+    value?: Amount;
+    senderUsername?: string;
+    receiverUsername?: string;
+    gasPrice?: uint32;
 
-        data?: ITransactionPayload;
-        version?: ITransactionVersion;
-        options?: ITransactionOptions;
-        guardian?: IAddress;
-    });
+    data?: bytes;
+    version?: uint32;
+    options?: uint32;
+    guardian?: string;
 
-    // Getters and setters for all the fields.
-    // ...
+    signature: bytes;
+    guardianSignature?: bytes;
 
-    // Optional: alias for setSignature().
-    applySignature(signature: bytes): void;
-    // Optional: alias for setGuardianSignature().
-    applyGuardianSignature(signature: bytes): void;
-
-    serializeForSigning(): bytes;
-
-    // Returns the transaction as a plain object.
-    toPlainObject(withSignatures: bool = true): any;
-
-    // Optional: alias for `toPlainObject()`.
-    toJSON(): any; // JavaScript
-    to_dictionary(): any; // Python
+    // Optional named constructor, if and only if the implementing library defines a `DraftTransaction`.
+    new_from_draft(draft: DraftTransaction): Transaction;
 ```
 
-Module-level functions:
+## DraftTransaction
+
+Optionally, if desired, the implementing library can also define an incomplete representation of the transaction, to be used as return type for the **transaction factories**. See [README](../README.md), instead of the `Transaction` type.
 
 ```
-computeFee(transaction: ITransaction, networkConfig: INetworkConfig): bigNumber;
-computeTransactionHash(transaction: ITransaction): bytes;
+dto DraftTransaction:
+    sender: string;
+    receiver: string;
+    value?: string;
+    data?: bytes;
+    gasLimit: uint32;
+    chainID: string; // The chain ID from the factory's config (received in the constructor) should be used
+```
+
+## TransactionComputer
+
+```
+class TransactionComputer:
+    compute_transaction_fee(transaction: Transaction, network_config: INetworkConfig): Amount;
+    compute_bytes_for_signing(transaction: Transaction): bytes;
+    compute_transaction_hash(transaction: Transaction): bytes;
 ```
