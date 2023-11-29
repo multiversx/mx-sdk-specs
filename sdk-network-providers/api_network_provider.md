@@ -4,27 +4,25 @@ Sometimes the `ApiNetworkProvider` class uses an underlying `ProxyNetworkProvide
 
 ```
 class ApiNetworkProvider:
-    constructor(url: str, config: Optional):
-        self.backing_proxy = ProxyNetworkProvider(url)
+    // The constructor is not captured by the specs; it's up to the implementing library to define it.
+    // Should specify the url to query and have a backing proxy provider
     
-    // same methods as the proxy provider
-    // generic methods
-    do_get_generic(resource_url: str): Dict[str, Any];
-        calls do_get(self.url + resource_url)
+    do_get_generic(resource_url: string): Dict[string, Any];
     
-    do get_generic_collection(resource_url: str): List[Dict[str, Any]];
-    
-    do_post_generic(resource_url: str, payload: any);
+    do_post_generic(resource_url: string, payload: any): Dict[string, Any];
 
-    // these methods use the `backing_proxy`
+    // these methods use the `backing proxy provider`
     get_network_config(): NetworkConfig;
 
     get_network_status(shard: int = METACHAIN_ID): NetworkStatus;
 
-    get_guardian_data(address: IAddress): GuardianData;
+    // returns None if transaction was not sent
+    send_transactions(transactions: List[ITransaction]): List[str | None];
 
     // the following methods use the API
-    get_network_gas_configs(): GasConfig;
+    get_guardian_data(address: IAddress): GuardianData;
+
+    get_network_gas_configs(): Dict[string, Any];
 
     get_network_stake_statistics(): NetworkStake;
 
@@ -36,29 +34,27 @@ class ApiNetworkProvider:
 
     get_nonfungible_tokens_of_account(address: IAddress, pagination: IPagination = DefaultPagination()): List[NonFungibleTokenOfAccountOnNetwork];
 
-    get_fungible_token_of_account(address: IAddress, token_identifier: str): FungibleTokenOfAccountOnNetwork;
+    get_fungible_token_of_account(address: IAddress, token_identifier: string): FungibleTokenOfAccountOnNetwork;
 
-    get_nonfungible_token_of_account(address: IAddress, collection: str, nonce: int): NonFungibleTokenOfAccountOnNetwork;
+    get_nonfungible_token_of_account(address: IAddress, collection: string, nonce: int): NonFungibleTokenOfAccountOnNetwork;
 
-    get_definition_of_fungible_token(token_identifier: str): DefinitionOfFungibleTokenOnNetwork;
+    get_definition_of_fungible_token(token_identifier: string): DefinitionOfFungibleTokenOnNetwork;
 
-    get_definition_of_token_collection(collection: str): DefinitionOfTokenCollectionOnNetwork;
+    get_definition_of_token_collection(collection: string): DefinitionOfTokenCollectionOnNetwork;
 
-    get_non_fungible_token(collection: str, nonce: int): NonFungibleTokenOfAccountOnNetwork;
+    get_non_fungible_token(collection: string, nonce: int): NonFungibleTokenOfAccountOnNetwork;
 
     query_contract(query: IContractQuery): ContractQueryResponse;
 
-    get_transaction(tx_hash: str): TransactionOnNetwork;
+    get_transaction(tx_hash: string): TransactionOnNetwork;
 
     get_account_transactions(address: IAddress, pagination: IPagination = DefaultPagination()): List[TransactionOnNetwork];
 
-    get_bunch_of_transactions(tx_hashes: List[str], with_block_info: bool = False, with_results: bool = False): List[TransactionOnNetwork];
+    get_bunch_of_transactions(tx_hashes: List[string], with_block_info: bool = False, with_results: bool = False): List[TransactionOnNetwork];
 
-    get_transactions_in_mempool_for_account(address: IAddress): List[TransactionInMempool];
+    get_transaction_status(tx_hash: string): TransactionStatus;
 
-    get_transaction_status(tx_hash: str): TransactionStatus;
+    send_transaction(transaction: ITransaction): string;
 
-    send_transaction(transaction: ITransaction): str;
-
-    send_transactions(transactions: List[ITransaction]): Tuple[int, str];
+    get_mex_pairs(pagination: IPagination = DefaultPagination()): PaironNetwork;
 ```

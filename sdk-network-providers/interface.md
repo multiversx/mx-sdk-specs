@@ -6,3 +6,8 @@ interface IContractQuery{
 
     get_encoded_arguments(): List[string];
 }
+
+interface IPagination {
+    from: number;
+    size: number;
+}

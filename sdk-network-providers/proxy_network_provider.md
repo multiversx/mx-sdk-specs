@@ -35,7 +35,7 @@ class ProxyNetworkProvider:
     send_transaction(transaction: ITransaction): str;
 
     // returns None if transaction was not sent
-    send_transactions(transactions: Sequence[ITransaction]): List[str | None];
+    send_transactions(transactions: List[ITransaction]): List[str | None];
 
     query_contract(query: IContractQuery): ContractQueryResponse;
 
