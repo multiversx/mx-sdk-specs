@@ -1,21 +1,31 @@
 ## EncryptedKeystore
 
+`EncryptedKeystore`
+
 ```
 class EncryptedKeystore:
-    // The constructor is not captured by the specs; it's up to the implementing library to define it.
+    // The constructor is not captured by the specs; it's up to the implementing library to define it. Suggestion below.
+    // If kind == 'secretKey', `secret_key`` must be provided, while `mnemonic` must be nil.
+    // If kind == 'mnemonic', `secret_key` must be nil, while `mnemonic` must be provided.
+    // In the implementation, all the parameters would be held as instance state (private fields).
+    private constructor(wallet_provider: IWalletProvider, kind: string, secret_key?: ISecretKey, mnemonic?: Mnemonic)
 
     // Named constructor
-    static new_from_secret_key(secret_key: ISecretKey): EncryptedKeystore
+    // This should have a trivial implementation (e.g. a wrapper around the private constructor).
+    static new_from_secret_key(wallet_provider: IWalletProvider, secret_key: ISecretKey): EncryptedKeystore
 
     // Named constructor
-    // Below, "wallet_provider" should implement "derive_secret_key_from_mnemonic()".
-    // Advice: in the implementation all the parameters will be held as instance state (private fields).
+    // This should have a trivial implementation (e.g. a wrapper around the private constructor).
     static new_from_mnemonic(wallet_provider: IWalletProvider, mnemonic: Mnemonic): EncryptedKeystore
 
     // Importing "constructor"
+    // This should decrypt the encrypted data, then call the (private) constructor.
+    // "password" should not be retained.
     static import_from_object(wallet_provider: IWalletProvider, object: KeyfileObject, password: string): EncryptedKeystore
 
     // Importing "constructor"
+    // This should load the file content, decrypt the encrypted data, then call the (private) constructor.
+    // "password" should not be retained.
     static import_from_file(wallet_provider: IWalletProvider, path: Path, password: string): EncryptedKeystore
 
     // When kind == 'secretKey', only index == 0 and passphrase == "" is supported.
