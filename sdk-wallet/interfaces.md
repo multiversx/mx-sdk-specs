@@ -5,12 +5,20 @@ For languages that support **structural typing** (e.g. Go, Python, TypeScript), 
 For languages that only support **nominal typing** (e.g. C#), these interfaces can be _exported_.
 
 ```
-interface IWalletProvider:
-    generate_keypair(): (ISecretKey, IPublicKey)
+interface ISigner:
     sign(data: bytes, secret_key: ISecretKey): bytes
+```
+
+```
+interface IVerifier:
     verify(data: bytes, signature: bytes, public_key: IPublicKey): bool
-    create_secret_key_from_bytes(data: bytes): ISecretKey
-    create_public_key_from_bytes(data: bytes): IPublicKey
+```
+
+```
+interface IKeysComputer:
+    generate_keypair(): (ISecretKey, IPublicKey)
+    compute_secret_key_from_bytes(data: bytes): ISecretKey
+    compute_public_key_from_bytes(data: bytes): IPublicKey
     compute_public_key_from_secret_key(secret_key: ISecretKey): IPublicKey
 ```
 

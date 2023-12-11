@@ -4,40 +4,43 @@
 
 ```
 class EncryptedKeystore:
-    // The constructor is not captured by the specs; it's up to the implementing library to define it. Suggestion below.
-    // If kind == 'secretKey', `secret_key`` must be provided, while `mnemonic` must be nil.
+    // The constructor is not strictly captured by the specs; it's up to the implementing library to define it. Suggestion below.
+    // If kind == 'secretKey', `secret_key` must be provided, while `mnemonic` must be nil.
     // If kind == 'mnemonic', `secret_key` must be nil, while `mnemonic` must be provided.
     // In the implementation, all the parameters would be held as instance state (private fields).
-    private constructor(wallet_provider: IWalletProvider, kind: string, secret_key?: ISecretKey, mnemonic?: Mnemonic)
+    private constructor(keys_computer: IKeysComputer, kind: string, secret_key?: ISecretKey, mnemonic?: Mnemonic)
 
     // Named constructor
     // This should have a trivial implementation (e.g. a wrapper around the private constructor).
-    static new_from_secret_key(wallet_provider: IWalletProvider, secret_key: ISecretKey): EncryptedKeystore
+    static new_from_secret_key(keys_computer: IKeysComputer, secret_key: ISecretKey): EncryptedKeystore
 
     // Named constructor
     // This should have a trivial implementation (e.g. a wrapper around the private constructor).
-    static new_from_mnemonic(wallet_provider: IWalletProvider, mnemonic: Mnemonic): EncryptedKeystore
+    static new_from_mnemonic(keys_computer: IKeysComputer, mnemonic: Mnemonic): EncryptedKeystore
 
     // Importing "constructor"
     // This should decrypt the encrypted data, then call the (private) constructor.
     // "password" should not be retained.
-    static import_from_object(wallet_provider: IWalletProvider, object: KeyfileObject, password: string): EncryptedKeystore
+    static import_from_object(keys_computer: IKeysComputer, object: KeyfileObject, password: string): EncryptedKeystore
 
     // Importing "constructor"
     // This should load the file content, decrypt the encrypted data, then call the (private) constructor.
     // "password" should not be retained.
-    static import_from_file(wallet_provider: IWalletProvider, path: Path, password: string): EncryptedKeystore
+    static import_from_file(keys_computer: IKeysComputer, path: Path, password: string): EncryptedKeystore
 
-    // When kind == 'secretKey', only index == 0 and passphrase == "" is supported.
-    // When kind == 'mnemonic', secret key derivation happens under the hood.
-    // Below, "passphrase" is the bip39 passphrase required to derive a secret key from a mnemonic (by default, it should be an empty string).
-    get_secret_key(index: int, passphrase: string): ISecretKey
+    get_kind(): "secretKey|mnemonic"
+
+    // Can throw:
+    // - ErrSecretKeyNotAvailable
+    //
+    // Returns the secretKey (if available, i.e. if kind == 'secretKey').
+    get_secret_key(): ISecretKey
 
     // Can throw:
     // - ErrMnemonicNotAvailable
     // 
     // Returns the mnemonic used to create the keystore (if available, i.e. if kind == 'mnemonic').
-    // This function is useful for UX flows where the application has to display the mnemonic etc.
+    // The caller of this can then derive secret keys, as needed.
     get_mnemonic(): Mnemonic
 
     export_to_object(password: string, address_hrp: string): KeyfileObject
