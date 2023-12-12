@@ -99,35 +99,3 @@ dto KeyfileObject:
         mac: string;
     };
 ```
-
-## Examples of usage
-
-Create a new JSON keystore using a new mnemonic:
-
-```
-provider = new UserWalletProvider()
-mnemonic = provider.generate_mnemonic()
-keystore = EncryptedKeystore.new_from_mnemonic(provider, mnemonic)
-keystore.export_to_file("file.json", "password", "erd")
-```
-
-Iterating over the first 3 accounts:
-
-```
-provider = new UserWalletProvider()
-keystore = EncryptedKeystore.import_from_file(provider, "file.json", "password")
-
-for i in [0, 1, 2]:
-    secret_key = keystore.get_secret_key(i, "")
-    public_key = provider.compute_public_key_from_secret_key(secret_key)
-    address = new Address(public_key, "erd")
-    print("Address", i, address.bech32())
-```
-
-Changing the password of an existing keystore:
-
-```
-provider = new UserWalletProvider()
-keystore = EncryptedKeystore.import_from_file(provider, "file.json", "password")
-keystore.export_to_file("file.json", "new_password", "erd")
-```
