@@ -1,6 +1,8 @@
 ## EncryptedKeystore
 
-`EncryptedKeystore`
+`EncryptedKeystore` handles encrypted JSON files.
+
+Note: current design is suboptimal. `EncryptedKeystore` handles both legacy keystore files (that hold encrypted secret keys) and new keystore files (that hold encrypted mnemonics). `get_kind()` can be used as a differentiator. A future design might involve two separate classes.
 
 ```
 class EncryptedKeystore:
