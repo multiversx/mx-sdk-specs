@@ -26,7 +26,7 @@ class Address:
     to_hex(): string;
 
     // Returns the underlying public key.
-    get_public_key(): bytes;
+    get_public_key(): IPublicKey;
 
     // Returns the human-readable part of the address.
     get_hrp(): string;
