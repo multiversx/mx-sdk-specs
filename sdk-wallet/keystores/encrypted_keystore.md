@@ -6,18 +6,19 @@ Note: current design is suboptimal. `EncryptedKeystore` handles both legacy keys
 
 ```
 class EncryptedKeystore:
-    // The constructor is not strictly captured by the specs; it's up to the implementing library to define it. Suggestion below.
-    // If kind == 'secretKey', `secret_key` must be provided, while `mnemonic` must be nil.
-    // If kind == 'mnemonic', `secret_key` must be nil, while `mnemonic` must be provided.
-    // In the implementation, all the parameters would be held as instance state (private fields).
-    private constructor(keys_computer: IKeysComputer, kind: string, secret_key?: ISecretKey, mnemonic?: Mnemonic)
+    // The constructor is not captured by the specs; it's up to the implementing library to define it.
+    // Instance fields to be held (suggestion): 
+    //  - keys_computer: IKeysComputer
+    //  - kind: "secretKey|mnemonic"
+    //  - secretKey: ISecretKey (will be nil if kind == 'mnemonic')
+    //  - mnemonic: Mnemonic (will be nil if kind == 'secretKey')
 
     // Named constructor
-    // This should have a trivial implementation (e.g. a wrapper around the private constructor).
+    // This should have a trivial implementation.
     static new_from_secret_key(keys_computer: IKeysComputer, secret_key: ISecretKey): EncryptedKeystore
 
     // Named constructor
-    // This should have a trivial implementation (e.g. a wrapper around the private constructor).
+    // This should have a trivial implementation.
     static new_from_mnemonic(keys_computer: IKeysComputer, mnemonic: Mnemonic): EncryptedKeystore
 
     // Importing "constructor"

@@ -2,7 +2,7 @@
 
 Provides functionality for generating secret keys, derivating public keys, signing & verifying data. 
 
-Additionally, allows one to generate and validate mnemonics, and to deriving secret keys from mnemonics (i.e. BIP39).
+Additionally, allows one to generate and validate mnemonics, and to derive secret keys from mnemonics (i.e. BIP39).
 
 ```
 class UserWalletProvider implements ISigner, IVerifier, IKeysGenerator, IMnemonicComputer:

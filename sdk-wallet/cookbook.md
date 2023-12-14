@@ -1,6 +1,8 @@
 
 ## Cookbook (examples of usage)
 
+Note: error handling is out of scope for this cookbook (omitted for brevity).
+
 Generate a mnemonic and derive the first secret key:
 
 ```
@@ -41,6 +43,19 @@ mnemonic = keystore.get_mnemonic()
 
 for i in [0, 1, 2]:
     sk = provider.derive_secret_key_from_mnemonic(mnemonic, address_index=i, passphrase="")
+    pk = provider.compute_public_key_from_secret_key(sk)
+    address = new Address(pk, "erd")
+    print("Address", i, address.bech32())
+```
+
+Load a PEM keystore, then iterate over the first 3 accounts:
+
+```
+provider = new UserWalletProvider()
+keystore = PEMKeystore.import_from_file(provider, "wallet.pem")
+
+for i in [0, 1, 2]:
+    sk = keystore.get_secret_key(i)
     pk = provider.compute_public_key_from_secret_key(sk)
     address = new Address(pk, "erd")
     print("Address", i, address.bech32())
