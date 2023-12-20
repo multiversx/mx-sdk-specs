@@ -2,19 +2,23 @@
 
 ```
 class PEMKeystore:
-    // The constructor is not captured by the specs; it's up to the implementing library to define it.
+    // The constructor is not strictly captured by the specs; it's up to the implementing library to define it. Suggestion below.
+    // In the implementation, all the parameters would be held as instance state (private fields).
+    private constructor(keys_computer: IKeysComputer, secret_keys: ISecretKey[])
 
     // Named constructor
-    static new_from_secret_key(wallet_provider: IWalletProvider, secret_key: ISecretKey): PEMKeystore
+    // This should have a trivial implementation (e.g. a wrapper around the private constructor).
+    static new_from_secret_key(keys_computer: IKeysComputer, secret_key: ISecretKey): PEMKeystore
 
     // Named constructor
-    static new_from_secret_keys(wallet_provider: IWalletProvider, secret_keys: ISecretKey[]): PEMKeystore
+    // This should have a trivial implementation (e.g. a wrapper around the private constructor).
+    static new_from_secret_keys(keys_computer: IKeysComputer, secret_keys: ISecretKey[]): PEMKeystore
 
     // Importing "constructor"
-    static import_from_text(wallet_provider: IWalletProvider, text: string): PEMKeystore
+    static import_from_text(keys_computer: IKeysComputer, text: string): PEMKeystore
 
     // Importing "constructor"
-    static import_from_file(wallet_provider: IWalletProvider, path: Path): PEMKeystore
+    static import_from_file(keys_computer: IKeysComputer, path: Path): PEMKeystore
 
     get_secret_key(index: int): ISecretKey
 
