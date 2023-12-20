@@ -5,6 +5,16 @@ For languages that support **structural typing** (e.g. Go, Python, TypeScript), 
 For languages that only support **nominal typing** (e.g. C#), these interfaces can be _exported_.
 
 ```
+interface IWalletController: 
+    get_address(address_index: number): Address;
+    get_current_address(): Address;
+    select_current_address(address_index: number);
+    sign_auth_token(auth_token: bytes): bytes;
+    sign_transaction(serialized_transaction: bytes): bytes;
+    sign_message(serialized_message: bytes): bytes;
+```
+
+```
 interface ISigner:
     sign(data: bytes, secret_key: ISecretKey): bytes
 ```

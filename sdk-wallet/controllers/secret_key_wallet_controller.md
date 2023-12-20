@@ -8,11 +8,15 @@ class SecretKeyWalletController implements IWalletController:
     // Generally speaking, upon construction, the selected address would be the one at index 0.
 
     // Generally speaking, this throws if "address_index" is not 0. Though, implementations can choose to support more than one secret key, if desired.
+    // Can throw:
+    // - ErrAddressNotAvailable
     get_address(address_index: number): Address;
 
     get_current_address(): Address;
     
     // Generally speaking, this throws if "address_index" is not 0. Though, implementations can choose to support more than one secret key, if desired.
+    // Can throw:
+    // - ErrAddressNotAvailable
     select_current_address(address_index: number);
 
     // Part of the Native Authentication flow.
