@@ -30,7 +30,6 @@ class TokenManagementTransactionsFactory:
         canFreeze: boolean;
         canWipe: boolean;
         canPause: boolean;
-        canTransferNFTCreateRole: boolean;
         canChangeOwner: boolean;
         canUpgrade: boolean;
         canAddSpecialRoles: boolean;
