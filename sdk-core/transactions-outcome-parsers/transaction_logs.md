@@ -1,9 +1,9 @@
 ## TransactionEvents
 
-A class containing the transaction events.
+A dto containing the transaction events.
 
 ```
-class TransactionEvents:
+dto TransactionEvent:
     address: string;
     identifier: string;
     topics: List[string];
@@ -12,10 +12,10 @@ class TransactionEvents:
 
 ## TransactionLogs
 
-A class containing the logs of the transaction.
+A dto containing the logs of the transaction.
 
 ```
-class TransactionLogs:
+dto TransactionLogs:
     address: string;
     events: List[TransactionEvents];
 ```
