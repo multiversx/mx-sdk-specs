@@ -1,33 +1,31 @@
 ## Interfaces needed for parsing token management transactions
 
 ```
-dto ITransactionEvent:
+dto TransactionEvent:
     address: string;
     identifier: string;
     topics: List[string]
-    data: string
+    data: bytes
 ```
 
 ```
-dto ITransactionLogs:
+dto TransactionLogs:
     address: string;
-    events: List[ITransactionEvent];
+    events: List[TransactionEvent];
 ```
 
 ```
-dto ITransactionResult:
+dto SmartContractResult:
     hash: string;
     timestamp: int;
     sender: string;
     receiver: string;
-    data: string;
-    original_tx_hash: string;
-    minblock_hash: string;
-    logs: ITransactionLogs;
+    data: bytes;
+    logs: TransactionLogs;
 ```
 
 ```
-dto ITransactionResultsAndLogsHolder:
-    transaction_results: List[ITransactionResult]
-    transaction_logs: ITransactionLogs
+dto TransactionOutcome:
+    smart_contract_results: List[SmartContractResult]
+    transaction_logs: TransactionLogs
 ```
