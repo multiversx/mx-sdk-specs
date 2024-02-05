@@ -1,4 +1,4 @@
-## Interfaces needed for parsing token management transactions
+## DTOs needed for parsing token management transactions
 
 ```
 dto TransactionEvent:
