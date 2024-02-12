@@ -16,8 +16,6 @@ dto TransactionLogs:
 
 ```
 dto SmartContractResult:
-    hash: string;
-    timestamp: int;
     sender: string;
     receiver: string;
     data: bytes;
