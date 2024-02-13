@@ -3,9 +3,9 @@
 ```
 dto Message:
     data: bytes;
-    signature: Optional[bytes];
-    address: Optional[IAddress];
-    version: Optional[int]
+    signature: bytes;
+    address: IAddress;
+    version: int;
 ```
 
 The only manadatory parameter for the constructor it's `data`. The others can be `undefined` or have default empty values.
@@ -17,7 +17,7 @@ If `version` is not provided the default value should be `1`.
 class MessageComputer:
     compute_bytes_for_signing(message: Message): bytes;
 
-    // return the call of `compute_bytes_for_signing()`
+    // returns the result of `compute_bytes_for_signing()`
     compute_bytes_for_verifying(messge: Message): bytes;
 
     pack_message(message: Message): {
