@@ -20,19 +20,19 @@ dto RegisterAndSetAllRolesOutcome:
 ```
 class TokenManagementTransactionsOutcomeParser:
     parse_issue_fungible(transaction_outcome: TransactionOutcome): {
-        identifier: string;
+        token_identifier: string;
     };
 
     parse_issue_semi_fungible(transaction_outcome: TransactionOutcome): {
-        identifier: string;
+        token_identifier: string;
     };
 
     parse_issue_non_fungible(transaction_outcome: TransactionOutcome): {
-        identifier: string;
+        token_identifier: string;
     };
 
     parse_register_meta_esdt(transaction_outcome: TransactionOutcome): {
-        identifier: string;
+        token_identifier: string;
     };
 
     parse_register_and_set_all_roles(transaction_outcome: TransactionOutcome): {
@@ -74,12 +74,12 @@ class TokenManagementTransactionsOutcomeParser:
 
     // returns the identifier of the paused token
     parse_pause(transaction_outcome: TransactionOutcome): {
-        identifier: string;
+        token_identifier: string;
     };
 
     // returns the identifier of the unpaused token
     parse_unpause(transaction_outcome: TransactionOutcome): {
-        identifier: string;
+        token_identifier: string;
     };
 
     parse_freeze(transaction_outcome: TransactionOutcome): {
