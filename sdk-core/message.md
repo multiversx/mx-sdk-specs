@@ -4,13 +4,37 @@
 dto Message:
     data: bytes;
     signature: bytes;
+    address: IAddress;
+    version: int;
 ```
+
+The only manadatory parameter for the constructor it's `data`. The others can be `undefined` or have default empty values.
+If `version` is not provided the default value should be `1`.
 
 ## MessageComputer
 
 ```
 class MessageComputer:
     compute_bytes_for_signing(message: Message): bytes;
+
+    // returns the result of `compute_bytes_for_signing()`
+    compute_bytes_for_verifying(messge: Message): bytes;
+
+    pack_message(message: Message): {
+        message: string; // hex encoded
+        signature: string; // hex encoded
+        address: string; // bech32 representation
+        version: int;
+    };
+
+    // packed_message should be the one obtained from calling `pack_message()`
+    // should treat both 'legacy message' and current message
+    unpack_message(packed_message: {
+        message: string;
+        signature: string;
+        address: string;
+        version: int;
+    }): Message;
 ```
 
 Reference implementation of `compute_bytes_for_signing`:
