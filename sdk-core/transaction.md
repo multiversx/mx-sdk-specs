@@ -44,6 +44,17 @@ dto DraftTransaction:
 ```
 class TransactionComputer:
     compute_transaction_fee(transaction: Transaction, network_config: INetworkConfig): Amount;
+
     compute_bytes_for_signing(transaction: Transaction): bytes;
+
     compute_transaction_hash(transaction: Transaction): bytes;
+
+    // checks if the second least significant bit is set; returns True if it's set, False otherwise
+    is_guarded_transaction(transaction: Transaction): bool;
+
+    // sets guardian address, guardian signature, transaction.version = 2, sets transaction.options second least significant bit
+    apply_guardian(
+        guardian: string; // bech32-encoded
+        guardian_signature: bytes;
+    ): Transaction;
 ```

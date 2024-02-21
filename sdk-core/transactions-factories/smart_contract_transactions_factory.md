@@ -43,6 +43,15 @@ class SmartContractTransactionsFactory:
         gasLimit: uint32;
     }): Transaction;
 
-    ...
+    create_transaction_for_claiming_developer_rewards({
+        sender: IAddress;
+        contract: IAddress;
+    }): Transaction;
+
+    create_transaction_for_changing_owner_address({
+        sender: IAddress;
+        contract: IAddress;
+        new_owner: IAddress;
+    }): Transaction;
 
 ```
