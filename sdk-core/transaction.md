@@ -49,12 +49,15 @@ class TransactionComputer:
 
     compute_transaction_hash(transaction: Transaction): bytes;
 
-    // checks if the second least significant bit is set; returns True if it's set, False otherwise
-    is_guarded_transaction(transaction: Transaction): bool;
+    // returns True if the second least significant bit is set; returns False otherwise
+    has_options_set_for_guarded_transaction(transaction: Transaction): bool;
 
-    // sets guardian address, guardian signature, transaction.version = 2, sets transaction.options second least significant bit
+    // returns True if the least significant bit is set; returns False otherwise
+    has_options_set_for_hash_signing(transaction: Transacion): bool;
+
+    // sets guardian address, transaction.version = 2, sets transaction.options second least significant bit
     apply_guardian(
+        transaction: Transaction;
         guardian: string; // bech32-encoded
-        guardian_signature: bytes;
-    ): Transaction;
+    );
 ```

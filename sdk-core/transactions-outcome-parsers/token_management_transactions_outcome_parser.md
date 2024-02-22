@@ -7,7 +7,7 @@ Each method should ensure that there is no `signalError` event;
 
 For all methods that return something, plain objects can be used (JS) or simple DTOs(Py).
 
-For DTOs, a naming convention should be used. Something like name of the operation followed by the `Outcome` keywork.
+For DTOs, a naming convention should be used. Something like name of the operation followed by the `Outcome` keyword.
 
 e.g.
 For the `parse_register_and_set_all_roles` method, we can use:
