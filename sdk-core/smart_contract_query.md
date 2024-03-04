@@ -4,7 +4,7 @@
 dto SmartContractQuery:
     contract: string;
     caller?: string;
-    value?: Amount
+    value?: Amount;
     function: string;
     arguments: List[bytes];
 ```
