@@ -1,4 +1,4 @@
-## DTOs needed for parsing token management transactions
+## DTOs needed for parsing the outcome of transactions
 
 ```
 dto TransactionEvent:
