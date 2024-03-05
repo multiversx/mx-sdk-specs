@@ -18,4 +18,4 @@ class RelayedTransactionsFactory:
         inner_transaction: ITransaction;
         inner_transaction_gas_limit: uint32;
         relayer_address: IAddress;
-    });
+    }): Transaction;

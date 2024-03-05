@@ -23,5 +23,5 @@ class AccountTransactionsFactory:
 
     create_transaction_for_unguarding_account({
         sender: IAddress;
-    })
+    }): Transaction;
 ```
