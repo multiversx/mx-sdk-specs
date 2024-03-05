@@ -13,7 +13,7 @@ dto SmartContractQuery:
 
 ```
 dto SmartContractQueryResponse:
-    original_query_function: string;
+    function: string;
     return_code: string;
     return_message: string;
     return_data_parts: List[bytes];
