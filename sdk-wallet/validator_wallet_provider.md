@@ -1,7 +1,7 @@
 ## ValidatorWalletProvider
 
 ```
-class ValidatorWalletProvider implements IWalletProvider:
+class ValidatorWalletProvider implements ISigner, IVerifier, IKeysGenerator:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // For example, the constructor can be parametrized with underlying, more low-level crypto components, if applicable.
 

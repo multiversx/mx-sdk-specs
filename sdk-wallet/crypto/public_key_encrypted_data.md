@@ -1,5 +1,10 @@
 ## PublicKeyEncryptedData
 
+Optional, can be omitted by implementing libraries.
+
+Implementation suggestions:
+ - https://github.com/multiversx/mx-sdk-js-wallet/blob/main/src/crypto/x25519EncryptedData.ts
+
 ```
 dto PublicKeyEncryptedData:
     nonce: string;
