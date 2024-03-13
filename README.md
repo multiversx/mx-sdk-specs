@@ -7,6 +7,8 @@ This repository contains specifications for the `mx-sdk-*` libraries. The specif
 - `core`: core components (address, transaction, etc.).
 - `wallet`: core wallet components (generation, signing).
 - `network-providers`: Network Provider (API, Gateway) components.
+- `adapters`: components that resolve the impedance mismatch between interfaces of different domains.
+- `converters`: components that are able to convert concepts (structures, classes) between different domains.
 
 Below, we add specific details for some of the most important packages and sub-components.
 
