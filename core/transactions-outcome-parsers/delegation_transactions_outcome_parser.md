@@ -5,7 +5,7 @@ i.e. Getting the address of a newly created delgation contract.
 
 Each method should ensure that there is no `signalError` event.
 
-For all methods that return something, plain objects(JS) or simple DTOs(Py) can be used.
+For all methods that return something, arrays of plain objects(JS) or simple DTOs(Py) can be used.
 For DTOs, a naming convention should be used. Something like the name of the operation followed by the `Outcome` keyword.
 
 e.g.
@@ -19,5 +19,5 @@ dto CreateNewDelegationContractOutcome:
 class DelegationTransactionsOutcomeParser:
     parse_create_new_delegation_contract(transaction_outcome: TransactionOutcome): {
         contract_address: string;
-    };
+    }[];
 ```
