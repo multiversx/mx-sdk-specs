@@ -45,6 +45,11 @@ dto DraftTransaction:
 class TransactionComputer:
     compute_transaction_fee(transaction: Transaction, network_config: INetworkConfig): Amount;
 
+    // this method should take care of both "regular" transaction signing and hash signing.
+    // should serialize the transaction after checking the version and the options fields.
+    // if version == 2 and the least significant bit of the options field is set it should serialize the transaction without the `signature` and `guardianSignature` fields and compute it's hash
+    // if the least significant bit is not set should simply serialize the transaction the "regular" way
+    // should also validate if the some of the transaction fields are set (sender, receiver, gasLimit, chainId); throws error otherwise
     compute_bytes_for_signing(transaction: Transaction): bytes;
 
     compute_transaction_hash(transaction: Transaction): bytes;
@@ -52,7 +57,7 @@ class TransactionComputer:
     // returns True if the second least significant bit is set; returns False otherwise
     has_options_set_for_guarded_transaction(transaction: Transaction): bool;
 
-    // returns True if the least significant bit is set; returns False otherwise
+    // returns True if the least significant bit is set; returns False otherwise; should also have transaction.version == 2
     has_options_set_for_hash_signing(transaction: Transacion): bool;
 
     // sets guardian address, transaction.version = 2, sets transaction.options second least significant bit
