@@ -8,7 +8,7 @@ class AccountTransactionsFactory:
 
     create_transaction_for_saving_key_value({
         sender: IAddress;
-        key_value_pairs: Dict[string, string];
+        key_value_pairs: Dict[bytes, bytes];
     }): Transaction;
 
     create_transaction_for_setting_guardian({
