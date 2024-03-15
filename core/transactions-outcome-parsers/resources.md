@@ -23,7 +23,16 @@ dto SmartContractResult:
 ```
 
 ```
+dto SmartContractCallOutcome:
+    function: string;
+    return_data_parts: bytes[];
+    return_message: string;
+    return_code: string;
+```
+
+```
 dto TransactionOutcome:
-    smart_contract_results: List[SmartContractResult]
-    transaction_logs: TransactionLogs
+    direct_smart_contract_call_outcome: SmartContractCallOutcome;
+    smart_contract_results: List[SmartContractResult];
+    logs: TransactionLogs;
 ```
