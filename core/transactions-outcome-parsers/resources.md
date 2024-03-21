@@ -25,14 +25,23 @@ dto SmartContractResult:
 ```
 dto SmartContractCallOutcome:
     function: string;
+
+    // The return data (collection) of the contract endpoint invoked by the original transaction.
     return_data_parts: bytes[];
+
+    // If not available, then it's identical to "return_code".
     return_message: string;
     return_code: string;
 ```
 
 ```
 dto TransactionOutcome:
+    // The direct outcome of a smart contract call. That is, the one that holds the "return data" of the endpoint invoked by the original transaction.
     direct_smart_contract_call_outcome: SmartContractCallOutcome;
+
+    // All the smart contract calls produced when processing the transaction.
     smart_contract_results: List[SmartContractResult];
+
+    // The logs produced when processing the transaction. Generally speaking, client code would also be interested in the logs within the smart contract results.
     logs: TransactionLogs;
 ```
