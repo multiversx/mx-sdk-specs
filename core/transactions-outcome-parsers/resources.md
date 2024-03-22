@@ -1,4 +1,4 @@
-## DTOs needed for parsing the outcome of transactions
+## Resources needed for parsing the outcome of transactions
 
 ```
 dto TransactionEvent:
@@ -44,4 +44,14 @@ dto TransactionOutcome:
 
     // The logs produced when processing the transaction. Generally speaking, client code would also be interested in the logs within the smart contract results.
     logs: TransactionLogs;
+```
+
+### Operations on resources
+
+The implementing libraries should also provide commonly-used operations on the resources defined above. For example:
+
+```
+find_events_by_identifier(transaction_outcome: TransactionOutcome, identifier: string): List[TransactionEvent];
+
+gather_all_events(transaction_outcome: TransactionOutcome): List[TransactionEvent];
 ```
