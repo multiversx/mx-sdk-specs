@@ -46,10 +46,11 @@ class TransactionComputer:
     compute_transaction_fee(transaction: Transaction, network_config: INetworkConfig): Amount;
 
     // this method should take care of both "regular" transaction signing and hash signing.
-    // should serialize the transaction after checking the version and the options fields.
-    // if version >= 2 and the least significant bit of the options field is set it should serialize the transaction and compute its hash
+    // should serialize the transaction after checking the `version` and the `options` fields.
+    // if `version` >= 2 and the least significant bit of the `options` field is set it should serialize the transaction and compute its hash
     // if the least significant bit is not set should simply serialize the transaction the "regular" way
-    // should also validate if the some of the transaction fields are set (sender, receiver, gasLimit, chainId); throws error otherwise
+    // should also validate if the some of the transaction fields are set (sender, receiver, gasLimit); throws error otherwise
+    // should ensure that if `options` is set, also `version` >= 2; throws error otherwise 
     compute_bytes_for_signing(transaction: Transaction): bytes;
 
     compute_transaction_hash(transaction: Transaction): bytes;
@@ -65,4 +66,7 @@ class TransactionComputer:
         transaction: Transaction;
         guardian: string; // bech32-encoded
     );
+
+    // sets the least significant bit of the `options` field; also ensures that `version` >= 2 
+    apply_options_for_hash_signing(transaction: Transaction);
 ```
