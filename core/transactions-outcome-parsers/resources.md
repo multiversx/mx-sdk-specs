@@ -5,9 +5,16 @@ dto TransactionEvent:
     address: string;
     identifier: string;
     topics: List[bytes]
-    data: bytes
-    // This is available since Sirius (protocol release).
-    additionalData: List[bytes]
+
+    // Before Sirius, within the Protocol, a log entry had the field "data".
+    // Since Sirius, a new field, "additionalData" (collection) has been added to the log entry.
+    // "additionalData" holds all the data items that correspond to the log entry, while the old (legacy) "data" field holds the first data item:
+    // https://github.com/multiversx/mx-chain-go/blob/v1.6.18/process/transactionLog/process.go#L159
+    //
+    // Here, in the SDKs, we drop the legacy and have one field (collection) to hold all data items of a log entry: "dataItems".
+    // For transactions processed before Sirius, this collection will have an item at most.
+    // For transactions processed after Sirius, this collection is synonymous with "additionalData".
+    dataItems: List[bytes]
 ```
 
 ```
