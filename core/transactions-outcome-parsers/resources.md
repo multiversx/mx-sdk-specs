@@ -4,7 +4,7 @@
 dto TransactionEvent:
     address: string;
     identifier: string;
-    topics: List[string]
+    topics: List[bytes]
     data: bytes
 ```
 
