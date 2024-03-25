@@ -5,7 +5,16 @@ dto TransactionEvent:
     address: string;
     identifier: string;
     topics: List[bytes]
-    data: bytes
+
+    // Before Sirius, within the Protocol, a log entry had the field "data".
+    // Since Sirius, a new field, "additionalData" (collection) has been added to the log entry.
+    // "additionalData" holds all the data items that correspond to the log entry, while the old (legacy) "data" field holds the first data item:
+    // https://github.com/multiversx/mx-chain-go/blob/v1.6.18/process/transactionLog/process.go#L159
+    //
+    // Here, in the SDKs, we drop the legacy and have one field (collection) to hold all data items of a log entry: "dataItems".
+    // For transactions processed before Sirius, this collection will have an item at most.
+    // For transactions processed after Sirius, this collection is synonymous with "additionalData".
+    dataItems: List[bytes]
 ```
 
 ```
@@ -51,7 +60,14 @@ dto TransactionOutcome:
 The implementing libraries should also provide commonly-used operations on the resources defined above. For example:
 
 ```
+// Finds the events (within the transaction outcome) that match a custom predicate (provided by the caller).
+// Generally speaking, this function should search across all events. See "gather_all_events".
+find_events_by_predicate(transaction_outcome: TransactionOutcome, predicate: (TransactionEvent) -> bool): List[TransactionEvent];
+
+// Finds the events (within the transaction outcome) that have a specific identifier.
+// Generally speaking, this function should search across all events. See "gather_all_events".
 find_events_by_identifier(transaction_outcome: TransactionOutcome, identifier: string): List[TransactionEvent];
 
+// Finds all the events within the transaction outcome, including those corresponding to smart contract results.
 gather_all_events(transaction_outcome: TransactionOutcome): List[TransactionEvent];
 ```
