@@ -12,6 +12,7 @@ class TransferTransactionsFactory:
         sender: IAddress;
         receiver: IAddress;
         native_amount: Amount;
+        data: Optional[bytes];
     }): Transaction;
 
     // Can throw:
