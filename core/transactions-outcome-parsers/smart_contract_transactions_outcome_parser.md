@@ -5,6 +5,19 @@ class SmartContractTransactionsOutcomeParser:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // Generally speaking, the constructor can be parametrized with an `Abi` or `Codec` instance (implementation detail), necessary to decode contract return data.
 
+    // Parses the transaction outcome and recovers basic information about the contract(s) deployed by the transaction.
+    parse_deploy({
+        transaction_outcome: TransactionOutcome
+    }): {
+        return_code: string;
+        return_message: string;
+        contracts: List[{
+            address: string;
+            ownerAddress: string;
+            codeHash: bytes;
+        }];
+    };
+
     // Parses the transaction outcome and recovers the "return data" of the contract endpoint (function) invoked by the transaction,
     // along with the return code and message.
     //
