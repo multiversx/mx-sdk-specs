@@ -68,6 +68,10 @@ find_events_by_predicate(transaction_outcome: TransactionOutcome, predicate: (Tr
 // Generally speaking, this function should search across all events. See "gather_all_events".
 find_events_by_identifier(transaction_outcome: TransactionOutcome, identifier: string): List[TransactionEvent];
 
+// Finds the events (within the transaction outcome) that have a specific first topic (acting like an identifier for user-defined events).
+// Generally speaking, this function should search across all events. See "gather_all_events".
+find_events_by_first_topic(transaction_outcome: TransactionOutcome, topic: string): List[TransactionEvent];
+
 // Finds all the events within the transaction outcome, including those corresponding to smart contract results.
 gather_all_events(transaction_outcome: TransactionOutcome): List[TransactionEvent];
 ```
