@@ -46,12 +46,14 @@ class TransactionComputer:
     compute_transaction_fee(transaction: Transaction, network_config: INetworkConfig): Amount;
 
     // this method should take care of both "regular" transaction signing and hash signing.
-    // should serialize the transaction after checking the `version` and the `options` fields.
-    // if `version` >= 2 and the least significant bit of the `options` field is set it should serialize the transaction and compute its hash
-    // if the least significant bit is not set should simply serialize the transaction the "regular" way
+    // if `signByHash` is false should serialize the transaction the regular way, otherwise it should compute its hash
     // should also validate if the some of the transaction fields are set (sender, receiver, gasLimit); throws error otherwise
     // should ensure that if `options` is set, also `version` >= 2; throws error otherwise 
-    compute_bytes_for_signing(transaction: Transaction): bytes;
+    compute_bytes_for_signing(transaction: Transaction, signByHash?: bool): bytes;
+
+    // should compute bytes for verifying the transaction signature
+    // if `isSignedByHash` is false, should serialize the transaction the regular way, otherwise it should compute its hash
+    compute_bytes_for_verifying(transaction: Transaction, isSignedByHash?: bool): bytes;
 
     compute_transaction_hash(transaction: Transaction): bytes;
 
