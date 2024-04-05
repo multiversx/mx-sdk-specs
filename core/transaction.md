@@ -53,6 +53,9 @@ class TransactionComputer:
     // should ensure that if `options` is set, also `version` >= 2; throws error otherwise 
     compute_bytes_for_signing(transaction: Transaction): bytes;
 
+    // should compute bytes for verifying the transaction signature
+    compute_bytes_for_verifying(transaction: Transaction): bytes;
+
     compute_transaction_hash(transaction: Transaction): bytes;
 
     // returns True if the second least significant bit is set; returns False otherwise
