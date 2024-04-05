@@ -51,7 +51,7 @@ class TransactionComputer:
     // if the least significant bit is not set should simply serialize the transaction the "regular" way
     // should also validate if the some of the transaction fields are set (sender, receiver, gasLimit); throws error otherwise
     // should ensure that if `options` is set, also `version` >= 2; throws error otherwise 
-    compute_bytes_for_signing(transaction: Transaction, signByHash?: bool): bytes;
+    compute_bytes_for_signing(transaction: Transaction): bytes;
 
     // should compute bytes for verifying the transaction signature
     compute_bytes_for_verifying(transaction: Transaction): bytes;
