@@ -6,10 +6,12 @@ dto Message:
     signature: bytes;
     address: IAddress;
     version: int;
+    signer: string;
 ```
 
 The only manadatory parameter for the constructor it's `data`. The others can be `undefined` or have default empty values.
 If `version` is not provided the default value should be `1`.
+The `signer` is not particularly used in signing or verifying the message, should be the name of the library that was used. (e.g. sdk-js, sdk-py, mxpy, etc.) 
 
 ## MessageComputer
 
@@ -25,6 +27,7 @@ class MessageComputer:
         signature: string; // hex encoded
         address: string; // bech32 representation
         version: int;
+        signer: string;
     };
 
     // packed_message should be the one obtained from calling `pack_message()`
@@ -34,6 +37,7 @@ class MessageComputer:
         signature: string;
         address: string;
         version: int;
+        signer: string
     }): Message;
 ```
 
