@@ -2,27 +2,20 @@
 
 TransactionWatcher allows one to continuously watch (monitor), by means of polling, the status of a given transaction.
 
-We need a 'TransactionFetcher` that fetches the transaction from the network.
+We need a `TransactionFetcher` that fetches the transaction from the network.
 
 ```
-interface TransactionFetcher:
+interface ITransactionFetcher:
     get_transaction(tx_hash: string): TransactionOnNetwork;
 ```
 
 ```
 class TransactionWatcher:
-    // The default polling interval for the `TransactionFetcher`. Can be 6000ms (6s)
-    static default_polling_interval;
-
-    // The default timeout, in milliseconds.
-    static default_timeout;
-
-    // An extra time (in milliseconds) to wait after the transaction has reached the desired status.
-    static default_patience;
-
-    // if optional values not provided, should use the default ones
+    // The constructor is not captured by the specs; it's up to the implementing library to define it.
+    // Generally, it should receieve a reference to a `ITransactionFetcher` which ultimately can be a `NetworkProvider`. Could be similar to the one below.
+    // if optional values not provided, should use some default ones
     constructor (
-        fetcher: TransactionFetcher,
+        fetcher: ITransactionFetcher,
         polling_interval_in_milliseconds?: int,
         timeout_in_milliseconds?: int,
         patience_in_milliseconds?: int
