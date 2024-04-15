@@ -1,6 +1,6 @@
-## TransactionWatcher
+## TransactionAwaiter
 
-TransactionWatcher allows one to continuously watch (monitor), by means of polling, the status of a given transaction.
+TransactionAwaiter allows one to await until a specific event (such as transaction completion) occurs on a given transaction.
 
 We need a `TransactionFetcher` that fetches the transaction from the network.
 
@@ -10,10 +10,10 @@ interface ITransactionFetcher:
 ```
 
 ```
-class TransactionWatcher:
+class TransactionAwaiter:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // Generally, it should receieve a reference to a `ITransactionFetcher` which ultimately can be a `NetworkProvider`. Could be similar to the one below.
-    // if optional values not provided, should use some default ones
+    // If optional values not provided, should use some default ones
     constructor (
         fetcher: ITransactionFetcher,
         polling_interval_in_milliseconds?: int,
@@ -21,11 +21,11 @@ class TransactionWatcher:
         patience_in_milliseconds?: int
     );
 
-    // waits untill the transaction is completely processed
-    // can throw ErrExpectedTransactionStatusNotReached
+    // Waits until the transaction is completely processed
+    // Can throw ErrExpectedTransactionStatusNotReached
     await_completed(tx_hash: string): TransactionOnNetwork;
 
-    // waits until the condition is satisfied
-    // can throw ErrExpectedTransactionStatusNotReached
+    // Waits until the condition is satisfied
+    // Can throw ErrExpectedTransactionStatusNotReached
     await_on_condition(tx_hash: string, condition: [data: TransactionOnNetwork] => boolean): TransactionOnNetwork;
 ```
