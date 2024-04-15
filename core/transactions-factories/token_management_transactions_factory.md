@@ -86,6 +86,7 @@ class TokenManagementTransactionsFactory:
         tokenIdentifier: string;
         addRoleLocalMint: boolean;
         addRoleLocalBurn: boolean;
+        addRoleESDTTransferRole: boolean;
     }): Transaction;
 
     create_transaction_for_setting_special_role_on_semi_fungible_token({
