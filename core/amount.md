@@ -3,7 +3,7 @@
 Generally speaking, the `Amount` type should be:
  - `int` in Python
  - `big.Int` or `string` in Go
- - `BigNumber.Value` (which includes `string`) in JavaScript
+ - `BigInt` in JavaScript
 
 The implementing library can define type aliases, if desired, for example:
 
@@ -16,7 +16,7 @@ type Amount = big.Int
 ```
 
 ```JavaScript
-type Amount = BigNumber.Value
+type Amount = BigInt
 ```
 
 Furthermore, the implementing library is free to define a wrapper class or structure. This isn't a requirement though. Example:
@@ -27,7 +27,7 @@ class Amount:
     to_string(): string
 ```
 
-Within the specs, we use `Amount` and we mean `(bigNumber|string)`. Or, to put it differently, `(Go[big.Int]|Python[int]|JavaScript[BigNumber.Value|string])`.
+Within the specs, we use `Amount` and we mean `(bigNumber|string)`. Or, to put it differently, `(Go[big.Int]|Python[int]|JavaScript[BigInt])`.
 
 **Important:** 
  - the value of an `Amount` is **always expressed in atomic units**. For example, to represent 1 EGLD, the value of `Amount` should be `1000000000000000000`, whether it's a Go `big.Int`, a Python `int`, a `string` etc.
