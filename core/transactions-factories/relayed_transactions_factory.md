@@ -25,6 +25,6 @@ class RelayedTransactionsFactory:
     // can throw InvalidInnerTransactionError if one of the inner_transactions is also a relayed tranaction
     // does not set gasLimit
     create_relayed_v3_transaction({
-        relayer: IAddress;
+        relayer_addresss: IAddress;
         innerTransactions: List[ITransaction];
-    })
+    }): Transaction;
