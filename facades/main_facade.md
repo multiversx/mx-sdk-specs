@@ -17,7 +17,7 @@ class MainFacade:
 
     recall_account_nonce(address: IAddress);
 
-    // Account is looked up by transaction.sender.
+    // Account is looked up by "transaction.sender".
     apply_nonce_on_transaction(transaction: Transaction);
 
     send_transaction(transaction: Transaction);
@@ -69,6 +69,7 @@ class MainFacade:
         }];
     };
 
+    // Does "await_completed_transaction" and "parse_contract_deploy" in one go.
     await_completed_contract_deploy({
         contract_name: string;
         transaction_hash: string;
@@ -104,6 +105,7 @@ class MainFacade:
         return_message: string;
     };
 
+    // Does "await_completed_transaction" and "parse_contract_execute" in one go.
     await_completed_contract_execute({
         contract_name: string;
         transaction_hash: string;
