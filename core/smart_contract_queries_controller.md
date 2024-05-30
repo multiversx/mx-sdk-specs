@@ -7,12 +7,14 @@ class SmartContractQueriesController:
     // Additionally, it can either be parametrized with a network provider, or some other facility to run contract queries against the network.
 
     // If `Abi` or `Codec` is available, this function encodes the input arguments accordingly.
+    // If a block nonce is provided, a deep-history query is performed.
     create_query({
         contract: string;
         caller?: string;
         value?: Amount;
         function: string;
         arguments: List[any];
+        block_nonce?: int;
     }): SmartContractQuery;
 
     // Runs the query against the network and returns the raw (encoded) response.
