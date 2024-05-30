@@ -8,7 +8,7 @@ class SmartContractQueriesController:
 
     // Does "create_query", "run_query" and "parse_query_response" in one go.
     // Can throw:
-    // - ErrQuery (e.g. when return code is not "ok")
+    // - ErrSmartContractQuery (e.g. when return code is not "ok")
     query({
         contract: IAddress;
         caller?: IAddress;
