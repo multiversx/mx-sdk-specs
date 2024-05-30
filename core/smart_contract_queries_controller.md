@@ -6,13 +6,27 @@ class SmartContractQueriesController:
     // Generally speaking, the constructor can be parametrized with an `Abi` or `Codec` instance (implementation detail), necessary to decode contract return data.
     // Additionally, it can either be parametrized with a network provider, or some other facility to run contract queries against the network.
 
+    // Does "create_query", "run_query" and "parse_query_response" in one go.
+    // Can throw:
+    // - ErrSmartContractQuery (e.g. when return code is not "ok")
+    query({
+        contract: IAddress;
+        caller?: IAddress;
+        value?: Amount;
+        function: string;
+        arguments: List[object];
+        block_nonce?: int;
+    }): List[any];
+
     // If `Abi` or `Codec` is available, this function encodes the input arguments accordingly.
+    // If a block nonce is provided, a deep-history query is performed.
     create_query({
         contract: string;
         caller?: string;
         value?: Amount;
         function: string;
         arguments: List[any];
+        block_nonce?: int;
     }): SmartContractQuery;
 
     // Runs the query against the network and returns the raw (encoded) response.
