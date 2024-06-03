@@ -39,4 +39,10 @@ interface INetworkProvider:
     // Queries a smart contract.
     // Block coordinates are optional, for deep-history lookups.
     query_contract(query: SmartContractQuery, block_coordinates?: BlockCoordinates): SmartContractQueryResponse;
+
+    // Does a generic GET request against the network (handles API enveloping).
+    do_get_generic(url: string): any;
+
+    // Does a generic POST request against the network (handles API enveloping).
+    do_post_generic(url: string, data: any): any;
 ```
