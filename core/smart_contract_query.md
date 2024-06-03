@@ -7,13 +7,14 @@ dto SmartContractQuery:
     value?: Amount;
     function: string;
     arguments: List[bytes];
-    block_nonce?: int;
 ```
 
 ## SmartContractQueryResponse
 
 ```
 dto SmartContractQueryResponse:
+    raw: any;
+
     function: string;
     return_code: string;
     return_message: string;
