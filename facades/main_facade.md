@@ -1,51 +1,58 @@
+TODO: find a name (think of space / astronomy stuff).
+TODO: have separate classes for most important networks: MainnetEntrypoint, DevnetEntrypoint, TestnetEntrypoint
+TODO: add functions for contract upgrade, as well
+
+## Account
+
+```
+class Account:
+    address: IAddress;
+    nonce: int;
+
+    sign(data: bytes): bytes;
+    get_nonce_then_increment(): int;
+```
+
 ## MainFacade
 
 ```
+// All functions that create transactions receive a sender Account.
+// They also receive a nonce, which is optional. If not provided, the nonce is fetched from the network.
+// Furthermore, all functions that create transactions return already-signed transactions.
 class MainFacade:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // For example, it can be parametrized with:
     // - a network provider URL and kind (proxy, API)
     // - a chain ID
 
-    register_secret_key(secret_key: ISecretKey);
-    register_wallet(wallet: Any);
+    // TBD
+    load_account(path: Path, password: Optional[string], address_index: Optional[int]): Account;
 
-    sign_transaction(transaction: Transaction);
-    sign_message(message: Message): Signature;
+
     verify_transaction_signature(transaction: Transaction): bool;
     verify_message_signature(message: Message): bool;
 
     recall_account_nonce(address: IAddress);
 
-    // Account is looked up by "transaction.sender".
-    apply_nonce_on_transaction(transaction: Transaction);
-
     send_transaction(transaction: Transaction);
-    await_completed_transaction(transaction_hash: string): TransactionOutcome;
 
-    create_transaction_for_native_token_transfer({
-        sender: IAddress;
+    // Generic function to await a transaction on the network.
+    // This, in contrast to the await* functions specialized for contract deployment and execution, does not parse the transaction.
+    await_completed_transaction(transaction_hash: string): TransactionOnNetwork;
+
+    create_transaction_for_transfer({
+        sender: Account;
+        nonce: Optional[int];
         receiver: IAddress;
-        native_amount: Amount;
+        native_amount: Optional[Amount];
         data: Optional[bytes];
-    }): Transaction;
-
-    create_transaction_for_esdt_token_transfer({
-        sender: IAddress;
-        receiver: IAddress;
         token_transfers: TokenTransfer[];
     }): Transaction;
 
-    // ABI is registered by name.
-    // When needed (in the contract-related utility functions), ABI is looked up by name.
-    register_abi({
-        contract: IAddress;
-        abi: Abi;
-    }): void;
-
-    create_transaction_for_deploy({
-        contract_name: string;
-        sender: IAddress;
+    create_transaction_for_contract_deploy({
+        abi: Optional[Abi];
+        sender: Account;
+        nonce: Optional[int];
         bytecode: bytes OR bytecodePath: Path;
         arguments: List[object] = [];
         native_transfer_amount: Amount = 0;
@@ -57,8 +64,8 @@ class MainFacade:
     }): Transaction;
 
     parse_contract_deploy({
-        contract_name: string;
-        transaction_outcome: TransactionOutcome
+        abi: Optional[Abi];
+        transaction_on_network: TransactionOnNetwork
     }): {
         return_code: string;
         return_message: string;
@@ -69,9 +76,10 @@ class MainFacade:
         }];
     };
 
+    // Specialized function to await and parse a contract deployment transaction.
     // Does "await_completed_transaction" and "parse_contract_deploy" in one go.
     await_completed_contract_deploy({
-        contract_name: string;
+        abi: Optional[Abi];
         transaction_hash: string;
     }): {
         return_code: string;
@@ -84,8 +92,9 @@ class MainFacade:
     };
 
     create_transaction_for_contract_execute({
-        contract_name: string;
-        sender: IAddress;
+        abi: Optional[Abi];
+        sender: Account;
+        nonce: Optional[int];
         contract: IAddress;
         // If "function" is a reserved word in the implementing language, it should be replaced with a different name (e.g. "func" or "functionName").
         function: string;
@@ -96,8 +105,8 @@ class MainFacade:
     }): Transaction;
 
     parse_contract_execute({
-        contract_name: string;
-        transaction_outcome: TransactionOutcome,
+        abi: Optional[Abi];
+        transaction_on_network: TransactionOnNetwork,
         function?: string
     }): {
         values: List[any];
@@ -105,9 +114,10 @@ class MainFacade:
         return_message: string;
     };
 
+    // Specialized function to await and parse a contract execution transaction.
     // Does "await_completed_transaction" and "parse_contract_execute" in one go.
     await_completed_contract_execute({
-        contract_name: string;
+        abi: Optional[Abi];
         transaction_hash: string;
     }): {
         values: List[any];
@@ -116,7 +126,7 @@ class MainFacade:
     };
 
     query_contract({
-        contract_name: string;
+        abi: Optional[Abi];
         contract: IAddress;
         caller?: IAddress;
         value?: Amount;
@@ -124,4 +134,54 @@ class MainFacade:
         arguments: List[object];
         block_nonce?: int;
     }): List[any];
+
+    // Below are functions of the network providers, promoted to the facade.
+    // get_account()
+    // TBD
+
+    // Below are the most useful functions of the transactions factories, promoted to the facade.
+
+    create_relayed_transaction({
+        relayer: Account;
+        nonce: Optional[int];
+        inner_transactions: List[ITransaction];
+    }): Transaction;
+
+    create_transaction_for_issuing_token({
+        TBD or more specific functions, as in the factory.
+    });
+
+```
+
+## Examples
+
+### Deploying a contract
+
+```
+facade = MainFacade(...);
+sender = Account(...);
+abi = Abi(...);
+
+transaction = facade.create_transaction_for_deploy({
+    abi: abi,
+    sender: sender,
+    nonce: sender.get_nonce_then_increment(),
+    bytecode: bytecode,
+    arguments: [arg1, arg2],
+    gasLimit: 1000000
+});
+
+transaction_hash = facade.send_transaction(transaction);
+parsed_outcome = facade.await_completed_contract_deploy(abi, transaction_hash);
+```
+
+### Accessing particular transaction factories
+
+```
+facade = MainFacade(...);
+sender = Account(...);
+
+facade.get_token_management_transactions_factory()
+OR
+facade.transaction_factories.token_management
 ```
