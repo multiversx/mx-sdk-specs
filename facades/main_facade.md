@@ -1,6 +1,5 @@
 TODO: find a name (think of space / astronomy stuff).
 TODO: have separate classes for most important networks: MainnetEntrypoint, DevnetEntrypoint, TestnetEntrypoint
-TODO: add functions for contract upgrade, as well
 
 ## Account
 
@@ -63,6 +62,7 @@ class MainFacade:
         gasLimit: uint32;
     }): Transaction;
 
+    // This method is less important (supports an exotic flow).
     parse_contract_deploy({
         abi: Optional[Abi];
         transaction_on_network: TransactionOnNetwork
@@ -91,6 +91,48 @@ class MainFacade:
         }];
     };
 
+    create_transaction_for_contract_upgrade({
+        abi: Optional[Abi];
+        sender: Account;
+        nonce: Optional[int];
+        contract: IAddress;
+        bytecode: bytes OR bytecodePath: Path;
+        arguments: List[object] = [];
+        native_transfer_amount: Amount = 0;
+        isUpgradeable: bool = True;
+        isReadable: bool = True;
+        isPayable: bool = False;
+        isPayableBySC: bool = True;
+        gasLimit: uint32;
+    }): Transaction;
+
+    // This method is less important (supports an exotic flow).
+    parse_contract_upgrade({
+        abi: Optional[Abi];
+        transaction_on_network: TransactionOnNetwork
+    }): {
+        return_code: string;
+        return_message: string;
+        contracts: List[{
+            address: string;
+            codeHash: bytes;
+        }];
+    };
+
+    // Specialized function to await and parse a contract upgrade transaction.
+    // Does "await_completed_transaction" and "parse_contract_upgrade" in one go.
+    await_completed_contract_upgrade({
+        abi: Optional[Abi];
+        transaction_hash: string;
+    }): {
+        return_code: string;
+        return_message: string;
+        contracts: List[{
+            address: string;
+            codeHash: bytes;
+        }];
+    };
+
     create_transaction_for_contract_execute({
         abi: Optional[Abi];
         sender: Account;
@@ -104,6 +146,7 @@ class MainFacade:
         gasLimit: uint32;
     }): Transaction;
 
+    // This method is less important (supports an exotic flow).
     parse_contract_execute({
         abi: Optional[Abi];
         transaction_on_network: TransactionOnNetwork,
