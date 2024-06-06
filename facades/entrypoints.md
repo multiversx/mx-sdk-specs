@@ -1,5 +1,4 @@
 TODO: find a name (think of space / astronomy stuff).
-TODO: have separate classes for most important networks: MainnetEntrypoint, DevnetEntrypoint, TestnetEntrypoint
 
 ## Account
 
@@ -12,20 +11,36 @@ class Account:
     get_nonce_then_increment(): int;
 ```
 
-## MainFacade
+## Pre-defined entrypoints
+
+Pre-defined entrypoints inherit from `NetworkEntrypoint` and use sensible default values.
 
 ```
-// (a) All functions that create transactions receive as first parameter the sender Account.
-//
-// (b) All functions that create transactions receive a nonce, which is optional.
-// If not provided, the nonce is fetched from the network.
-//
-// (c) All functions that create transactions return already-signed transactions.
-//
-// (d) All functions that create smart-contract transactions receive an optional ABI as a parameter.
-//
-// (e) All functions that parse the outcome of a transaction receive an optional ABI as a parameter.
-class MainFacade:
+class MainnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("api.multiversx.com"), "1");
+
+class DevnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("devnet-api.multiversx.com"), "D");
+
+class TestnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("testnet-api.multiversx.com"), "T");
+```
+
+## NetworkEntrypoint
+
+The `NetworkEntrypoint` acts as a facade for interacting with the network. It should cover the most common use-cases "out of the box".
+
+**(a)** All functions that create transactions receive as first parameter the sender Account.
+
+**(b)** All functions that create transactions receive a nonce, which is optional. If not provided, the nonce is fetched from the network.
+
+**(c)** All functions that create transactions return already-signed transactions.
+
+**(d)** All functions that create smart-contract transactions receive an optional ABI as a parameter.
+
+**(e)** All functions that parse the outcome of a transaction receive an optional ABI as a parameter.
+
+**(f)** The facade should allow one to access the underlying, more lower-level components (e.g. transaction factories, network provider).
+
+```
+class NetworkEntrypoint:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // For example, it can be parametrized with:
     // - a network provider URL and kind (proxy, API)
@@ -40,7 +55,17 @@ class MainFacade:
 
     recall_account_nonce(address: IAddress);
 
-    send_transaction(transaction: Transaction);
+    // Function of the network provider, promoted to the facade.
+    get_account(address: IAddress): AccountOnNetwork;
+
+    // Function of the network provider, promoted to the facade.
+    get_transaction(transaction_hash: string): TransactionOnNetwork;
+
+    // Function of the network provider, promoted to the facade.
+    send_transaction(transaction: Transaction): string;
+
+    // Function of the network provider, promoted to the facade.
+    send_transactions(transaction: Transaction); Tuple[int, List[string]];
 
     // Generic function to await a transaction on the network.
     // This, in contrast to the await* functions specialized for contract deployment and execution, does not parse the transaction.
@@ -185,10 +210,6 @@ class MainFacade:
         block_nonce?: int;
     }): List[any];
 
-    // Below are functions of the network providers, promoted to the facade.
-    // get_account()
-    // TBD
-
     // Below are the most useful functions of the transactions factories, promoted to the facade.
 
     create_relayed_transaction({
@@ -201,6 +222,17 @@ class MainFacade:
         TBD or more specific functions, as in the factory.
     });
 
+    // Access to the underlying components:
+    get_network_provider(): INetworkProvider;
+    get_transaction_computer(): TransactionComputer;
+    get_token_computer(): TokenComputer;
+    get_address_computer(): AddressComputer;
+
+    get_account_transactions_factory(): AccountTransactionsFactory;
+    get_delegation_transactions_factory(): DelegationTransactionsFactory;
+    get_token_management_transactions_factory(): TokenManagementTransactionsFactory;
+    get_transfer_transactions_factory(): TransferTransactionsFactory;
+    create_smart_contract_transactions_factory(abi: Optional[Abi]): SmartContractTransactionsFactory;
 ```
 
 ## Examples
@@ -208,11 +240,11 @@ class MainFacade:
 ### Deploying a contract
 
 ```
-facade = MainFacade(...);
+entrypoint = MainnetEntrypoint(...);
 sender = Account(...);
 abi = Abi(...);
 
-transaction = facade.create_transaction_for_deploy({
+transaction = entrypoint.create_transaction_for_deploy({
     abi: abi,
     sender: sender,
     nonce: sender.get_nonce_then_increment(),
@@ -221,17 +253,17 @@ transaction = facade.create_transaction_for_deploy({
     gasLimit: 1000000
 });
 
-transaction_hash = facade.send_transaction(transaction);
-parsed_outcome = facade.await_completed_contract_deploy(abi, transaction_hash);
+transaction_hash = entrypoint.send_transaction(transaction);
+parsed_outcome = entrypoint.await_completed_contract_deploy(abi, transaction_hash);
 ```
 
 ### Accessing particular transaction factories
 
 ```
-facade = MainFacade(...);
+entrypoint = MainnetEntrypoint(...);
 sender = Account(...);
 
-facade.get_token_management_transactions_factory()
+entrypoint.get_token_management_transactions_factory()
 OR
-facade.transaction_factories.token_management
+entrypoint.transaction_factories.token_management
 ```
