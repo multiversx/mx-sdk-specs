@@ -3,9 +3,14 @@
 ```
 class Account:
     address: IAddress;
+
+    // Local copy of the account nonce.
+    // Must be explicitly managed by client code.
     nonce: int;
 
     sign(data: bytes): bytes;
+
+    // Gets the nonce (the one from the object's state) and increments it.
     get_nonce_then_increment(): int;
 ```
 
@@ -44,9 +49,18 @@ class NetworkEntrypoint:
     // - a network provider URL and kind (proxy, API)
     // - a chain ID
 
-    // TBD
-    load_account(path: Path, password: Optional[string], address_index: Optional[int]): Account;
+    // Loads a secret key from a PEM file. PEM files may contain multiple accounts - thus, an (optional) "index" is used to select the desired secret key.
+    // Returns an Account object, initialized with the secret key.
+    load_account_from_pem(path: Path, index: Optional[int]): Account;
 
+    // Loads a secret key from an encrypted keystore file. Handles both keystores that hold a mnemonic and ones that hold a secret key (legacy).
+    // For keystores that hold an encrypted mnemonic, the optional "address_index" parameter is used to derive the desired secret key.
+    // Returns an Account object, initialized with the secret key.
+    load_account_from_keystore(path: Path, password: str, address_index: Optional[int]): Account;
+
+    // Loads (derives) a secret key from a mnemonic. The optional "address_index" parameter is used to guide the derivation.
+    // Returns an Account object, initialized with the secret key.
+    load_account_from_mnemonic(mnemonic: str, address_index: Optional[int]): Account;
 
     verify_transaction_signature(transaction: Transaction): bool;
     verify_message_signature(message: Message): bool;
@@ -238,9 +252,11 @@ class NetworkEntrypoint:
 ### Deploying a contract
 
 ```
-entrypoint = MainnetEntrypoint(...);
-sender = Account(...);
-abi = Abi(...);
+entrypoint = MainnetEntrypoint();
+sender = entrypoint.load_account_from_pem("alice.pem");
+abi = Abi.load("adder.abi.json");
+
+sender.nonce = entrypoint.recall_account_nonce(sender.address);
 
 transaction = entrypoint.create_transaction_for_deploy({
     abi: abi,
@@ -258,10 +274,8 @@ parsed_outcome = entrypoint.await_completed_contract_deploy(abi, transaction_has
 ### Accessing particular transaction factories
 
 ```
-entrypoint = MainnetEntrypoint(...);
-sender = Account(...);
+entrypoint = MainnetEntrypoint();
 
-entrypoint.get_token_management_transactions_factory()
-OR
-entrypoint.transaction_factories.token_management
+factory = entrypoint.get_delegation_transactions_factory()
+factory = entrypoint.get_token_management_transactions_factory()
 ```
