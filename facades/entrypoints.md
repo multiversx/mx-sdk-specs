@@ -6,12 +6,12 @@ class Account:
 
     // Local copy of the account nonce.
     // Must be explicitly managed by client code.
-    nonce: int;
+    nonce: uint64;
 
     sign(data: bytes): bytes;
 
     // Gets the nonce (the one from the object's state) and increments it.
-    get_nonce_then_increment(): int;
+    get_nonce_then_increment(): uint64;
 ```
 
 ## Pre-defined entrypoints
@@ -42,6 +42,10 @@ The `NetworkEntrypoint` acts as a facade for interacting with the network. It sh
 
 **(f)** The facade should allow one to access the underlying, more lower-level components (e.g. transaction factories, network provider).
 
+**(g)** The facade should promote the most commonly-used functions of the network provider.
+
+**(h)** The facade should promote the most commonly-used functions of the transactions factories.
+
 ```
 class NetworkEntrypoint:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
@@ -65,7 +69,11 @@ class NetworkEntrypoint:
     verify_transaction_signature(transaction: Transaction): bool;
     verify_message_signature(message: Message): bool;
 
-    recall_account_nonce(address: IAddress);
+    // Fetches the account nonce from the network.
+    recall_account_nonce(address: IAddress): uint64;
+
+    // Utility function: does account.nonce = recall_account_nonce(account.address).
+    refresh_account_nonce(account: Account);
 
     // Function of the network provider, promoted to the facade.
     get_account(address: IAddress): AccountOnNetwork;
@@ -99,11 +107,11 @@ class NetworkEntrypoint:
         bytecode: bytes OR bytecodePath: Path;
         arguments: List[object] = [];
         native_transfer_amount: Amount = 0;
-        isUpgradeable: bool = True;
-        isReadable: bool = True;
-        isPayable: bool = False;
-        isPayableBySC: bool = True;
-        gasLimit: uint32;
+        is_upgradeable: bool = True;
+        is_readable: bool = True;
+        is_payable: bool = False;
+        is_payable_by_contract_: bool = True;
+        gas_limit: uint32;
     }): Transaction;
 
     // This method is less important (supports an exotic flow).
@@ -143,11 +151,11 @@ class NetworkEntrypoint:
         bytecode: bytes OR bytecodePath: Path;
         arguments: List[object] = [];
         native_transfer_amount: Amount = 0;
-        isUpgradeable: bool = True;
-        isReadable: bool = True;
-        isPayable: bool = False;
-        isPayableBySC: bool = True;
-        gasLimit: uint32;
+        is_upgradeable: bool = True;
+        is_readable: bool = True;
+        is_payable: bool = False;
+        is_payable_by_contract_: bool = True;
+        gas_limit: uint32;
     }): Transaction;
 
     // This method is less important (supports an exotic flow).
@@ -187,7 +195,7 @@ class NetworkEntrypoint:
         arguments: List[object] = [];
         native_transfer_amount: Amount = 0;
         token_transfers: List[TokenTransfer] = [];
-        gasLimit: uint32;
+        gas_limit: uint32;
     }): Transaction;
 
     // This method is less important (supports an exotic flow).
@@ -222,8 +230,8 @@ class NetworkEntrypoint:
         block_nonce?: int;
     }): List[any];
 
-    // Below are the most useful functions of the transactions factories, promoted to the facade.
-
+    // Function of the relayed transactions factory, promoted to the facade.
+    // Handles relayed V3 transactions.
     create_relayed_transaction({
         relayer: Account;
         nonce: Optional[int];
@@ -249,14 +257,34 @@ class NetworkEntrypoint:
 
 ## Examples
 
-### Deploying a contract
+### Transfer native tokens
+
+```
+entrypoint = MainnetEntrypoint();
+sender = entrypoint.load_account_from_pem("alice.pem");
+receiver = Address.from_bech32("erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx");
+
+entrypoint.refresh_account_nonce(sender);
+
+transaction = entrypoint.create_transaction_for_transfer({
+    sender: sender,
+    nonce: sender.get_nonce_then_increment(),
+    receiver: receiver,
+    native_amount: 1000000000000000000,
+});
+
+transaction_hash = entrypoint.send_transaction(transaction);
+transaction_on_network = entrypoint.await_completed_transaction(transaction_hash);
+```
+
+### Deploy a contract
 
 ```
 entrypoint = MainnetEntrypoint();
 sender = entrypoint.load_account_from_pem("alice.pem");
 abi = Abi.load("adder.abi.json");
 
-sender.nonce = entrypoint.recall_account_nonce(sender.address);
+entrypoint.refresh_account_nonce(sender);
 
 transaction = entrypoint.create_transaction_for_deploy({
     abi: abi,
@@ -264,14 +292,14 @@ transaction = entrypoint.create_transaction_for_deploy({
     nonce: sender.get_nonce_then_increment(),
     bytecode: bytecode,
     arguments: [arg1, arg2],
-    gasLimit: 1000000
+    gas_limit: 10000000
 });
 
 transaction_hash = entrypoint.send_transaction(transaction);
 parsed_outcome = entrypoint.await_completed_contract_deploy(abi, transaction_hash);
 ```
 
-### Accessing particular transaction factories
+### Access particular transaction factories
 
 ```
 entrypoint = MainnetEntrypoint();
