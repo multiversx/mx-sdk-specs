@@ -15,9 +15,16 @@ class Account:
 ## MainFacade
 
 ```
-// All functions that create transactions receive a sender Account.
-// They also receive a nonce, which is optional. If not provided, the nonce is fetched from the network.
-// Furthermore, all functions that create transactions return already-signed transactions.
+// (a) All functions that create transactions receive as first parameter the sender Account.
+//
+// (b) All functions that create transactions receive a nonce, which is optional.
+// If not provided, the nonce is fetched from the network.
+//
+// (c) All functions that create transactions return already-signed transactions.
+//
+// (d) All functions that create smart-contract transactions receive an optional ABI as a parameter.
+//
+// (e) All functions that parse the outcome of a transaction receive an optional ABI as a parameter.
 class MainFacade:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // For example, it can be parametrized with:
