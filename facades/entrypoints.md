@@ -1,7 +1,22 @@
+Questions:
+
+(1) have load_account as a single method, or separate, explicit functions (3 methods)?
+
+(2) please confirm that the suggested constructor is all right. Should we or should we not apply heuristics to infer the kind of network provider based on its URL?
+
+(3) what to do when the developer wants to use a non-promoted function of a transactions factory?
+
+(4) how about having a higher-level factory for each transactions factory? Pre-construction logic, post-construction logic.
+
 ## Account
 
 ```
 class Account:
+    // The constructor is not captured by the specs; it's up to the implementing library to define it.
+    // Suggestions:
+    constructor(secret_key: bytes, hrp: Optional[str]);
+    constructor(user_signer: IUserSigner, hrp: Optional[str]);
+
     address: IAddress;
 
     // Local copy of the account nonce.
@@ -12,6 +27,22 @@ class Account:
 
     // Gets the nonce (the one from the object's state) and increments it.
     get_nonce_then_increment(): uint64;
+
+    // Named constructor
+    // Loads a secret key from a PEM file. PEM files may contain multiple accounts - thus, an (optional) "index" is used to select the desired secret key.
+    // Returns an Account object, initialized with the secret key.
+    static new_from_pem(path: Path, index: Optional[int], hrp: Optional[str]): Account;
+
+    // Named constructor
+    // Loads a secret key from an encrypted keystore file. Handles both keystores that hold a mnemonic and ones that hold a secret key (legacy).
+    // For keystores that hold an encrypted mnemonic, the optional "address_index" parameter is used to derive the desired secret key.
+    // Returns an Account object, initialized with the secret key.
+    static new_from_keystore(path: Path, password: str, address_index: Optional[int], hrp: Optional[str]): Account;
+
+    // Named constructor
+    // Loads (derives) a secret key from a mnemonic. The optional "address_index" parameter is used to guide the derivation.
+    // Returns an Account object, initialized with the secret key.
+    static new_from_mnemonic(mnemonic: str, address_index: Optional[int], hrp: Optional[str]): Account;
 ```
 
 ## Pre-defined entrypoints
@@ -19,26 +50,26 @@ class Account:
 Pre-defined entrypoints inherit from `NetworkEntrypoint` and use sensible default values.
 
 ```
-class MainnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("api.multiversx.com"), "1");
+class MainnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("https://api.multiversx.com"));
 
-class DevnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("devnet-api.multiversx.com"), "D");
+class DevnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("https://devnet-api.multiversx.com"));
 
-class TestnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("testnet-api.multiversx.com"), "T");
+class TestnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("https://testnet-api.multiversx.com"));
 ```
 
 ## NetworkEntrypoint
 
 The `NetworkEntrypoint` acts as a facade for interacting with the network. It should cover the most common use-cases "out of the box".
 
-**(a)** All functions that create transactions receive as first parameter the sender Account.
+**(a)** All functions that create transactions receive as first parameter the `sender: Account`. And an optional `guardian: Account`.
 
 **(b)** All functions that create transactions receive a nonce, which is optional. If not provided, the nonce is fetched from the network.
 
 **(c)** All functions that create transactions return already-signed transactions.
 
-**(d)** All functions that create smart-contract transactions receive an optional ABI as a parameter.
+**(d)** All functions that create smart-contract transactions receive an optional `Abi` as a parameter.
 
-**(e)** All functions that parse the outcome of a transaction receive an optional ABI as a parameter.
+**(e)** All functions that parse the outcome of a transaction receive an optional `Abi` as a parameter.
 
 **(f)** The facade should allow one to access the underlying, more lower-level components (e.g. transaction factories, network provider).
 
@@ -46,34 +77,19 @@ The `NetworkEntrypoint` acts as a facade for interacting with the network. It sh
 
 **(h)** The facade should promote the most commonly-used functions of the transactions factories.
 
+**(i)** The facade should fetch network parameters (network config) needed for construction transactions (e.g. chain ID) in a lazy manner. For example, it may fetch them when the first transaction is created. This works fine for JavaScript, as well, since transaction-creation functions are async anyway.
+
 ```
 class NetworkEntrypoint:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
-    // For example, it can be parametrized with:
-    // - a network provider URL and kind (proxy, API)
-    // - a chain ID
-
-    // Loads a secret key from a PEM file. PEM files may contain multiple accounts - thus, an (optional) "index" is used to select the desired secret key.
-    // Returns an Account object, initialized with the secret key.
-    load_account_from_pem(path: Path, index: Optional[int]): Account;
-
-    // Loads a secret key from an encrypted keystore file. Handles both keystores that hold a mnemonic and ones that hold a secret key (legacy).
-    // For keystores that hold an encrypted mnemonic, the optional "address_index" parameter is used to derive the desired secret key.
-    // Returns an Account object, initialized with the secret key.
-    load_account_from_keystore(path: Path, password: str, address_index: Optional[int]): Account;
-
-    // Loads (derives) a secret key from a mnemonic. The optional "address_index" parameter is used to guide the derivation.
-    // Returns an Account object, initialized with the secret key.
-    load_account_from_mnemonic(mnemonic: str, address_index: Optional[int]): Account;
+    // For example, it can be parametrized with: a network provider URL and kind (proxy, API)
+    constructor(url: str, kind: Optional[str]);
 
     verify_transaction_signature(transaction: Transaction): bool;
     verify_message_signature(message: Message): bool;
 
     // Fetches the account nonce from the network.
     recall_account_nonce(address: IAddress): uint64;
-
-    // Utility function: does account.nonce = recall_account_nonce(account.address).
-    refresh_account_nonce(account: Account);
 
     // Function of the network provider, promoted to the facade.
     get_account(address: IAddress): AccountOnNetwork;
@@ -227,7 +243,6 @@ class NetworkEntrypoint:
         value?: Amount;
         function: string;
         arguments: List[object];
-        block_nonce?: int;
     }): List[any];
 
     // Function of the relayed transactions factory, promoted to the facade.
@@ -238,9 +253,11 @@ class NetworkEntrypoint:
         inner_transactions: List[ITransaction];
     }): Transaction;
 
+    //
     create_transaction_for_issuing_token({
-        TBD or more specific functions, as in the factory.
+        // See questions (3) and (4)
     });
+    //
 
     // Access to the underlying components:
     get_network_provider(): INetworkProvider;
@@ -264,7 +281,7 @@ entrypoint = MainnetEntrypoint();
 sender = entrypoint.load_account_from_pem("alice.pem");
 receiver = Address.from_bech32("erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx");
 
-entrypoint.refresh_account_nonce(sender);
+account.nonce = entrypoint.recall_account_nonce(account.address);
 
 transaction = entrypoint.create_transaction_for_transfer({
     sender: sender,
@@ -284,7 +301,7 @@ entrypoint = MainnetEntrypoint();
 sender = entrypoint.load_account_from_pem("alice.pem");
 abi = Abi.load("adder.abi.json");
 
-entrypoint.refresh_account_nonce(sender);
+account.nonce = entrypoint.recall_account_nonce(account.address);
 
 transaction = entrypoint.create_transaction_for_deploy({
     abi: abi,
