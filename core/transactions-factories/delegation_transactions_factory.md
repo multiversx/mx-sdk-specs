@@ -48,6 +48,7 @@ class DelegationTransactionsFactory:
         sender: IAddress,
         delegationContract: IAddress;
         publicKeys: List[IPublicKey];
+        amount: Amount;
     }): Transaction;
 
     create_transaction_for_changing_service_fee({
