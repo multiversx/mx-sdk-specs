@@ -61,7 +61,7 @@ class NetworkEntrypoint:
 entrypoint = MainnetEntrypoint();
 controller = entrypoint.get_transfer_transactions_controller()
 
-sender = entrypoint.load_account_from_pem("alice.pem");
+sender = Account.new_from_pem("alice.pem");
 sender.nonce = entrypoint.recall_account_nonce(sender.address);
 
 transaction = controller.create_transaction_for_transfer({
