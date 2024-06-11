@@ -90,7 +90,7 @@ entrypoint = MainnetEntrypoint();
 abi = Abi.load("adder.abi.json");
 controller = entrypoint.create_smart_contract_controller(abi);
 
-sender = entrypoint.load_account_from_pem("alice.pem");
+sender = Account.new_from_pem("alice.pem");
 sender.nonce = entrypoint.recall_account_nonce(sender.address);
 
 transaction = entrypoint.create_transaction_for_deploy({
@@ -112,7 +112,7 @@ entrypoint = MainnetEntrypoint();
 abi = Abi.load("adder.abi.json");
 controller = entrypoint.create_smart_contract_controller(abi);
 
-sender = entrypoint.load_account_from_pem("alice.pem");
+sender = Account.new_from_pem("alice.pem");
 sender.nonce = entrypoint.recall_account_nonce(sender.address);
 
 transaction = controller.create_transaction_for_execute({
@@ -150,8 +150,8 @@ abi = Abi.load("adder.abi.json");
 contract_controller = entrypoint.create_smart_contract_controller(abi);
 relayed_controller = entrypoint.get_relayed_controller();
 
-sender = entrypoint.load_account_from_pem("alice.pem");
-relayer = entrypoint.load_account_from_pem("carol.pem");
+sender = Account.new_from_pem("alice.pem");
+relayer = Account.new_from_pem("carol.pem");
 sender.nonce = entrypoint.recall_account_nonce(sender.address);
 relayer.nonce = entrypoint.recall_account_nonce(relayer.address);
 
