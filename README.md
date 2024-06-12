@@ -21,6 +21,18 @@ The methods are named in correspondence with the use cases they implement, e.g. 
 
 Optionally, the implementing library can choose to return an object that isn't a complete representation of the `Transaction`, if desired. In this case, the library must name the incomplete representation `DraftTransaction`, and also must provide a direct conversion facility from `DraftTransaction` to `Transaction` - for example, a named constructor. See [transaction](core/transaction.md).
 
+### Transactions Controllers
+
+The transaction controllers are components built upon the lower-level transaction factories and transaction outcome parsers. They are able to create signed transactions and parse the outcome of these transactions. The controllers are specialized for a "family" of transactions (e.g. transfer transactions, delegation transactions, smart contract transactions), just like the factories and the outcome parsers.
+
+One controller is backed by **one transaction factory and one outcome parser** (paired).
+
+- All functions that create transactions receive as first parameter the `sender: IAccount`. They also receive an optional `guardian: IAccount`.
+- All functions that create transactions receive a nonce, which is optional. If not provided, the nonce is fetched from the network.
+- All functions that create transactions return already-signed transactions.
+- All functions that parse transactions outcomes receive a `TransactionOnNetwork`.
+- All functions that parse transactions outcomes are paired with an additional function that awaits the completion of the transaction on the network (before parsing the outcome). For example, `parse_deploy` is paired with `await_completed_deploy`.
+
 ## Guidelines
 
 ### **`in-ifaces-out-concrete-types`**
