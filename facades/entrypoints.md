@@ -59,7 +59,7 @@ class NetworkEntrypoint:
 
 ```
 entrypoint = MainnetEntrypoint();
-controller = entrypoint.get_transfer_transactions_controller()
+controller = entrypoint.get_transfers_controller()
 
 sender = Account.new_from_pem("alice.pem");
 sender.nonce = entrypoint.recall_account_nonce(sender.address);
@@ -172,6 +172,60 @@ transaction = relayed_controller.create_relayed_transaction({
 
 transaction_hash = entrypoint.send_transaction(transaction);
 outcome = entrypoint.await_completed_transaction(transaction_hash);
+```
+
+### Issue a fungible token, do a quick airdrop
+
+```
+entrypoint = MainnetEntrypoint();
+tokens_controller = entrypoint.get_token_management_controller();
+transfers_controller = entrypoint.get_transfers_controller();
+
+sender = Account.new_from_pem("alice.pem");
+sender.nonce = entrypoint.recall_account_nonce(sender.address);
+
+transaction = tokens_controller.create_transaction_for_issuing_fungible({
+    sender: sender,
+    nonce: sender.get_nonce_then_increment(),
+    token_name: "EXAMPLE",
+    token_ticker: "EXAMPLE",
+    initial_supply: 1000000000000000000000,
+    num_decimals: 18,
+    can_freeze: true,
+    can_wipe: true,
+    can_pause: true,
+    can_transfer_nft_create_role: true,
+    can_change_owner: true,
+    can_upgrade: true,
+    can_add_special_roles: true
+});
+
+transaction_hash = entrypoint.send_transaction(transaction);
+parsed_outcome = tokens_controller.await_completed_issue_fungible(transaction_hash);
+token_identifier = parsed_outcome.token_identifier;
+
+receivers = [
+    Address.from_bech32("erd1..."),
+    Address.from_bech32("erd1..."),
+    Address.from_bech32("erd1...")
+];
+
+transactions = [];
+
+for receiver in receivers:
+    transaction = transfers_controller.create_transaction_for_transfer({
+        sender: sender,
+        nonce: sender.get_nonce_then_increment(),
+        receiver: receiver,
+        token_transfers: [
+            token: Token(token_identifier),
+            amount: 1000000000000000000
+        ]
+    });
+
+    transactions.append(transaction);
+
+entrypoint.send_transactions(transactions);
 ```
 
 ### Access underlying components
