@@ -2,6 +2,8 @@
 
 ```
 dto TransactionEvent:
+    raw: any;
+
     address: string;
     identifier: string;
     topics: List[bytes]
@@ -25,6 +27,8 @@ dto TransactionLogs:
 
 ```
 dto SmartContractResult:
+    raw: any;
+
     sender: string;
     receiver: string;
     data: bytes;
