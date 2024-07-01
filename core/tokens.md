@@ -65,4 +65,7 @@ dto TokenTransfer:
 
     // Always in atomic units, e.g. for transferring 1.000000 "USDC-c76f1f", it must be "1000000".
     amount: Amount;
+
+    // should instantiate 'TokenTransfer' from native token.
+    new_from_native_amount(amount: Amount): 'TokenTransfer';
 ```
