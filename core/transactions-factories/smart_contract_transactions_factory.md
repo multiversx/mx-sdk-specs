@@ -26,7 +26,7 @@ class SmartContractTransactionsFactory:
         function: string;
         arguments: List[object] = [];
         native_transfer_amount: Amount = 0;
-        token_transfers: List[TokenTransfer] = [];
+        token_transfers: List[ITokenAmount] = [];
         gasLimit: uint32;
     }): Transaction;
 
