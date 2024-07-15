@@ -46,11 +46,11 @@ class NetworkEntrypoint:
 
     // Access to the individual controllers.
     create_smart_contract_controller(abi: Optional[Abi]): SmartContractController;
-    get_transfers_controller(): TransfersController;
-    get_token_management_controller(): TokenManagementController;
-    get_delegation_controller(): DelegationController;
-    get_relayed_controller(): RelayedController;
-    get_account_management__controller(): AccountManagementController;
+    create_transfers_controller(): TransfersController;
+    create_token_management_controller(): TokenManagementController;
+    create_delegation_controller(): DelegationController;
+    create_relayed_controller(): RelayedController;
+    create_account_management__controller(): AccountManagementController;
 ```
 
 ## Examples
@@ -59,7 +59,7 @@ class NetworkEntrypoint:
 
 ```
 entrypoint = MainnetEntrypoint();
-controller = entrypoint.get_transfers_controller()
+controller = entrypoint.create_transfers_controller()
 
 sender = Account.new_from_pem("alice.pem");
 sender.nonce = entrypoint.recall_account_nonce(sender.address);
@@ -148,7 +148,7 @@ parsed_outcome = controller.query({
 entrypoint = MainnetEntrypoint();
 abi = Abi.load("adder.abi.json");
 contract_controller = entrypoint.create_smart_contract_controller(abi);
-relayed_controller = entrypoint.get_relayed_controller();
+relayed_controller = entrypoint.create_relayed_controller();
 
 sender = Account.new_from_pem("alice.pem");
 relayer = Account.new_from_pem("carol.pem");
@@ -178,8 +178,8 @@ outcome = entrypoint.await_completed_transaction(transaction_hash);
 
 ```
 entrypoint = MainnetEntrypoint();
-tokens_controller = entrypoint.get_token_management_controller();
-transfers_controller = entrypoint.get_transfers_controller();
+tokens_controller = entrypoint.create_token_management_controller();
+transfers_controller = entrypoint.create_transfers_controller();
 
 sender = Account.new_from_pem("alice.pem");
 sender.nonce = entrypoint.recall_account_nonce(sender.address);
@@ -233,7 +233,7 @@ entrypoint.send_transactions(transactions);
 ```
 entrypoint = MainnetEntrypoint();
 
-controller = entrypoint.get_delegation_controller()
-controller = entrypoint.get_token_management_controller()
+controller = entrypoint.create_delegation_controller()
+controller = entrypoint.create_token_management_controller()
 network_provider = entrypoint.get_network_provider()
 ```
