@@ -1,4 +1,4 @@
-## Resources needed for parsing the outcome of transactions
+## TransactionOutcome (and related resources)
 
 ```
 dto TransactionEvent:
