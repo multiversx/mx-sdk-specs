@@ -8,8 +8,8 @@ This package holds components that are able to interact with the network (e.g. s
 - `BasicApiNetworkProvider`, following the `IBasicNetworkProvider` interface - must be implemented by the SDK.
 - `BasicNodeNetworkProvider`, following the `IBasicNetworkProvider` interface - must be implemented by the SDK.
 
-## Rich network providers
+## Fully-featured network providers
 
-- `RichProxyNetworkProvider`, mirroring the Open API specification of https://gateway.multiversx.com - can be (optionally) implemented by the SDK.
-- `RichApiNetworkProvider`, mirroring the Open API specification of https://api.multiversx.com - can be (optionally) implemented by the SDK.
-- `RichNodeNetworkProvider`, mirroring the Open API specification of the Node API - can be (optionally) implemented by the SDK.
+- `ProxyNetworkProvider`, mirroring the Open API specification of https://gateway.multiversx.com - can be (optionally) implemented by the SDK.
+- `ApiNetworkProvider`, mirroring the Open API specification of https://api.multiversx.com - can be (optionally) implemented by the SDK.
+- `NodeNetworkProvider`, mirroring the Open API specification of the Node API - can be (optionally) implemented by the SDK.

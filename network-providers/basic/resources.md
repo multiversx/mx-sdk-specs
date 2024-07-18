@@ -64,17 +64,18 @@ dto AccountOnNetwork:
     address: string;
     nonce: uint64;
     balance: Amount;
-    username: string;
+    username?: string;
 
-    code_hash: bytes;
-    code: bytes;
-    developer_reward: Amount;
-    owner_address: string;
+    contract_code_hash?: bytes;
+    contract_code?: bytes;
+    contract_developer_reward?: Amount;
+    contract_owner_address?: string;
 
-    is_upgradable: bool;
-    is_readable: bool;
-    is_payable: bool;
-    is_payable_by_smart_contract: bool;
+    is_contract_upgradable?: bool;
+    is_contract_readable?: bool;
+    is_contract_payable?: bool;
+    is_contract_payable_by_contract?: bool;
+
     is_guarded: bool;
 ```
 
@@ -183,10 +184,10 @@ dto TokenAmountOnNetwork implements TokenAmount:
     amount: Amount;
 ```
 
-## DefinitionOfFungibleTokenOnNetwork
+## FungibleTokenMetadata
 
 ```
-dto DefinitionOfFungibleTokenOnNetwork:
+dto FungibleTokenMetadata:
     raw: any;
 
     identifier: string;
@@ -196,10 +197,10 @@ dto DefinitionOfFungibleTokenOnNetwork:
     decimals: number;
 ```
 
-## DefinitionOfTokensCollectionOnNetwork
+## TokensCollectionMetadata
 
 ```
-dto DefinitionOfTokensCollectionOnNetwork:
+dto TokensCollectionMetadata:
     raw: any;
 
     collection: string;

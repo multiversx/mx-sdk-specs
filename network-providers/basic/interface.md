@@ -81,10 +81,10 @@ interface IBasicNetworkProvider:
     get_non_fungible_tokens_of_account(address: IAddress, url_parameters?: Any): List[TokenAmountOnNetwork];
 
     // Fetches the definition of a fungible token.
-    get_definition_of_fungible_token(token_identifier: string, url_parameters?: Any): DefinitionOfFungibleTokenOnNetwork;
+    get_definition_of_fungible_token(token_identifier: string, url_parameters?: Any): FungibleTokenMetadata;
 
     // Fetches the definition of a tokens collection.
-    get_definition_of_tokens_collection(collection_name: string, url_parameters?: Any): DefinitionOfTokensCollectionOnNetwork;
+    get_definition_of_tokens_collection(collection_name: string, url_parameters?: Any): TokensCollectionMetadata;
 
     // Queries a smart contract.
     // URL parameters can be used, for example, to provide block coordinates for deep-history lookups.
