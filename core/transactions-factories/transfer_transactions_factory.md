@@ -32,6 +32,6 @@ class TransferTransactionsFactory:
     create_transaction_for_esdt_token_transfer({
         sender: IAddress;
         receiver: IAddress;
-        token_transfers: TokenTransfer[];
+        token_transfers: ITokenAmount[];
     }): Transaction;
 ```

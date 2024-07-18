@@ -6,7 +6,7 @@ class SmartContractQueriesController:
     // Generally speaking, the constructor can be parametrized with an `Abi` or `Codec` instance (implementation detail), necessary to decode contract return data.
     // Additionally, it can either be parametrized with a network provider, or some other facility to run contract queries against the network.
 
-    // Does "create_query", "run_query" and "parse_query_response" in one go.
+    // It does "create_query", "run_query" and "parse_query_response" in one go.
     // Can throw:
     // - ErrSmartContractQuery (e.g. when return code is not "ok")
     query({

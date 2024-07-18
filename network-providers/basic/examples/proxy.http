@@ -1,0 +1,86 @@
+@url = https://gateway.multiversx.com
+@userAddress = erd1r44w4rky0l29pynkp4hrmrjdhnmd5knrrmevarp6h2dg9cu74sas597hhl
+@contractAddress = erd1qqqqqqqqqqqqqpgqvc7gdl0p4s97guh498wgz75k8sav6sjfjlwqh679jy
+@transaction = 684d46173811638e0cb11a44d5dda68ae1c5b6dd103069a8a650bec0f416ca5f
+@fungibleToken = WEGLD-bd4d79
+@fungibleTokenHex = 5745474c442d626434643739
+@nonFungibleTokenIdentifier = VOTEPROOF-19034b
+@nonFungibleTokenNonce = 01
+
+### Get network config
+
+GET {{ url }}/network/config HTTP/1.1
+Content-Type: application/json
+
+### Get account (user)
+
+GET {{ url }}/address/{{ userAddress }} HTTP/1.1
+Content-Type: application/json
+
+### Get account (contract)
+
+GET {{ url }}/address/{{ contractAddress }} HTTP/1.1
+Content-Type: application/json
+
+### Get transaction
+
+GET {{ url }}/transaction/{{ transaction }}?withResults=true HTTP/1.1
+Content-Type: application/json
+
+### Get transaction status
+
+GET {{ url }}/transaction/{{ transaction }}/process-status HTTP/1.1
+Content-Type: application/json
+
+### Get account tokens (fungible and non-fungible)
+
+GET {{ url }}/address/{{ userAddress }}/esdt HTTP/1.1
+
+### Get account token (fungible)
+
+GET {{ url }}/address/{{ userAddress }}/esdt/{{ fungibleToken }} HTTP/1.1
+
+### Get account token (non-fungible)
+
+GET {{ url }}/address/{{ userAddress }}/nft/{{ nonFungibleTokenIdentifier  }}/nonce/{{ nonFungibleTokenNonce }} HTTP/1.1
+
+### Simulate transaction
+
+POST https://devnet-gateway.multiversx.com/transaction/simulate HTTP/1.1
+Content-Type: application/json
+
+{
+    "nonce": 3,
+    "value": "0",
+    "receiver": "erd1qqqqqqqqqqqqqpgqw8kxq34re3jv47v72kp7gge337f44ntw7l4q8faf5l",
+    "sender": "erd12lg0shk0rrtl40lfq6cum69662s92j9wpzkv5vllp6kmj5fy7l4q9yj5yf",
+    "gasPrice": 1000000000,
+    "gasLimit": 10000000,
+    "chainID": "D",
+    "senderUsername": "",
+    "receiverUsername": "",
+    "data": "YWRkQDJh",
+    "version": 2,
+    "options": 0,
+    "guardian": "",
+    "signature": "c0eec7289ea18093505be83203a6e44e9ecfbb8c31df1fa4322455d5df5f242a7202bd9768431a8c3a1cabaf0b5536779cda6afec071d4ed03ea3307b1368e01",
+    "guardianSignature": ""
+}
+
+### Estimate cost of transaction
+
+POST https://devnet-gateway.multiversx.com/transaction/cost HTTP/1.1
+Content-Type: application/json
+
+{
+    "nonce": 3,
+    "value": "0",
+    "receiver": "erd1qqqqqqqqqqqqqpgqw8kxq34re3jv47v72kp7gge337f44ntw7l4q8faf5l",
+    "sender": "erd12lg0shk0rrtl40lfq6cum69662s92j9wpzkv5vllp6kmj5fy7l4q9yj5yf",
+    "gasPrice": 1000000000,
+    "gasLimit": 10000000,
+    "chainID": "D",
+    "data": "YWRkQDJh",
+    "version": 2,
+    "options": 0
+}

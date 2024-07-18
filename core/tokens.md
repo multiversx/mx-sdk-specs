@@ -42,7 +42,7 @@ class TokenComputer:
     // For example, useful when preparing the parameters for querying token data from a network provider.
     compute_extended_identifier_from_identifier_and_nonce(identifier: string, nonce: number): string;
 
-    // Optional, if `parse_extended_identifier_parts()` is also implemented. 
+    // Optional, if `parse_extended_identifier_parts()` is also implemented.
     // Pick one of the following (if the language does not support overloading):
     compute_extended_identifier_from_parts(ticker: string, random_sequence: string, nonce: number): string;
     compute_extended_identifier_from_parts(parts: TokenIdentifierParts): string;
@@ -59,11 +59,21 @@ dto TokenIdentifierParts:
 
 ## TokenTransfer
 
+This is a synonym for `TokenAmount`.
+
 ```
-dto TokenTransfer:
+dto TokenTransfer implements ITokenAmount:
+    token: Token;
+    amount: Amount;
+```
+
+## ITokenAmount
+
+```
+interface ITokenAmount:
     token: Token;
 
-    // Always in atomic units, e.g. for transferring 1.000000 "USDC-c76f1f", it must be "1000000".
+    // Always in atomic units, e.g. for expressing 1.000000 "USDC-c76f1f", it must be "1000000".
     amount: Amount;
 
     // should instantiate 'TokenTransfer' from native token.
