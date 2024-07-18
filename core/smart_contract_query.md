@@ -13,6 +13,8 @@ dto SmartContractQuery:
 
 ```
 dto SmartContractQueryResponse:
+    raw: any;
+
     function: string;
     return_code: string;
     return_message: string;

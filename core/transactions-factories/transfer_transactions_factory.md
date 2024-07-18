@@ -7,7 +7,7 @@ class TransferTransactionsFactory:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // Generally speaking, the constructor should be parametrized with a configuration object which defines entries such as:
     // "minGasLimit", "gasLimitPerByte", "issueCost", gas limit for specific operations etc. (e.g. "gasLimitForESDTTransfer").
-    
+
     create_transaction_for_native_token_transfer({
         sender: IAddress;
         receiver: IAddress;
@@ -23,6 +23,6 @@ class TransferTransactionsFactory:
     create_transaction_for_esdt_token_transfer({
         sender: IAddress;
         receiver: IAddress;
-        token_transfers: TokenTransfer[];
+        token_transfers: ITokenAmount[];
     }): Transaction;
 ```
