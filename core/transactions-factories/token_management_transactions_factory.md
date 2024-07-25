@@ -111,6 +111,8 @@ class TokenManagementTransactionsFactory:
         addRoleESDTTransferRole: bool;
         addRoleESDTModifyCreator: boolean;
         addRoleNFTRecreate: boolean;
+        addRoleESDTSetNewURI: boolean;
+        addRoleESDTModifyRoyalties: boolean;
     }): Transaction;
 
     create_transaction_for_creating_nft({
