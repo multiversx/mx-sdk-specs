@@ -1,5 +1,6 @@
 ## RelayedTransactionsFactory
 
+```
 class RelayedTransactionsFactory:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // Generally speaking, the constructor should be parametrized with a configuration object which defines entries such as:
@@ -26,5 +27,6 @@ class RelayedTransactionsFactory:
     // does not set gasLimit
     create_relayed_v3_transaction({
         relayer_addresss: IAddress;
-        innerTransactions: List[ITransaction];
+        inner_transactions: List[ITransaction];
     }): Transaction;
+```
