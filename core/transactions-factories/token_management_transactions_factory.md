@@ -97,90 +97,164 @@ class TokenManagementTransactionsFactory:
         addRoleNFTBurn: boolean;
         addRoleNFTAddQuantity: boolean;
         addRoleESDTTransferRole: boolean;
+        addRoleESDTModifyCreator: boolean;
     }): Transaction;
 
     create_transaction_for_setting_special_role_on_non_fungible_token({
         sender: IAddress;
         user: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
         addRoleNftCreate: bool;
         addRoleNftBurn: bool;
         addRoleNftUpdate_attributes: bool;
         addRoleNftAddUri: bool;
         addRoleESDTTransferRole: bool;
+        addRoleESDTModifyCreator: boolean;
+        addRoleNFTRecreate: boolean;
     }): Transaction;
 
     create_transaction_for_creating_nft({
         sender: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
         initialQuantity: int;
-        name: str;
+        name: string;
         royalties: int;
-        hash: str;
+        hash: string;
         attributes: bytes;
-        uris: List[str];
+        uris: List[string];
     }): Transaction;
 
     create_transaction_for_pausing({
         sender: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
     }): Transaction;
 
     create_transaction_for_unpausing({
         sender: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
     }): Transaction;
 
     create_transaction_for_freezing({
         sender: IAddress;
         user: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
     }): Transaction;
 
     create_transaction_for_unfreezing({
         sender: IAddress;
         user: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
     }): Transaction;
 
     create_transaction_for_wiping({
         sender: IAddress;
         user: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
     }): Transaction;
 
     create_transaction_for_local_minting({
         sender: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
         supplyToMint: int;
     }): Transaction;
 
     create_transaction_for_local_burning({
         sender: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
         supplyToBurn: int;
     }): Transaction;
 
     create_transaction_for_updating_attributes({
         sender: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
         tokenNonce: int;
         attributes: bytes;
     }): Transaction;
 
     create_transaction_for_adding_quantity({
         sender: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
         tokenNonce: int;
         quantityToAdd: int;
     }): Transaction;
 
     create_transaction_for_burning_quantity({
         sender: IAddress;
-        tokenIdentifier: str;
+        tokenIdentifier: string;
         tokenNonce: int;
         quantityToBurn: int;
     }): Transaction;
 
-    ...
+    // receiver is the same as the sender
+    create_transaction_for_modifying_royalties({
+        sender: IAddress;
+        tokenIdentifier: string;
+        tokenNonce: int;
+        royalties: int;
+    }): Transaction;
+
+    // receiver is the same as the sender
+    create_transaction_for_setting_new_uris({
+        sender: IAddress;
+        tokenIdentifier: string;
+        tokenNonce: int;
+        uris: List[string]
+    }): Transaction;
+
+    // receiver is the same as the sender
+    create_transaction_for_modifying_creator({
+        sender: IAddress;
+        tokenIdentifier: string;
+        tokenNonce: int;
+    }): Transaction;
+
+    // receiver is the same as the sender
+    create_transaction_for_updating_metadata({
+        sender: IAddress;
+        tokenIdentifier: string;
+        tokenName?: string;
+        royalties?: int;
+        hash?: string;
+        attributes?: bytes;
+        uris?: List[string];
+    }): Transaction;
+
+    // receiver is the same as the sender
+    create_transaction_for_metadata_recreate({
+        sender: IAddress;
+        tokenIdentifier: string;
+        tokenName?: string;
+        royalties?: int;
+        hash?: string;
+        attributes?: bytes;
+        uris?: List[string];
+    }): Transaction;
+
+    // receiver is the esdt manager address
+    create_transaction_for_changing_token_to_dynamic({
+        sender: IAddress;
+        tokenIdentifier: string;
+    }): Transaction;
+
+    // receiver is the esdt manager address
+    create_transaction_for_updating_token_id({
+        sender: IAddress;
+        tokenIdentifier: string;
+    }): Transaction;
+
+    // receiver is the esdt manager address
+    create_transaction_for_registering_dynamic_token({
+        sender: IAddress;
+        tokenName: string;
+        tokenTicker: string;
+        tokenType: "NFT" | "SFT" | "META" | "FNG";
+    }): Transaction;
+
+    // receiver is the esdt manager address
+    create_transaction_for_registering_dynamic_and_setting_roles({
+        sender: IAddress;
+        tokenName: string;
+        tokenTicker: string;
+        tokenType: "NFT" | "SFT" | "META" | "FNG";
+    }): Transaction;
 ```
