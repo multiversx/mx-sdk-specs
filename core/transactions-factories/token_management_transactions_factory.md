@@ -190,7 +190,7 @@ class TokenManagementTransactionsFactory:
         sender: IAddress;
         tokenIdentifier: string;
         tokenNonce: int;
-        royalties: int;
+        new_royalties: int;
     }): Transaction;
 
     // receiver is the same as the sender
@@ -198,7 +198,7 @@ class TokenManagementTransactionsFactory:
         sender: IAddress;
         tokenIdentifier: string;
         tokenNonce: int;
-        uris: List[string]
+        new_uris: List[string];
     }): Transaction;
 
     // receiver is the same as the sender
@@ -212,11 +212,11 @@ class TokenManagementTransactionsFactory:
     create_transaction_for_updating_metadata({
         sender: IAddress;
         tokenIdentifier: string;
-        tokenName?: string;
-        royalties?: int;
-        hash?: string;
-        attributes?: bytes;
-        uris?: List[string];
+        new_tokenName?: string;
+        new_royalties?: int;
+        new_hash?: string;
+        new_attributes?: bytes;
+        new_uris?: List[string];
     }): Transaction;
 
     // receiver is the same as the sender
@@ -227,7 +227,7 @@ class TokenManagementTransactionsFactory:
         royalties?: int;
         hash?: string;
         attributes?: bytes;
-        uris?: List[string];
+        new_uris?: List[string];
     }): Transaction;
 
     // receiver is the esdt manager address
