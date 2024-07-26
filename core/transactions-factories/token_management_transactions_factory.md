@@ -93,26 +93,31 @@ class TokenManagementTransactionsFactory:
         sender: IAddress;
         user: IAddress;
         tokenIdentifier: string;
-        addRoleNFTCreate: boolean;
-        addRoleNFTBurn: boolean;
-        addRoleNFTAddQuantity: boolean;
-        addRoleESDTTransferRole: boolean;
-        addRoleESDTModifyCreator: boolean;
+        addRoleNFTCreate?: boolean;
+        addRoleNFTBurn?: boolean;
+        addRoleNFTAddQuantity?: boolean;
+        addRoleESDTTransferRole?: boolean;
+        addRoleNFTUpdate?: boolean;
+        addRoleESDTModifyRoyalties?: boolean;
+        addRoleESDTSetNewUri?: boolean;
+        addRoleESDTModifyCreator?: boolean;
+        addRoleNFTRecreate?: boolean;
     }): Transaction;
 
     create_transaction_for_setting_special_role_on_non_fungible_token({
         sender: IAddress;
         user: IAddress;
         tokenIdentifier: string;
-        addRoleNftCreate: bool;
-        addRoleNftBurn: bool;
-        addRoleNftUpdate_attributes: bool;
-        addRoleNftAddUri: bool;
-        addRoleESDTTransferRole: bool;
-        addRoleESDTModifyCreator: boolean;
-        addRoleNFTRecreate: boolean;
-        addRoleESDTSetNewURI: boolean;
-        addRoleESDTModifyRoyalties: boolean;
+        addRoleNftCreate?: bool;
+        addRoleNftBurn?: bool;
+        addRoleNftUpdateAttributes?: bool;
+        addRoleNftAddUri?: bool;
+        addRoleESDTTransferRole?: bool;
+        addRoleNFTUpdate?: boolean;
+        addRoleESDTModifyRoyalties?: boolean;
+        addRoleESDTSetNewURI?: boolean;
+        addRoleESDTModifyCreator?: boolean;
+        addRoleNFTRecreate?: boolean;
     }): Transaction;
 
     create_transaction_for_creating_nft({
