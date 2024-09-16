@@ -39,6 +39,8 @@ One controller is backed by **one transaction factory and one outcome parser** (
 
 Generally speaking, it's recommended to receive input parameters as abstractions (interfaces) in the public API of the SDKs. This leads to an improved decoupling, and allows for easier type substitution (e.g. easier mocking, testing).
 
+Exception to the rule above: when receiving easily constructable objects (plain structures, DTOs) as input parameters, it's perfectly fine to receive them as concrete types.
+
 Generally speaking, it's recommended to return concrete types in the public API of the SDKs. The client code is responsible with decoupling from unnecessary data and behaviour of returned objects (e.g. by using interfaces, on their side). The only notable exception to this is when working with factories (abstract or method factories) that should have the function output an interface type. For example, have a look over `(User|Validator)WalletProvider.generate_keypair()` - this method returns abstract types (interfaces).
 
 ### **`pay-attention-to-types`**
