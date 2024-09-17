@@ -62,15 +62,13 @@ dto TokenIdentifierParts:
 This is a synonym for `TokenAmount`.
 
 ```
-dto TokenTransfer implements ITokenAmount:
-    token: Token;
-    amount: Amount;
+dto TokenTransfer = TokenAmount;
 ```
 
-## ITokenAmount
+## TokenAmount
 
 ```
-interface ITokenAmount:
+dto TokenAmount:
     token: Token;
 
     // Always in atomic units, e.g. for expressing 1.000000 "USDC-c76f1f", it must be "1000000".
