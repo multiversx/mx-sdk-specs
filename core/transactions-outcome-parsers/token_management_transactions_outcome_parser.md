@@ -19,53 +19,53 @@ dto RegisterAndSetAllRolesOutcome:
 
 ```
 class TokenManagementTransactionsOutcomeParser:
-    parse_issue_fungible(transaction_outcome: TransactionOutcome): {
+    parse_issue_fungible(transaction: TransactionOnNetwork): {
         token_identifier: string;
     }[];
 
-    parse_issue_semi_fungible(transaction_outcome: TransactionOutcome): {
+    parse_issue_semi_fungible(transaction: TransactionOnNetwork): {
         token_identifier: string;
     }[];
 
-    parse_issue_non_fungible(transaction_outcome: TransactionOutcome): {
+    parse_issue_non_fungible(transaction: TransactionOnNetwork): {
         token_identifier: string;
     }[];
 
-    parse_register_meta_esdt(transaction_outcome: TransactionOutcome): {
+    parse_register_meta_esdt(transaction: TransactionOnNetwork): {
         token_identifier: string;
     }[];
 
-    parse_register_and_set_all_roles(transaction_outcome: TransactionOutcome): {
+    parse_register_and_set_all_roles(transaction: TransactionOnNetwork): {
         token_identifier: string;
         roles: List[string];
     }[];
 
     // returns nothing;
-    parse_set_burn_role_globally(transaction_outcome: TransactionOutcome): None;
+    parse_set_burn_role_globally(transaction: TransactionOnNetwork): None;
 
     // returns nothing;
-    parse_unset_burn_role_globally(transaction_outcome: TransactionOutcome): None;
+    parse_unset_burn_role_globally(transaction: TransactionOnNetwork): None;
 
-    parse_set_special_role(transaction_outcome: TransactionOutcome): {
+    parse_set_special_role(transaction: TransactionOnNetwork): {
         user_address: string;
         token_identifier: string;
         roles: List[string];
     }[];
 
-    parse_nft_create(transaction_outcome: TransactionOutcome): {
+    parse_nft_create(transaction: TransactionOnNetwork): {
         token_identifier: string;
         nonce: uint64;
         initial_quantity: uint64;
     }[];
 
-    parse_local_mint(transaction_outcome: TransactionOutcome): {
+    parse_local_mint(transaction: TransactionOnNetwork): {
         user_address: string;
         token_identifier: string;
         nonce: uint64;
         minted_supply: uint64;
     }[];
 
-    parse_local_burn(transaction_outcome: TransactionOutcome): {
+    parse_local_burn(transaction: TransactionOnNetwork): {
         user_address: string;
         token_identifier: string;
         nonce: uint64;
@@ -73,49 +73,49 @@ class TokenManagementTransactionsOutcomeParser:
     }[];
 
     // returns the identifier of the paused token
-    parse_pause(transaction_outcome: TransactionOutcome): {
+    parse_pause(transaction: TransactionOnNetwork): {
         token_identifier: string;
     }[];
 
     // returns the identifier of the unpaused token
-    parse_unpause(transaction_outcome: TransactionOutcome): {
+    parse_unpause(transaction: TransactionOnNetwork): {
         token_identifier: string;
     }[];
 
-    parse_freeze(transaction_outcome: TransactionOutcome): {
+    parse_freeze(transaction: TransactionOnNetwork): {
         user_address: string;
         token_identifier: string;
         nonce: uint64;
         balance: uint64;
     }[];
 
-    parse_unfreeze(transaction_outcome: TransactionOutcome): {
+    parse_unfreeze(transaction: TransactionOnNetwork): {
         user_address: string;
         token_identifier: string;
         nonce: uint64;
         balance: uint64;
     }[];
 
-    parse_wipe(transaction_outcome: TransactionOutcome): {
+    parse_wipe(transaction: TransactionOnNetwork): {
         user_address: string;
         token_identifier: string;
         nonce: uint64;
         balance: uint64;
     }[];
 
-    parse_update_attributes(transaction_outcome: TransactionOutcome): {
+    parse_update_attributes(transaction: TransactionOnNetwork): {
         token_identifier: string;
         nonce: uint64;
         attributes: bytes;
     }[];
 
-    parse_add_quantity(transaction_outcome: TransactionOutcome): {
+    parse_add_quantity(transaction: TransactionOnNetwork): {
         token_identifier: string;
         nonce: uint64;
         added_quantity: uint64;
     }[];
 
-    parse_burn_quantity(transaction_outcome: TransactionOutcome): {
+    parse_burn_quantity(transaction: TransactionOnNetwork): {
         token_identifier: string;
         nonce: uint64;
         burnt_quantity: uint64;
