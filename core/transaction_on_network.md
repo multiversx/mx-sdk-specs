@@ -83,18 +83,18 @@ dto SmartContractCallOutcome:
 The implementing libraries should also provide commonly-used operations on the resources defined above. For example:
 
 ```
-// Finds the events (within the transaction outcome) that match a custom predicate (provided by the caller).
+// Finds the events (within the transaction) that match a custom predicate (provided by the caller).
 // Generally speaking, this function should search across all events. See "gather_all_events".
-find_events_by_predicate(transaction_outcome: TransactionOutcome, predicate: (TransactionEvent) -> bool): List[TransactionEvent];
+find_events_by_predicate(transaction: TransactionOnNetwork, predicate: (TransactionEvent) -> bool): List[TransactionEvent];
 
-// Finds the events (within the transaction outcome) that have a specific identifier.
+// Finds the events (within the transaction) that have a specific identifier.
 // Generally speaking, this function should search across all events. See "gather_all_events".
-find_events_by_identifier(transaction_outcome: TransactionOutcome, identifier: string): List[TransactionEvent];
+find_events_by_identifier(transaction: TransactionOnNetwork, identifier: string): List[TransactionEvent];
 
-// Finds the events (within the transaction outcome) that have a specific first topic (acting like an identifier for user-defined events).
+// Finds the events (within the transaction) that have a specific first topic (acting like an identifier for user-defined events).
 // Generally speaking, this function should search across all events. See "gather_all_events".
-find_events_by_first_topic(transaction_outcome: TransactionOutcome, topic: string): List[TransactionEvent];
+find_events_by_first_topic(transaction: TransactionOnNetwork, topic: string): List[TransactionEvent];
 
-// Finds all the events within the transaction outcome, including those corresponding to smart contract results.
-gather_all_events(transaction_outcome: TransactionOutcome): List[TransactionEvent];
+// Finds all the events within the transaction, including those corresponding to smart contract results.
+gather_all_events(transaction: TransactionOnNetwork): List[TransactionEvent];
 ```
