@@ -108,15 +108,6 @@ dto BlockCoordinates:
     hash: bytes;
     root_hash: bytes;
 ```
-## TransactionSimulationResponse
-
-```
-dto TransactionSimulationResponse:
-    raw: any;
-
-    status: TransactionStatus;
-    outcome: TransactionOutcome;
-```
 
 ## TransactionCostResponse
 
@@ -126,7 +117,6 @@ dto TransactionCostResponse:
 
     gas_limit: uint64;
     status: TransactionStatus;
-    outcome: TransactionOutcome;
 ```
 
 ## AwaitingOptions
