@@ -1,4 +1,38 @@
-## TransactionOutcome (and related resources)
+## TransactionOnNetwork (and related resources)
+
+```
+dto TransactionOnNetwork:
+    raw: any;
+
+    hash: bytes;
+    nonce: uint64;
+    round: uint64;
+    epoch: uint32;
+    timestamp: uint64;
+    block_hash: bytes;
+    miniblock_hash: bytes;
+
+    sender: string;
+    receiver: string;
+    sender_shard: uint32;
+    receiver_shard: uint32;
+
+    value: Amount;
+    gas_limit: uint64;
+    gas_price: uint64;
+    function: string;
+    data: bytes;
+    version: uint32;
+    options: uint32;
+    signature: bytes;
+    status: TransactionStatus;
+
+    // All the smart contract calls produced when processing the transaction.
+    smart_contract_results: List[SmartContractResult];
+
+    // The logs produced when processing the transaction.
+    logs: TransactionLogs;
+```
 
 ```
 dto TransactionEvent:
@@ -42,18 +76,6 @@ dto SmartContractCallOutcome:
     // If not available, then it's identical to "return_code".
     return_message: string;
     return_code: string;
-```
-
-```
-dto TransactionOutcome:
-    // The direct outcome of a smart contract call. That is, the one that holds the "return data" of the endpoint invoked by the original transaction.
-    direct_smart_contract_call_outcome: SmartContractCallOutcome;
-
-    // All the smart contract calls produced when processing the transaction.
-    smart_contract_results: List[SmartContractResult];
-
-    // The logs produced when processing the transaction. Generally speaking, client code would also be interested in the logs within the smart contract results.
-    logs: TransactionLogs;
 ```
 
 ### Operations on resources
