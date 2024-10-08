@@ -109,50 +109,6 @@ dto BlockCoordinates:
     root_hash: bytes;
 ```
 
-## TransactionOnNetwork
-
-```
-dto TransactionOnNetwork:
-    raw: any;
-
-    hash: bytes;
-    nonce: uint64;
-    round: uint64;
-    epoch: uint32;
-    timestamp: uint64;
-    block_hash: bytes;
-    miniblock_hash: bytes;
-
-    sender: string;
-    receiver: string;
-    sender_shard: uint32;
-    receiver_shard: uint32;
-
-    value: Amount;
-    gas_limit: uint64;
-    gas_price: uint64;
-    function: string;
-    data: bytes;
-    version: uint32;
-    options: uint32;
-    signature: bytes;
-
-    // See core/transaction_status.md.
-    status: TransactionStatus;
-    // See core/transaction_outcome.md.
-    outcome: TransactionOutcome;
-```
-
-## TransactionSimulationResponse
-
-```
-dto TransactionSimulationResponse:
-    raw: any;
-
-    status: TransactionStatus;
-    outcome: TransactionOutcome;
-```
-
 ## TransactionCostResponse
 
 ```
@@ -161,7 +117,6 @@ dto TransactionCostResponse:
 
     gas_limit: uint64;
     status: TransactionStatus;
-    outcome: TransactionOutcome;
 ```
 
 ## AwaitingOptions

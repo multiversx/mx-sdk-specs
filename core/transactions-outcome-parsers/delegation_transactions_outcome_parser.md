@@ -17,7 +17,7 @@ dto CreateNewDelegationContractOutcome:
 
 ```
 class DelegationTransactionsOutcomeParser:
-    parse_create_new_delegation_contract(transaction_outcome: TransactionOutcome): {
+    parse_create_new_delegation_contract(transaction: TransactionOnNetwork): {
         contract_address: string;
     }[];
 ```

@@ -6,4 +6,4 @@ Components in this package must not be referenced by `core`, `wallet` and `netwo
 
 ## Example: transactions converter
 
-For example, this package holds a `TransactionsConverter`, able to convert a `Transaction` from the `core` domain (package) to a plain object, and vice versa. Additionally, this component can convert a `TransactionOnNetwork`, which is a concept of `network-providers`, to a `TransactionOutcome`, which is a concept of `core`.
+For example, this package holds a `TransactionsConverter`, able to convert a `Transaction` from the `core` domain (package) to a plain object, and vice versa.

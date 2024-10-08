@@ -37,7 +37,7 @@ interface IBasicNetworkProvider:
     send_transaction(transaction: Transaction): bytes;
 
     // Simulates a transaction.
-    simulate_transaction(transaction: Transaction): TransactionSimulationResponse;
+    simulate_transaction(transaction: Transaction): TransactionOnNetwork;
 
     // Estimates the cost of a transaction.
     estimate_transaction_cost(transaction: Transaction): TransactionCostEstimationResponse
