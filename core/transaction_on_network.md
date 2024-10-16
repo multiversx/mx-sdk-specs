@@ -66,18 +66,6 @@ dto SmartContractResult:
     logs: TransactionLogs;
 ```
 
-```
-dto SmartContractCallOutcome:
-    function: string;
-
-    // The return data (collection) of the contract endpoint invoked by the original transaction.
-    return_data_parts: bytes[];
-
-    // If not available, then it's identical to "return_code".
-    return_message: string;
-    return_code: string;
-```
-
 ### Operations on resources
 
 The implementing libraries should also provide commonly-used operations on the resources defined above. For example:
