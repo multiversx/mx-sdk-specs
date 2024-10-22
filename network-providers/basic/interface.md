@@ -73,12 +73,12 @@ interface IBasicNetworkProvider:
     get_token_of_account(address: IAddress, Token: token): TokenAmountOnNetwork;
 
     // Fetches the balances of an account, for all fungible tokens held by the account.
-    // Pagination isn't explicitly handled by a basic network provider, but can be achieved by using the `url_parameters` argument.
-    get_fungible_tokens_of_account(address: IAddress, url_parameters?: Any): List[TokenAmountOnNetwork];
+    // Pagination isn't explicitly handled by a basic network provider, but can be achieved by using `do_get_generic`.
+    get_fungible_tokens_of_account(address: IAddress): List[TokenAmountOnNetwork];
 
     // Fetches the balances of an account, for all non-fungible tokens held by the account.
-    // Pagination isn't explicitly handled by a basic network provider, but can be achieved by using the `url_parameters` argument.
-    get_non_fungible_tokens_of_account(address: IAddress, url_parameters?: Any): List[TokenAmountOnNetwork];
+    // Pagination isn't explicitly handled by a basic network provider, but can be achieved by using `do_get_generic`.
+    get_non_fungible_tokens_of_account(address: IAddress): List[TokenAmountOnNetwork];
 
     // Fetches the definition of a fungible token.
     get_definition_of_fungible_token(token_identifier: string): FungibleTokenMetadata;
