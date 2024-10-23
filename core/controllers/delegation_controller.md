@@ -3,7 +3,7 @@
 Promotes all the functionality of `DelegationTransactionsFactory` and `DelegationTransactionsOutcomeParser`.
 
 ```
-class DelegationController:
+class DelegationController extends BasicController:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // Suggestions:
     constructor(network_provider: INetworkProvider);

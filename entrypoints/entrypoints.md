@@ -26,31 +26,11 @@ class NetworkEntrypoint:
     // For example, it can be parametrized with: a network provider URL and kind (proxy, API)
     constructor(url: str, kind: Optional[str]);
 
-    verify_transaction_signature(transaction: Transaction): bool;
-    verify_message_signature(message: Message): bool;
-
-    // Fetches the account nonce from the network.
-    recall_account_nonce(address: IAddress): uint64;
-
-    // Signs the message and sets the signature field of the message
-    def sign_message(self, message: Message, account: Account);
-
-    // Signs the transaction and sets the signature field of the transaction
-    sign_transaction(self, transaction: Transaction, account: Account);
-
-    // Function of the network provider, promoted to the facade.
-    send_transaction(transaction: Transaction): string;
-
-    // Function of the network provider, promoted to the facade.
-    send_transactions(transaction: Transaction); Tuple[int, List[string]];
-
-    // Generic function to await a transaction on the network.
-    await_completed_transaction(transaction_hash: string): TransactionOnNetwork;
-
     // Access to the underlying network provider.
     get_network_provider(): IBasicNetworkProvider;
 
-    // Access to the individual controllers.
+    // Access to controllers.
+    create_basic_controller(): BasicController;
     create_smart_contract_controller(abi: Optional[Abi]): SmartContractController;
     create_transfers_controller(): TransfersController;
     create_token_management_controller(): TokenManagementController;
@@ -68,7 +48,7 @@ entrypoint = MainnetEntrypoint();
 controller = entrypoint.create_transfers_controller()
 
 sender = Account.new_from_pem("alice.pem");
-sender.nonce = entrypoint.recall_account_nonce(sender.address);
+sender.nonce = controller.recall_account_nonce(sender.address);
 
 transaction = controller.create_transaction_for_transfer({
     sender: sender,
@@ -78,15 +58,13 @@ transaction = controller.create_transaction_for_transfer({
     token_transfers: [];
 });
 
-// Broadcast transaction (option 1):
-transaction_hash = entrypoint.send_transaction(transaction);
-// Broadcast transaction (option 2):
-transaction_hash = entrypoint.get_network_provider().send_transaction(transaction);
+// Broadcast transaction:
+transaction_hash = controller.send_transaction(transaction);
 
 // Await transaction completion (option 1, await and specialized outcome parsing):
 parsed_outcome = controller.await_completed_transfer(transaction_hash);
 // Await transaction completion (option 2, simple await):
-transaction_on_network = entrypoint.await_completed_transaction(transaction_hash);
+transaction_on_network = controller.await_completed_transaction(transaction_hash);
 ```
 
 ### Deploy a contract
@@ -97,9 +75,9 @@ abi = Abi.load("adder.abi.json");
 controller = entrypoint.create_smart_contract_controller(abi);
 
 sender = Account.new_from_pem("alice.pem");
-sender.nonce = entrypoint.recall_account_nonce(sender.address);
+sender.nonce = controller.recall_account_nonce(sender.address);
 
-transaction = entrypoint.create_transaction_for_deploy({
+transaction = controller.create_transaction_for_deploy({
     sender: sender,
     nonce: sender.get_nonce_then_increment(),
     bytecode: bytecode,
@@ -107,8 +85,8 @@ transaction = entrypoint.create_transaction_for_deploy({
     gas_limit: 10000000
 });
 
-transaction_hash = entrypoint.send_transaction(transaction);
-parsed_outcome = entrypoint.await_completed_contract_deploy(abi, transaction_hash);
+transaction_hash = controller.send_transaction(transaction);
+parsed_outcome = controller.await_completed_deploy(abi, transaction_hash);
 ```
 
 ### Call a contract
@@ -119,7 +97,7 @@ abi = Abi.load("adder.abi.json");
 controller = entrypoint.create_smart_contract_controller(abi);
 
 sender = Account.new_from_pem("alice.pem");
-sender.nonce = entrypoint.recall_account_nonce(sender.address);
+sender.nonce = controller.recall_account_nonce(sender.address);
 
 transaction = controller.create_transaction_for_execute({
     sender: sender,
@@ -130,7 +108,7 @@ transaction = controller.create_transaction_for_execute({
     gas_limit: 10000000
 });
 
-transaction_hash = entrypoint.send_transaction(transaction);
+transaction_hash = controller.send_transaction(transaction);
 parsed_outcome = controller.await_completed_execute(transaction_hash);
 ```
 
@@ -158,10 +136,10 @@ relayed_controller = entrypoint.create_relayed_controller();
 
 sender = Account.new_from_pem("alice.pem");
 relayer = Account.new_from_pem("carol.pem");
-sender.nonce = entrypoint.recall_account_nonce(sender.address);
-relayer.nonce = entrypoint.recall_account_nonce(relayer.address);
+sender.nonce = contract_controller.recall_account_nonce(sender.address);
+relayer.nonce = relayed_controller.recall_account_nonce(relayer.address);
 
-user_transaction = controller.create_transaction_for_execute({
+user_transaction = contract_controller.create_transaction_for_execute({
     sender: sender,
     nonce: sender.get_nonce_then_increment(),
     contract: Address.from_bech32("erd1..."),
@@ -176,8 +154,8 @@ transaction = relayed_controller.create_relayed_transaction({
     inner_transactions: [user_transaction]
 });
 
-transaction_hash = entrypoint.send_transaction(transaction);
-outcome = entrypoint.await_completed_transaction(transaction_hash);
+transaction_hash = relayed_controller.send_transaction(transaction);
+outcome = relayed_controller.await_completed_transaction(transaction_hash);
 ```
 
 ### Issue a fungible token, do a quick airdrop
@@ -188,7 +166,7 @@ tokens_controller = entrypoint.create_token_management_controller();
 transfers_controller = entrypoint.create_transfers_controller();
 
 sender = Account.new_from_pem("alice.pem");
-sender.nonce = entrypoint.recall_account_nonce(sender.address);
+sender.nonce = tokens_controller.recall_account_nonce(sender.address);
 
 transaction = tokens_controller.create_transaction_for_issuing_fungible({
     sender: sender,
@@ -206,7 +184,7 @@ transaction = tokens_controller.create_transaction_for_issuing_fungible({
     can_add_special_roles: true
 });
 
-transaction_hash = entrypoint.send_transaction(transaction);
+transaction_hash = tokens_controller.send_transaction(transaction);
 parsed_outcome = tokens_controller.await_completed_issue_fungible(transaction_hash);
 token_identifier = parsed_outcome.token_identifier;
 
@@ -231,7 +209,7 @@ for receiver in receivers:
 
     transactions.append(transaction);
 
-entrypoint.send_transactions(transactions);
+transfers_controller.send_transactions(transactions);
 ```
 
 ### Access underlying components
@@ -239,6 +217,7 @@ entrypoint.send_transactions(transactions);
 ```
 entrypoint = MainnetEntrypoint();
 
+controller = entrypoint.create_basic_controller()
 controller = entrypoint.create_delegation_controller()
 controller = entrypoint.create_token_management_controller()
 network_provider = entrypoint.get_network_provider()
