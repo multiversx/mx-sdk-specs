@@ -3,6 +3,6 @@
 Promotes all the functionality of `RelayedTransactionsFactory` and `RelayedTransactionsOutcomeParser`.
 
 ```
-class RelayedController:
+class RelayedController extends BasicController:
     ...
 ```

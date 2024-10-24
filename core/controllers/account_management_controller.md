@@ -3,6 +3,6 @@
 Promotes all the functionality of `AccountManagementTransactionsFactory` and `AccountManagementTransactionsOutcomeParser`.
 
 ```
-class AccountManagementController:
+class AccountManagementController extends BasicController:
     ...
 ```

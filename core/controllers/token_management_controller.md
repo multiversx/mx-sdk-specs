@@ -3,6 +3,6 @@
 Promotes all the functionality of `TokenManagementTransactionsFactory` and `TokenManagementTransactionsOutcomeParser`.
 
 ```
-class TokenManagementController:
+class TokenManagementController extends BasicController:
     ...
 ```
