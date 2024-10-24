@@ -10,16 +10,16 @@ class TransferTransactionsFactory:
 
     // If multiple transfers are specified, or if a native amount and a token transfer are specified, then a multi-ESDT transfer transaction should be created.
     create_transaction_for_transfer({
-        sender: IAddress;
-        receiver: IAddress;
+        sender: Address;
+        receiver: Address;
         native_amount: Optional[Amount];
         data: Optional[bytes];
         token_transfers: TokenTransfer[];
     }): Transaction;
 
     create_transaction_for_native_token_transfer({
-        sender: IAddress;
-        receiver: IAddress;
+        sender: Address;
+        receiver: Address;
         native_amount: Amount;
         data: Optional[bytes];
     }): Transaction;
@@ -30,8 +30,8 @@ class TransferTransactionsFactory:
     // If multiple transfers are specified, a multi-ESDT transfer transaction should be created.
     // Bad usage should be reported.
     create_transaction_for_esdt_token_transfer({
-        sender: IAddress;
-        receiver: IAddress;
+        sender: Address;
+        receiver: Address;
         token_transfers: TokenAmount[];
     }): Transaction;
 ```

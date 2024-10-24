@@ -10,8 +10,8 @@ class SmartContractQueriesController:
     // Can throw:
     // - ErrSmartContractQuery (e.g. when return code is not "ok")
     query({
-        contract: IAddress;
-        caller?: IAddress;
+        contract: Address;
+        caller?: Address;
         value?: Amount;
         function: string;
         arguments: List[object];
