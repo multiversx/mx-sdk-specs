@@ -57,16 +57,29 @@ Generally speaking, it's recommended to return concrete types in the public API 
 
 ## **`plain-representation-of-object`**
 
-When appropriate, classes should define methods for converting to and from plain objects. For example:
+When appropriate, classes should define methods for converting to and from plain objects. The definition of a "plain object" depends on the implementation language. For example, in Python, it could be a `dict`, while in TypeScript, it might be an `object`.
+
+Python example:
 
 ```
 class MyClass:
     // Named constructor:
-    new_from_plain_object(plain_object: any): MyClass;
+    new_from_dict(value: dict[Any, str]): MyClass;
+
     // Conversion utility method:
-    to_plain_object(): any;
+    to_dict(): dict[Any, str];
 ```
-Note: The definition of a "plain object" depends on the implementation language. For example, in Python, it could be a `dict`, while in TypeScript, it might be an `object`.
+
+TypeScript example:
+
+```
+class MyClass:
+    // Named constructor:
+    newFromJSON(value: any): MyClass;
+
+    // Conversion utility method:
+    toJSON(): any;
+```
 
 ## **`any-object`**
 
