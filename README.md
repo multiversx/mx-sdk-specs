@@ -75,10 +75,10 @@ TypeScript example:
 ```
 class MyClass:
     // Named constructor:
-    newFromJSON(value: any): MyClass;
+    newFromPlainObject(value: any): MyClass;
 
     // Conversion utility method:
-    toJSON(): any;
+    toPlainObject(): any;
 ```
 
 ## **`any-object`**
