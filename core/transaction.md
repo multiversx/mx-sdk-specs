@@ -22,4 +22,9 @@ dto Transaction:
     guardianSignature?: bytes;
     relayer?: string;
     innerTransactions?: List[Transaction];
+
+    // Named constructor:
+    new_from_plain_object(plain_object: any): Transaction;
+    // Conversion utility method:
+    to_plain_object(): any;
 ```
