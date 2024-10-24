@@ -55,6 +55,32 @@ Generally speaking, it's recommended to return concrete types in the public API 
 - Generally speaking, named constructors should be prefixed with `new` - e.g. `Address.new_from_bech32()`. This guideline is especially recommended for Go and Python, but TypeScript code can also benefit from adopting this convention.
 - Names of classes, functions, parameters, and other identifiers should adhere to the specifications as closely as possible. However, if a specified name is a reserved keyword in the implementing language, it should be replaced with an alternative name (e.g., replace `function` with `func`, `arguments` with `args`).
 
+### **`plain-representation-of-object`**
+
+When appropriate, classes should define methods for converting to and from plain objects. The definition of a "plain object" depends on the implementation language. For example, in Python, it could be a `dict`, while in TypeScript, it might be an `object`.
+
+Python example:
+
+```
+class MyClass:
+    // Named constructor:
+    new_from_dict(value: dict[Any, str]): MyClass;
+
+    // Conversion utility method:
+    to_dict(): dict[Any, str];
+```
+
+TypeScript example:
+
+```
+class MyClass:
+    // Named constructor:
+    newFromPlainObject(value: any): MyClass;
+
+    // Conversion utility method:
+    toPlainObject(): any;
+```
+
 ## **`any-object`**
 
 In the specs, `object` is used as a placeholder for any type of object. In the implementing libraries, this would be replaced with the most appropriate type. For example:
