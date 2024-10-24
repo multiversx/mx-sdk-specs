@@ -19,8 +19,6 @@ These components are located in `core/transactions-factories` and are responsibl
 
 The methods are named in correspondence with the use cases they implement, e.g. `create_transaction_for_native_transfer()` or `create_transaction_for_new_delegation_contract()`. They return a `Transaction` (data transfer object), where `sender`, `receiver`, `value`, `data` and `gasLimit` are properly set (upon eventual computation, where applicable).
 
-Optionally, the implementing library can choose to return an object that isn't a complete representation of the `Transaction`, if desired. In this case, the library must name the incomplete representation `DraftTransaction`, and also must provide a direct conversion facility from `DraftTransaction` to `Transaction` - for example, a named constructor. See [transaction](core/transaction.md).
-
 ### Transactions Controllers
 
 The transaction controllers are components built upon the lower-level transaction factories and transaction outcome parsers. They are able to create signed transactions and parse the outcome of these transactions. The controllers are specialized for a "family" of transactions (e.g. transfer transactions, delegation transactions, smart contract transactions), just like the factories and the outcome parsers.
@@ -39,13 +37,14 @@ One controller is backed by **one transaction factory and one outcome parser** (
 
 Generally speaking, it's recommended to receive input parameters as abstractions (interfaces) in the public API of the SDKs. This leads to an improved decoupling, and allows for easier type substitution (e.g. easier mocking, testing).
 
-Exception to the rule above: when receiving easily constructable objects (plain structures, DTOs) as input parameters, it's perfectly fine to receive them as concrete types.
+Exception to the rule above: when receiving easily constructable objects (plain structures or DTOs) as input parameters, **it's perfectly fine to receive them as concrete types**.
 
 Generally speaking, it's recommended to return concrete types in the public API of the SDKs. The client code is responsible with decoupling from unnecessary data and behaviour of returned objects (e.g. by using interfaces, on their side). The only notable exception to this is when working with factories (abstract or method factories) that should have the function output an interface type. For example, have a look over `(User|Validator)WalletProvider.generate_keypair()` - this method returns abstract types (interfaces).
 
 ### **`pay-attention-to-types`**
 
 - For JavaScript / TypeScript, `bytes` should be `Uint8Array`.
+- For JavaScript / TypeScript, use `bigint` when applicable (amounts, gas limit, nonces), instead of `number`.
 
 ### **`follow-language-conventions`**
 
@@ -53,6 +52,8 @@ Generally speaking, it's recommended to return concrete types in the public API 
 - In the specs, interfaces are prefixed with `I`, simply to make them stand out. However, in the implementing libraries, this convention does not have to be applied.
 - In `go`, the term `serialize` (whether it's part of a class name or a function name) can be replaced by `marshal`, since that is the convention.
 - Errors should also follow the language convention - e.g. `ErrInvalidPublicKey` vs `InvalidPublicKeyError`. Should have the same error message in all implementing libraries, though.
+- Generally speaking, named constructors should be prefixed with `new` - e.g. `Address.new_from_bech32()`. This guideline is especially recommended for Go and Python, but TypeScript code can also benefit from adopting this convention.
+- Names of classes, functions, parameters, and other identifiers should adhere to the specifications as closely as possible. However, if a specified name is a reserved keyword in the implementing language, it should be replaced with an alternative name (e.g., replace `function` with `func`, `arguments` with `args`).
 
 ## **`any-object`**
 
