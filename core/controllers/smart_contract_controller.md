@@ -45,7 +45,7 @@ class SmartContractController:
     create_transaction_for_upgrade({
         sender: IAccount;
         nonce: Optional[int];
-        contract: IAddress;
+        contract: Address;
         bytecode: bytes OR bytecodePath: Path;
         arguments: List[object] = [];
         native_transfer_amount: Amount = 0;
@@ -80,7 +80,7 @@ class SmartContractController:
     create_transaction_for_execute({
         sender: IAccount;
         nonce: Optional[int];
-        contract: IAddress;
+        contract: Address;
         // If "function" is a reserved word in the implementing language, it should be replaced with a different name (e.g. "func" or "functionName").
         function: string;
         arguments: List[object] = [];
@@ -108,8 +108,8 @@ class SmartContractController:
     };
 
     query_contract({
-        contract: IAddress;
-        caller?: IAddress;
+        contract: Address;
+        caller?: Address;
         value?: Amount;
         function: string;
         arguments: List[object];

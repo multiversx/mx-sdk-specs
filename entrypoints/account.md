@@ -7,7 +7,7 @@ class Account:
     constructor(secret_key: bytes, hrp: Optional[str]);
     constructor(user_signer: IUserSigner, hrp: Optional[str]);
 
-    address: IAddress;
+    address: Address;
 
     // Local copy of the account nonce.
     // Must be explicitly managed by client code.

@@ -16,19 +16,19 @@ interface IBasicNetworkProvider:
 
     // Fetches account information for a given address.
     // URL parameters can be used, for example, to provide block coordinates for deep-history lookups.
-    get_account(address: IAddress): AccountOnNetwork;
+    get_account(address: Address): AccountOnNetwork;
 
     // Fetches the storage (key-value pairs) of an account.
-    get_account_storage(address: IAddress): AccountStorage;
+    get_account_storage(address: Address): AccountStorage;
 
     // Fetches a specific storage entry of an account.
-    get_account_storage_entry(address: IAddress, entry_key: string): AccountStorageEntry;
+    get_account_storage_entry(address: Address, entry_key: string): AccountStorageEntry;
 
     // Waits until an account satisfies a given condition.
     // Can throw:
     // - ErrAwaitConditionNotReached
     await_account_on_condition(
-        address: IAddress,
+        address: Address,
         condition: [data: AccountOnNetwork] => boolean,
         options?: AwaitingOptions
     ): AccountOnNetwork;
@@ -70,15 +70,15 @@ interface IBasicNetworkProvider:
 
     // Fetches the balance of an account, for a given token.
     // Able to handle both fungible and non-fungible tokens (NFTs, SFTs, MetaESDTs).
-    get_token_of_account(address: IAddress, Token: token): TokenAmountOnNetwork;
+    get_token_of_account(address: Address, Token: token): TokenAmountOnNetwork;
 
     // Fetches the balances of an account, for all fungible tokens held by the account.
     // Pagination isn't explicitly handled by a basic network provider, but can be achieved by using `do_get_generic`.
-    get_fungible_tokens_of_account(address: IAddress): List[TokenAmountOnNetwork];
+    get_fungible_tokens_of_account(address: Address): List[TokenAmountOnNetwork];
 
     // Fetches the balances of an account, for all non-fungible tokens held by the account.
     // Pagination isn't explicitly handled by a basic network provider, but can be achieved by using `do_get_generic`.
-    get_non_fungible_tokens_of_account(address: IAddress): List[TokenAmountOnNetwork];
+    get_non_fungible_tokens_of_account(address: Address): List[TokenAmountOnNetwork];
 
     // Fetches the definition of a fungible token.
     get_definition_of_fungible_token(token_identifier: string): FungibleTokenMetadata;

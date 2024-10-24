@@ -30,7 +30,7 @@ class NetworkEntrypoint:
     verify_message_signature(message: Message): bool;
 
     // Fetches the account nonce from the network.
-    recall_account_nonce(address: IAddress): uint64;
+    recall_account_nonce(address: Address): uint64;
 
     // Signs the message and sets the signature field of the message
     def sign_message(self, message: Message, account: Account);

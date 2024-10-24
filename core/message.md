@@ -4,7 +4,7 @@
 dto Message:
     data: bytes;
     signature: bytes;
-    address: IAddress;
+    address: Address;
     version: int;
     signer: string;
 ```

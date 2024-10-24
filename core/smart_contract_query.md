@@ -2,7 +2,7 @@
 
 ```
 dto SmartContractQuery:
-    contract: string;
+    contract: Address;
     caller?: string;
     value?: Amount;
     function: string;

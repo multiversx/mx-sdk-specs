@@ -11,14 +11,14 @@ class RelayedTransactionsFactory:
 
     create_relayed_v1_transaction({
         inner_transaction: ITransaction;
-        relayer_address: IAddress;
+        relayer_address: Address;
     }): Transaction;
 
     // can throw InvalidInnerTransactionError if inner_transaction.gas_limit != 0
     create_relayed_v2_transaction({
         inner_transaction: ITransaction;
         inner_transaction_gas_limit: uint32;
-        relayer_address: IAddress;
+        relayer_address: Address;
     }): Transaction;
 
     // sets relayer's address as sender and receiver of the transaction
@@ -26,7 +26,7 @@ class RelayedTransactionsFactory:
     // can throw InvalidInnerTransactionError if one of the inner_transactions is also a relayed tranaction
     // does not set gasLimit
     create_relayed_v3_transaction({
-        relayer_addresss: IAddress;
+        relayer_addresss: Address;
         inner_transactions: List[ITransaction];
     }): Transaction;
 ```
