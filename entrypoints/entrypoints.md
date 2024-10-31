@@ -3,11 +3,11 @@
 Pre-defined entrypoints inherit from `NetworkEntrypoint` and use sensible default values.
 
 ```
-class MainnetEntrypoint extends NetworkEntrypoint(BasicApiNetworkProvider("https://api.multiversx.com"));
+class MainnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("https://api.multiversx.com"));
 
-class DevnetEntrypoint extends NetworkEntrypoint(BasicApiNetworkProvider("https://devnet-api.multiversx.com"));
+class DevnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("https://devnet-api.multiversx.com"));
 
-class TestnetEntrypoint extends NetworkEntrypoint(BasicApiNetworkProvider("https://testnet-api.multiversx.com"));
+class TestnetEntrypoint extends NetworkEntrypoint(ApiNetworkProvider("https://testnet-api.multiversx.com"));
 ```
 
 ## NetworkEntrypoint
@@ -48,7 +48,7 @@ class NetworkEntrypoint:
     await_completed_transaction(transaction_hash: string): TransactionOnNetwork;
 
     // Access to the underlying network provider.
-    get_network_provider(): IBasicNetworkProvider;
+    get_network_provider(): INetworkProvider;
 
     // Access to the individual controllers.
     create_smart_contract_controller(abi: Optional[Abi]): SmartContractController;

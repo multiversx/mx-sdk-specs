@@ -33,7 +33,7 @@ dto NetworkStatus:
 
 ```
 dto GetBlockArguments:
-    // Some implementations might require the shard (e.g. BasicProxyNetworkProvider).
+    // Some implementations might require the shard (e.g. ProxyNetworkProvider).
     shard?: uint32;
     block_nonce?: uint64;
     block_hash?: bytes;
