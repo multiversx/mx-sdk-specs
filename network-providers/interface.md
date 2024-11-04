@@ -1,7 +1,7 @@
-## IBasicNetworkProvider
+## INetworkProvider
 
 ```
-interface IBasicNetworkProvider:
+interface INetworkProvider:
     // Fetches the general configuration of the network.
     get_network_config(): NetworkConfig;
 
