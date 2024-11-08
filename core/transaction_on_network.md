@@ -12,8 +12,8 @@ dto TransactionOnNetwork:
     block_hash: bytes;
     miniblock_hash: bytes;
 
-    sender: string;
-    receiver: string;
+    sender: Address;
+    receiver: Address;
     sender_shard: uint32;
     receiver_shard: uint32;
 
@@ -38,8 +38,8 @@ dto TransactionOnNetwork:
 dto TransactionEvent:
     raw: any;
 
-    address: string;
-    identifier: string;
+    address: Address;
+    identifier: Address;
     topics: List[bytes]
 
     // Before Sirius, within the Protocol, a log entry had the field "data".
@@ -52,7 +52,7 @@ dto TransactionEvent:
 
 ```
 dto TransactionLogs:
-    address: string;
+    address: Address;
     events: List[TransactionEvent];
 ```
 
@@ -60,8 +60,8 @@ dto TransactionLogs:
 dto SmartContractResult:
     raw: any;
 
-    sender: string;
-    receiver: string;
+    sender: Address;
+    receiver: Address;
     data: bytes;
     logs: TransactionLogs;
 ```

@@ -10,14 +10,15 @@ For DTOs, a naming convention should be used. Something like the name of the ope
 
 e.g.
 For the `parse_create_new_delegation_contract` method, we can use:
+
 ```
 dto CreateNewDelegationContractOutcome:
-    contract_address: string;
+    contract_address: Address;
 ```
 
 ```
 class DelegationTransactionsOutcomeParser:
     parse_create_new_delegation_contract(transaction: TransactionOnNetwork): {
-        contract_address: string;
+        contract_address: Address;
     }[];
 ```

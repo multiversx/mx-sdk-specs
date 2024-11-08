@@ -61,7 +61,7 @@ dto AccountOnNetwork:
     raw: any;
     block_coordinates?: BlockCoordinates;
 
-    address: string;
+    address: Address;
     nonce: uint64;
     balance: Amount;
     username?: string;
@@ -69,7 +69,7 @@ dto AccountOnNetwork:
     contract_code_hash?: bytes;
     contract_code?: bytes;
     contract_developer_reward?: Amount;
-    contract_owner_address?: string;
+    contract_owner_address?: Address;
 
     is_contract_upgradable?: bool;
     is_contract_readable?: bool;
