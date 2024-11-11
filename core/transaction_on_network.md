@@ -39,7 +39,7 @@ dto TransactionEvent:
     raw: any;
 
     address: Address;
-    identifier: Address;
+    identifier: string;
     topics: List[bytes]
 
     // Before Sirius, within the Protocol, a log entry had the field "data".
