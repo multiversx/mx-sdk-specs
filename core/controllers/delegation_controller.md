@@ -17,11 +17,11 @@ class DelegationController:
     }): Transaction;
 
     parse_create_new_delegation_contract(transaction_on_network: TransactionOnNetwork): {
-        contract_address: string;
+        contract_address: Address;
     }[];
 
     await_completed_create_new_delegation_contract(transaction_on_network: TransactionOnNetwork): {
-        contract_address: string;
+        contract_address: Address;
     }[];
 
     // ...

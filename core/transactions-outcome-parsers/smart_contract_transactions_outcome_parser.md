@@ -12,8 +12,8 @@ class SmartContractTransactionsOutcomeParser:
         return_code: string;
         return_message: string;
         contracts: List[{
-            address: string;
-            ownerAddress: string;
+            address: Address;
+            ownerAddress: Address;
             codeHash: bytes;
         }];
     };

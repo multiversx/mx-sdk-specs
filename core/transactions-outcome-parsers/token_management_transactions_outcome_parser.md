@@ -11,6 +11,7 @@ For DTOs, a naming convention should be used. Something like name of the operati
 
 e.g.
 For the `parse_register_and_set_all_roles` method, we can use:
+
 ```
 dto RegisterAndSetAllRolesOutcome:
     token_identifier: str
@@ -47,7 +48,7 @@ class TokenManagementTransactionsOutcomeParser:
     parse_unset_burn_role_globally(transaction: TransactionOnNetwork): None;
 
     parse_set_special_role(transaction: TransactionOnNetwork): {
-        user_address: string;
+        user_address: Address;
         token_identifier: string;
         roles: List[string];
     }[];
@@ -59,14 +60,14 @@ class TokenManagementTransactionsOutcomeParser:
     }[];
 
     parse_local_mint(transaction: TransactionOnNetwork): {
-        user_address: string;
+        user_address: Address;
         token_identifier: string;
         nonce: uint64;
         minted_supply: uint64;
     }[];
 
     parse_local_burn(transaction: TransactionOnNetwork): {
-        user_address: string;
+        user_address: Address;
         token_identifier: string;
         nonce: uint64;
         burnt_supply: uint64;
@@ -83,21 +84,21 @@ class TokenManagementTransactionsOutcomeParser:
     }[];
 
     parse_freeze(transaction: TransactionOnNetwork): {
-        user_address: string;
+        user_address: Address;
         token_identifier: string;
         nonce: uint64;
         balance: uint64;
     }[];
 
     parse_unfreeze(transaction: TransactionOnNetwork): {
-        user_address: string;
+        user_address: Address;
         token_identifier: string;
         nonce: uint64;
         balance: uint64;
     }[];
 
     parse_wipe(transaction: TransactionOnNetwork): {
-        user_address: string;
+        user_address: Address;
         token_identifier: string;
         nonce: uint64;
         balance: uint64;
