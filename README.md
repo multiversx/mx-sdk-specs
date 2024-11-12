@@ -15,7 +15,7 @@ This repository contains specifications for the `mx-sdk-*` libraries. The specif
 - `relayed`: contains all files related to the relayed interactions (controller,factory, parser, entities).
 - `smart-contract`: contains all files related to the smart contract interactions (controller,factory, parser, entities).
 - `token-management`: contains all files related to the token management interactions (controller,factory, parser, entities).
-- `smart-contract`: contains all files related to the transfers interactions (controller,factory, parser, entities).
+- `transfers`: contains all files related to the transfers interactions (controller,factory, parser, entities).
 
 Below, we add specific details for some of the most important packages and sub-components.
 
