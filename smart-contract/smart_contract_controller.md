@@ -106,7 +106,7 @@ class SmartContractController:
         return_code: string;
         return_message: string;
     };
-    
+
     // It does "create_query", "run_query" and "parse_query_response" in one go.
     // Can throw:
     // - ErrSmartContractQuery (e.g. when return code is not "ok")
@@ -129,7 +129,4 @@ class SmartContractController:
 
     // Runs the query against the network and returns the raw (encoded) response.
     run_query(query: SmartContractQuery): SmartContractQueryResponse;
-
-    // Decodes the raw (encoded) response and returns the parsed result.
-    parse_query_response(response: SmartContractQueryResponse): List[any];
 ```

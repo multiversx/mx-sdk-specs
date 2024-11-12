@@ -1,7 +1,7 @@
-## SmartContractTransactionsOutcomeParser
+## SmartContractTransactionsParser
 
 ```
-class SmartContractTransactionsOutcomeParser:
+class SmartContractTransactionsParser:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // Generally speaking, the constructor can be parametrized with an `Abi` or `Codec` instance (implementation detail), necessary to decode contract return data.
 
@@ -33,4 +33,7 @@ class SmartContractTransactionsOutcomeParser:
         return_code: string;
         return_message: string;
     };
+
+      // Decodes the raw (encoded) response and returns the parsed result.
+    parse_query_response(response: SmartContractQueryResponse): List[any];
 ```

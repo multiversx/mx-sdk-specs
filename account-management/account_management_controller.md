@@ -11,21 +11,21 @@ class AccountManagementController:
     constructor(options: { chainID: string });
 
     create_transaction_for_saving_key_value({
-        sender: Address;
+        sender: IAccount;
         key_value_pairs: Dict[bytes, bytes];
     }): Transaction;
 
     create_transaction_for_setting_guardian({
-        sender: Address;
+        sender: IAccount;
         guardian_address: Address;
         service_id: string;
     }): Transaction;
 
     create_transaction_for_guarding_account({
-        sender: Address;
+        sender: IAccount;
     }): Transaction;
 
     create_transaction_for_unguarding_account({
-        sender: Address;
+        sender: IAccount;
     }): Transaction;
 ```
