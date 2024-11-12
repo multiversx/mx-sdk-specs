@@ -106,12 +106,30 @@ class SmartContractController:
         return_code: string;
         return_message: string;
     };
-
-    query_contract({
+    
+    // It does "create_query", "run_query" and "parse_query_response" in one go.
+    // Can throw:
+    // - ErrSmartContractQuery (e.g. when return code is not "ok")
+    query({
         contract: Address;
         caller?: Address;
         value?: Amount;
         function: string;
         arguments: List[object];
     }): List[any];
+
+    // If `Abi` or `Codec` is available, this function encodes the input arguments accordingly.
+    create_query({
+        contract: string;
+        caller?: string;
+        value?: Amount;
+        function: string;
+        arguments: List[any];
+    }): SmartContractQuery;
+
+    // Runs the query against the network and returns the raw (encoded) response.
+    run_query(query: SmartContractQuery): SmartContractQueryResponse;
+
+    // Decodes the raw (encoded) response and returns the parsed result.
+    parse_query_response(response: SmartContractQueryResponse): List[any];
 ```
