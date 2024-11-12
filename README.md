@@ -10,7 +10,7 @@ This repository contains specifications for the `mx-sdk-*` libraries. The specif
 - `abi`: ABI components and ABI-aware codecs.
 - `adapters`: components that resolve the impedance mismatch between interfaces of different domains.
 - `converters`: components that are able to convert concepts (structures, classes) between different domains.
-- `account-management`: contains all files related to the account management interactions (controller,factory, parser, entities).
+- `account-management`: contains all files related to the account management interactions (controller,factory, parser).
 - `delegation`: contains all files related to the delegation interactions (controller,factory, parser, entities).
 - `relayed`: contains all files related to the relayed interactions (controller,factory, parser, entities).
 - `smart-contract`: contains all files related to the smart contract interactions (controller,factory, parser, entities).
