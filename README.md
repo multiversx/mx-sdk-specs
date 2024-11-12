@@ -5,6 +5,7 @@ This repository contains specifications for the `mx-sdk-*` libraries. The specif
 ## Structure
 
 - `core`: core components (address, transaction, etc.).
+- `accounts`: accounts components (account, ledgerAccount, guardianAccount, etc.).
 - `wallet`: core wallet components (generation, signing).
 - `network-providers`: network provider (API, Gateway) components.
 - `abi`: ABI components and ABI-aware codecs.
