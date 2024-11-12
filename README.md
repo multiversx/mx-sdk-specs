@@ -4,19 +4,18 @@ This repository contains specifications for the `mx-sdk-*` libraries. The specif
 
 ## Structure
 
-- `core`: core components (address, transaction, etc.).
-- `accounts`: accounts components (account, ledgerAccount, guardianAccount, etc.).
-- `wallet`: core wallet components (generation, signing).
-- `network-providers`: network provider (API, Gateway) components.
 - `abi`: ABI components and ABI-aware codecs.
-- `adapters`: components that resolve the impedance mismatch between interfaces of different domains.
-- `converters`: components that are able to convert concepts (structures, classes) between different domains.
 - `account-management`: contains all files related to the account management interactions (controller,factory, parser).
+- `accounts`: accounts components (account, ledgerAccount, guardianAccount, etc.).
+- `core`: core components (address, transaction, etc.).
 - `delegation`: contains all files related to the delegation interactions (controller,factory, parser, entities).
+- `entrypoints`: pre-defined entrypoints inherit from `NetworkEntrypoint` and use sensible default values.
+- `network-providers`: network provider (API, Gateway) components.
 - `relayed`: contains all files related to the relayed interactions (controller,factory, parser, entities).
 - `smart-contract`: contains all files related to the smart contract interactions (controller,factory, parser, entities).
 - `token-management`: contains all files related to the token management interactions (controller,factory, parser, entities).
 - `transfers`: contains all files related to the transfers interactions (controller,factory, parser, entities).
+- `wallet`: core wallet components (generation, signing).
 
 Below, we add specific details for some of the most important packages and sub-components.
 
