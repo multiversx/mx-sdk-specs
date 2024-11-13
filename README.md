@@ -4,18 +4,24 @@ This repository contains specifications for the `mx-sdk-*` libraries. The specif
 
 ## Structure
 
-- `core`: core components (address, transaction, etc.).
-- `wallet`: core wallet components (generation, signing).
-- `network-providers`: network provider (API, Gateway) components.
 - `abi`: ABI components and ABI-aware codecs.
-- `adapters`: components that resolve the impedance mismatch between interfaces of different domains.
-- `converters`: components that are able to convert concepts (structures, classes) between different domains.
+- `account-management`: contains all files related to the account management interactions (controller,factory, parser).
+- `accounts`: accounts components (account, ledgerAccount, guardianAccount, etc.).
+- `core`: core components (address, transaction, etc.).
+- `delegation`: contains all files related to the delegation interactions (controller,factory, parser, entities).
+- `entrypoints`: pre-defined entrypoints inherit from `NetworkEntrypoint` and use sensible default values.
+- `network-providers`: network provider (API, Gateway) components.
+- `relayed`: contains all files related to the relayed interactions (controller,factory, parser, entities).
+- `smart-contract`: contains all files related to the smart contract interactions (controller,factory, parser, entities).
+- `token-management`: contains all files related to the token management interactions (controller,factory, parser, entities).
+- `transfers`: contains all files related to the transfers interactions (controller,factory, parser, entities).
+- `wallet`: core wallet components (generation, signing).
 
 Below, we add specific details for some of the most important packages and sub-components.
 
 ### Transactions Factories
 
-These components are located in `core/transactions-factories` and are responsible with creating transactions for specific use cases. They are designed as _multi-factory_ classes, having methods that return a `Transaction` object constructed by following specific recipes (with respect to the Protocol).
+These components are located in each folder use case (e.g. token-management) and are responsible with creating transactions for specific use cases. They are designed as _multi-factory_ classes, having methods that return a `Transaction` object constructed by following specific recipes (with respect to the Protocol).
 
 The methods are named in correspondence with the use cases they implement, e.g. `create_transaction_for_native_transfer()` or `create_transaction_for_new_delegation_contract()`. They return a `Transaction` (data transfer object), where `sender`, `receiver`, `value`, `data` and `gasLimit` are properly set (upon eventual computation, where applicable).
 

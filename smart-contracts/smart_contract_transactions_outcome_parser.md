@@ -33,4 +33,7 @@ class SmartContractTransactionsOutcomeParser:
         return_code: string;
         return_message: string;
     };
+
+      // Decodes the raw (encoded) response and returns the parsed result.
+    parse_query_response(response: SmartContractQueryResponse): List[any];
 ```
