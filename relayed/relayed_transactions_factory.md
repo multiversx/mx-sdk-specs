@@ -20,13 +20,4 @@ class RelayedTransactionsFactory:
         inner_transaction_gas_limit: uint32;
         relayer_address: Address;
     }): Transaction;
-
-    // sets relayer's address as sender and receiver of the transaction
-    // can throw InvalidInnerTransactionError if one of the inner_transactions has a different relayer compared to the one receieved as a parameter
-    // can throw InvalidInnerTransactionError if one of the inner_transactions is also a relayed tranaction
-    // does not set gasLimit
-    create_relayed_v3_transaction({
-        relayer_addresss: Address;
-        inner_transactions: List[ITransaction];
-    }): Transaction;
 ```

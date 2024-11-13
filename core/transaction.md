@@ -20,8 +20,8 @@ dto Transaction:
 
     signature: bytes;
     guardianSignature?: bytes;
-    relayer?: string;
-    innerTransactions?: List[Transaction];
+    relayer?: Address;
+    relayerSignature?: bytes;
 
     // Named constructor:
     new_from_plain_object(value: any): Transaction;
