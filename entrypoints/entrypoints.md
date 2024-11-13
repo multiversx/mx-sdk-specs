@@ -173,7 +173,7 @@ user_transaction = controller.create_transaction_for_execute({
 transaction = relayed_controller.create_relayed_transaction({
     relayer: relayer,
     nonce: relayer.get_nonce_then_increment(),
-    inner_transactions: [user_transaction]
+    inner_transaction: user_transaction
 });
 
 transaction_hash = entrypoint.send_transaction(transaction);
