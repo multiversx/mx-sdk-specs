@@ -15,6 +15,12 @@ class Account:
 
     sign(data: bytes): bytes;
 
+    // serializes the transaction, signs the transaction, applies the signature on the transaction
+    sign_transaction(transaction: Transaction);
+
+    // serializes the message, signs the message, applies the signature on the message
+    sign_message(message: Message);
+
     // Gets the nonce (the one from the object's state) and increments it.
     get_nonce_then_increment(): uint64;
 
@@ -33,4 +39,10 @@ class Account:
     // Loads (derives) a secret key from a mnemonic. The optional "address_index" parameter is used to guide the derivation.
     // Returns an Account object, initialized with the secret key.
     static new_from_mnemonic(mnemonic: str, address_index: Optional[int], hrp: Optional[str]): Account;
+
+    // saves the wallet to a pem file
+    save_to_pem(path: Path);
+
+    // saves the wallet to a keystore file
+    save_to_keystore(path: Path, password: string);
 ```
