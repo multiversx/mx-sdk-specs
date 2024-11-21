@@ -10,14 +10,21 @@ class RelayedTransactionsFactory:
     // Can throw InvalidInnerTransactionError
 
     create_relayed_v1_transaction({
-        inner_transaction: ITransaction;
+        inner_transaction: Transaction;
         relayer_address: Address;
     }): Transaction;
 
     // can throw InvalidInnerTransactionError if inner_transaction.gas_limit != 0
     create_relayed_v2_transaction({
-        inner_transaction: ITransaction;
+        inner_transaction: Transaction;
         inner_transaction_gas_limit: uint32;
+        relayer_address: Address;
+    }): Transaction;
+
+    // the transaction should not be signed by the sender when the method is called
+    // sets the relayer address and adds extra gasLimit for relayed V3 transactions
+    create_relayed_v3_transaction({
+        transaction: Transaction;
         relayer_address: Address;
     }): Transaction;
 ```
