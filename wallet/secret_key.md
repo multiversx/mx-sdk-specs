@@ -5,7 +5,7 @@ class SecretKey:
     // checks length, can throw InvalidSecretKeyLengthError
     constructor(buffer: bytes);
 
-    static from_string(buffer_hex: str): SecretKey;
+    static new_from_string(buffer_hex: str): SecretKey;
 
     static generate(): SecretKey;
 

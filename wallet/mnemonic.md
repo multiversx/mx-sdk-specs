@@ -10,14 +10,14 @@ class Mnemonic:
     constructor(words: string[]);
 
     // Alternatively, named constructors can be used:
-    static newfromText(text: string): Mnemonic;
-    static newfromWords(words: string[]): Mnemonic;
+    static new_from_text(text: string): Mnemonic;
+    static new_from_words(words: string[]): Mnemonic;
 
-    static from_entropy(entropy: bytes): Mnemonic;
+    static new_from_entropy(entropy: bytes): Mnemonic;
 
     static generate(): Mnemonic;
 
-    validate_mnemonic(mnemonic: Mnemonic): bool;
+    static validate_mnemonic(mnemonic: Mnemonic): bool;
 
     // Can throw:
     // - ErrInvalidMnemonic
@@ -28,10 +28,10 @@ class Mnemonic:
     get_entropy(): bytes;
 
     // Gets the mnemonic words.
-    getWords(): string[];
+    get_words(): string[];
 
     // Returns the mnemonic as a string.
-    toString(): string;
+    to_string(): string;
 ```
 
 ## Examples of usage

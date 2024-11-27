@@ -1,8 +1,8 @@
 ## KeyPair
 
 ```
+// stores both a secret key and a public key
 class KeyPair:
-    // stores both a secret key and a public key
     constructor(secret_key: SecretKey): KeyPair;
 
     // Should not throw.
@@ -14,7 +14,7 @@ class KeyPair:
 
     // Can throw:
     // - ErrInvalidSecretKeyBytes
-    static create_from_bytes(data: bytes): KeyPair;
+    static new_from_bytes(data: bytes): KeyPair;
 
     get_secret_key(): SecretKey;
 

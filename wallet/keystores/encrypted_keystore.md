@@ -92,7 +92,7 @@ Create a new JSON keystore using a new mnemonic:
 
 ```
 mnemonic = Mnemonic.generate_mnemonic()
-keystore = EncryptedKeystore.new_from_mnemonic(mnemonic)
+keystore = EncryptedKeystore.new_from_mnemonic(mnemonic, "password")
 keystore.export_to_file("file.json", "password", "erd")
 ```
 
