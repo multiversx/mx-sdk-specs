@@ -11,7 +11,7 @@ class SecretKey:
 
     sign(data: bytes): bytes;
 
-    get_public_key(): PublicKey;
+    generate_public_key(): PublicKey;
 
     get_bytes(): bytes
 ```

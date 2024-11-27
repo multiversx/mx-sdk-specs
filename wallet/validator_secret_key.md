@@ -11,7 +11,7 @@ class ValidatorSecretKey:
 
     sign(data: bytes): bytes;
 
-    get_public_key(): ValidatorPublicKey;
+    generate_public_key(): ValidatorPublicKey;
 
-    get_bytes(): bytes
+    get_bytes(): bytes;
 ```
