@@ -6,7 +6,7 @@ class KeyPair:
     constructor(secret_key: SecretKey): KeyPair;
 
     // Should not throw.
-    generate(): KeyPair;
+    static generate(): KeyPair;
 
     sign(data: bytes): bytes;
 
