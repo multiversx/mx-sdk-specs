@@ -14,6 +14,8 @@ class DelegationController:
         totalDelegationCap: Amount;
         service_fee: number;
         amount: Amount;
+        guardian: Optional[Address];
+        relayer: Optional[Address];
     }): Transaction;
 
     parse_create_new_delegation_contract(transaction_on_network: TransactionOnNetwork): {

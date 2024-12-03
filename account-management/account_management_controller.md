@@ -13,19 +13,25 @@ class AccountManagementController:
     create_transaction_for_saving_key_value({
         sender: IAccount;
         key_value_pairs: Dict[bytes, bytes];
+        guardian: Optional[Address];
+        relayer: Optional[Address];
     }): Transaction;
 
     create_transaction_for_setting_guardian({
         sender: IAccount;
         guardian_address: Address;
         service_id: string;
+        relayer: Optional[Address];
     }): Transaction;
 
     create_transaction_for_guarding_account({
         sender: IAccount;
+        relayer: Optional[Address];
     }): Transaction;
 
     create_transaction_for_unguarding_account({
         sender: IAccount;
+        guardian: Optional[Address];
+        relayer: Optional[Address];
     }): Transaction;
 ```
