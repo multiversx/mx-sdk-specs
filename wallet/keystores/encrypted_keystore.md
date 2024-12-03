@@ -12,26 +12,29 @@ class EncryptedKeystore:
     static new_from_mnemonic(mnemonic: Mnemonic, password: string, randomness: Optional[Randomnness]): EncryptedKeystore;
 
     // Importing "constructor"
-    static import_from_object(object: KeyfileObject, password: string): EncryptedKeystore;
+    static import_from_object(object: KeyfileObject): EncryptedKeystore;
 
     // Importing "constructor"
-    static import_from_file(path: Path, password: string): EncryptedKeystore;
+    static import_from_file(path: Path): EncryptedKeystore;
 
     // When kind == 'secretKey', only index == 0 and passphrase == "" is supported.
     // When kind == 'mnemonic', secret key derivation happens under the hood.
     // Below, "passphrase" is the bip39 passphrase required to derive a secret key from a mnemonic (by default, it should be an empty string).
-    get_secret_key(index: int=0, passphrase: string=""): SecretKey;
+    decrypt_secret_key(index: int = 0, passphrase: string = ""): SecretKey;
+
+    // decyripts the secrect keys for a range of indexes; only for kind == 'mnemonic'
+    decrypt_secret_keys_in_range(start: int = 0, end: int = 10, passphrase: str = ""): SecretKey[];
 
     // Can throw:
     // - ErrMnemonicNotAvailable
     //
     // Returns the mnemonic used to create the keystore (if available, i.e. if kind == 'mnemonic').
     // This function is useful for UX flows where the application has to display the mnemonic etc.
-    get_mnemonic(): Mnemonic
+    decrypt_mnemonic(password: string = ""): Mnemonic;
 
-    export_to_object(password: string, address_hrp: string): KeyfileObject
+    export_to_object(address_hrp: string = "erd"): KeyfileObject;
 
-    export_to_file(path: Path, password: string, address_hrp: string = "erd")
+    export_to_file(path: Path, address_hrp: string = "erd");
 ```
 
 ```
@@ -93,17 +96,16 @@ Create a new JSON keystore using a new mnemonic:
 ```
 mnemonic = Mnemonic.generate_mnemonic()
 keystore = EncryptedKeystore.new_from_mnemonic(mnemonic, "password")
-keystore.export_to_file("file.json", "password", "erd")
+keystore.export_to_file("file.json", "erd")
 ```
 
 Iterating over the first 3 accounts:
 
 ```
-provider = new UserWalletProvider()
-keystore = EncryptedKeystore.import_from_file(provider, "file.json", "password")
+keystore = EncryptedKeystore.import_from_file("file.json")
 
 for i in [0, 1, 2]:
-    secret_key = keystore.get_secret_key(i)
+    secret_key = keystore.decrypt_secret_key(i)
     public_key = secret_key.get_public_key()
     address = new Address(public_key.get_bytes(), "erd")
     print("Address", i, address.to_bech32())
@@ -112,6 +114,7 @@ for i in [0, 1, 2]:
 Changing the password of an existing keystore:
 
 ```
-keystore = EncryptedKeystore.import_from_file("file.json", "password")
-keystore.export_to_file("file.json", "new_password", "erd")
+keystore = EncryptedKeystore.import_from_file("file.json")
+secret_key = keystore.decrypt_secret_key() // when keystore.kind == "secretKey"
+new_keystore = EncryptedKeystore.new_from_secret_key(secret_key, "newPassword")
 ```
