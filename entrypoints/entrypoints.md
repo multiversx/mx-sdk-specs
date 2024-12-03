@@ -64,7 +64,7 @@ class NetworkEntrypoint:
     create_token_management_factory(): TokenManagementTransactionsFactory;
     create_delegation_factory(): DelegationTransactionsFactory;
     create_relayed_factory(): RelayedTransactionsFactory;
-    create_account_management__factory(): AccountManagementTransactionsFactory;
+    create_account_management_factory(): AccountManagementTransactionsFactory;
 ```
 
 ## Examples
