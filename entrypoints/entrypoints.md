@@ -59,12 +59,12 @@ class NetworkEntrypoint:
     create_account_management__controller(): AccountManagementController;
 
     // Access to the individual factories.
-    create_smart_contract_factory(abi: Optional[Abi]): SmartContractTransactionsFactory;
-    create_transfers_factory(): TransfersTransactionsFactory;
-    create_token_management_factory(): TokenManagementTransactionsFactory;
-    create_delegation_factory(): DelegationTransactionsFactory;
-    create_relayed_factory(): RelayedTransactionsFactory;
-    create_account_management_factory(): AccountManagementTransactionsFactory;
+    create_smart_contract_transactions_factory(abi: Optional[Abi]): SmartContractTransactionsFactory;
+    create_transfers_transactions_factory(): TransfersTransactionsFactory;
+    create_token_management_transactions_factory(): TokenManagementTransactionsFactory;
+    create_delegation_transactions_factory(): DelegationTransactionsFactory;
+    create_relayed_transactions_factory(): RelayedTransactionsFactory;
+    create_account_management_transactions_factory(): AccountManagementTransactionsFactory;
 ```
 
 ## Examples
