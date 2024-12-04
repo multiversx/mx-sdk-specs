@@ -22,8 +22,8 @@ class EncryptedKeystore:
     // Below, "passphrase" is the bip39 passphrase required to derive a secret key from a mnemonic (by default, it should be an empty string).
     decrypt_secret_key(index: int = 0, passphrase: string = ""): SecretKey;
 
-    // decyripts the secrect keys for a range of indexes; only for kind == 'mnemonic'
-    decrypt_secret_keys_in_range(start: int = 0, end: int = 10, passphrase: str = ""): SecretKey[];
+    // decrypts the secrect keys for a range of indexes; only for kind == 'mnemonic'
+    decrypt_secret_keys_in_range(start: int, end: int, passphrase: str = ""): SecretKey[];
 
     // Can throw:
     // - ErrMnemonicNotAvailable
