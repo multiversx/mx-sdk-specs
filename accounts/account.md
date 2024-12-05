@@ -5,7 +5,6 @@ class Account:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // Suggestions:
     constructor(secret_key: bytes, hrp: Optional[str]);
-    constructor(user_signer: IUserSigner, hrp: Optional[str]);
 
     address: Address;
 
@@ -13,7 +12,11 @@ class Account:
     // Must be explicitly managed by client code.
     nonce: uint64;
 
+    // signs using the secret key of the account
     sign(data: bytes): bytes;
+
+    // verifies the signature using the public key of the account
+    verify(data: bytes, signature: bytes) : boolean;
 
     // serializes the transaction, signs the transaction, applies the signature on the transaction
     sign_transaction(transaction: Transaction);
@@ -39,6 +42,10 @@ class Account:
     // Loads (derives) a secret key from a mnemonic. The optional "address_index" parameter is used to guide the derivation.
     // Returns an Account object, initialized with the secret key.
     static new_from_mnemonic(mnemonic: str, address_index: Optional[int], hrp: Optional[str]): Account;
+
+    // Named constructor
+    // Returns an Account object, initialized with the secret key.
+    static new_from_keypair(keypair: KeyPair): Account;
 
     // saves the wallet to a pem file
     save_to_pem(path: Path);

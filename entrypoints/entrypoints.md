@@ -51,7 +51,7 @@ class NetworkEntrypoint:
     await_completed_transaction(transaction_hash: string): TransactionOnNetwork;
 
     // Access to the underlying network provider.
-    get_network_provider(): INetworkProvider;
+    create_network_provider(): INetworkProvider;
 
     // Access to the individual controllers.
     create_smart_contract_controller(abi: Optional[Abi]): SmartContractController;
