@@ -1,8 +1,17 @@
 ## SecretKey
 
 ```
-interface ISecretKey:
+class SecretKey:
+    // checks length, can throw InvalidSecretKeyLengthError
+    constructor(buffer: bytes);
+
+    static new_from_string(buffer_hex: str): SecretKey;
+
+    static generate(): SecretKey;
+
+    sign(data: bytes): bytes;
+
+    generate_public_key(): PublicKey;
+
     get_bytes(): bytes
 ```
-
-In order to create and handle secret keys, use the methods of the `(User|Validator)WalletProvider`.

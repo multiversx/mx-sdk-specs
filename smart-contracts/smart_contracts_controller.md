@@ -19,6 +19,8 @@ class SmartContractsController:
         is_payable: bool = False;
         is_payable_by_contract: bool = True;
         gas_limit: uint32;
+        guardian: Optional[Address];
+        relayer: Optional[Address];
     }): Transaction;
 
     parse_deploy(transaction_on_network: TransactionOnNetwork): {
@@ -54,6 +56,8 @@ class SmartContractsController:
         is_payable: bool = False;
         is_payable_by_contract: bool = True;
         gas_limit: uint32;
+        guardian: Optional[Address];
+        relayer: Optional[Address];
     }): Transaction;
 
     // This method is less important (supports an exotic flow).
@@ -87,6 +91,8 @@ class SmartContractsController:
         native_transfer_amount: Amount = 0;
         token_transfers: List[TokenTransfer] = [];
         gas_limit: uint32;
+        guardian: Optional[Address];
+        relayer: Optional[Address];
     }): Transaction;
 
     parse_execute({
