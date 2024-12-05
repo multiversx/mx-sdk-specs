@@ -26,17 +26,20 @@ class NetworkEntrypoint:
     // For example, it can be parametrized with: a network provider URL and kind (proxy, API)
     constructor(url: str, kind: Optional[str]);
 
+    // verifies if the signature field is valid
     verify_transaction_signature(transaction: Transaction): bool;
+
+    // verifies if message signature is valid
     verify_message_signature(message: Message): bool;
+
+    // creates a new Account by generating a new secret key and instantiating an UserSigner
+    create_account(): Account;
+
+    // calls a faucet
+    get_airdrop(address: Address);
 
     // Fetches the account nonce from the network.
     recall_account_nonce(address: Address): uint64;
-
-    // Signs the message and sets the signature field of the message
-    def sign_message(self, message: Message, account: Account);
-
-    // Signs the transaction and sets the signature field of the transaction
-    sign_transaction(self, transaction: Transaction, account: Account);
 
     // Function of the network provider, promoted to the facade.
     send_transaction(transaction: Transaction): string;
@@ -48,7 +51,7 @@ class NetworkEntrypoint:
     await_completed_transaction(transaction_hash: string): TransactionOnNetwork;
 
     // Access to the underlying network provider.
-    get_network_provider(): INetworkProvider;
+    create_network_provider(): INetworkProvider;
 
     // Access to the individual controllers.
     create_smart_contract_controller(abi: Optional[Abi]): SmartContractController;
