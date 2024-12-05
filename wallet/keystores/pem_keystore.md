@@ -2,52 +2,49 @@
 
 ```
 class PEMKeystore:
-    // The constructor is not captured by the specs; it's up to the implementing library to define it.
+    constructor(keypair: KeyPair);
 
     // Named constructor
-    static new_from_secret_key(wallet_provider: IWalletProvider, secret_key: ISecretKey): PEMKeystore
+    static new_from_secret_key(secret_key: SecretKey): PEMKeystore;
 
     // Named constructor
-    static new_from_secret_keys(wallet_provider: IWalletProvider, secret_keys: ISecretKey[]): PEMKeystore
+    static new_from_secret_keys(secret_keys: SecretKey[]): PEMKeystore[];
 
     // Importing "constructor"
-    static import_from_text(wallet_provider: IWalletProvider, text: string): PEMKeystore
+    static import_from_text(text: string): PEMKeystore;
 
     // Importing "constructor"
-    static import_from_file(wallet_provider: IWalletProvider, path: Path): PEMKeystore
+    static import_from_file(path: Path, index=0): PEMKeystore;
 
-    get_secret_key(index: int): ISecretKey
+    // Importing "constructor"
+    static import_all_from_file(path: Path): PEMKeystore[];
 
-    get_number_of_secret_keys(): number
+    get_keypair(): KeyPair;
 
-    export_to_text(address_hrp: string): string
+    export_to_text(address_hrp: string = "erd"): string;
 
-    export_to_file(path: Path, address_hrp: string)
+    export_to_file(path: Path, address_hrp: string = "erd");
 ```
 
 ## Examples of usage
 
-Creating a PEM file to hold three newly created secret keys.
+Creating a PEM file to hold a newly created keypair.
 
 ```
-provider = new UserWalletProvider()
-sk1, _ = provider.generate_keypair()
-sk2, _ = provider.generate_keypair()
-sk3, _ = provider.generate_keypair()
+keypair = KeyPair.generate()
 
-keystore = PEMKeystore.new_from_secret_keys(provider, [sk1, sk2, sk3])
-keystore.export_to_file(Path("file.pem"), "erd")
+keystore = PEMKeystore(keypair)
+keystore.export_to_file(Path("wallet.pem"))
 ```
 
 Iterating over the accounts in a PEM file.
 
 ```
-provider = new UserWalletProvider()
-keystore = PEMKeystore.import_from_file(provider, Path("file.pem"))
+keystores = PEMKeystore.import_all_from_file(Path("file.pem"))
 
-for i in range(keystore.get_number_of_secret_keys()):
-    sk = keystore.get_secret_key(i)
-    pk = provider.compute_public_key_from_secret_key(sk)
-    address = new Address(public_key, "erd")
-    print("Address", i, address.bech32())
+for i in range(len(keystores)):
+    keypair = keystores[i].get_keypair()
+    pk = keypair.get_public_key()
+    address = new Address(public_key.get_bytes(), "erd")
+    print("Address", i, address.to_bech32())
 ```
