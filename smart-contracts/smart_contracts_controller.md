@@ -33,7 +33,7 @@ class SmartContractsController:
         }];
     };
 
-    // Does "await_completed_transaction" and "parse_deploy" in one go.
+    // Does "await_transaction_completed" and "parse_deploy" in one go.
     await_completed_deploy(transaction_hash: string): {
         return_code: string;
         return_message: string;
@@ -71,7 +71,7 @@ class SmartContractsController:
     };
 
     // Specialized function to await and parse a contract upgrade transaction.
-    // Does "await_completed_transaction" and "parse_upgrade" in one go.
+    // Does "await_transaction_completed" and "parse_upgrade" in one go.
     await_completed_upgrade(transaction_hash: string): {
         return_code: string;
         return_message: string;
@@ -104,7 +104,7 @@ class SmartContractsController:
         return_message: string;
     };
 
-    // Does "await_completed_transaction" and "parse_execute" in one go.
+    // Does "await_transaction_completed" and "parse_execute" in one go.
     await_completed_execute({
         transaction_hash: string;
     }): {
