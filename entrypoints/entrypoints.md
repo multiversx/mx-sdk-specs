@@ -48,7 +48,7 @@ class NetworkEntrypoint:
     send_transactions(transaction: Transaction); Tuple[int, List[string]];
 
     // Generic function to await a transaction on the network.
-    await_completed_transaction(transaction_hash: string): TransactionOnNetwork;
+    await_transaction_completed(transaction_hash: string): TransactionOnNetwork;
 
     // Access to the underlying network provider.
     create_network_provider(): INetworkProvider;
@@ -97,7 +97,7 @@ transaction_hash = entrypoint.get_network_provider().send_transaction(transactio
 // Await transaction completion (option 1, await and specialized outcome parsing):
 parsed_outcome = controller.await_completed_transfer(transaction_hash);
 // Await transaction completion (option 2, simple await):
-transaction_on_network = entrypoint.await_completed_transaction(transaction_hash);
+transaction_on_network = entrypoint.await_transaction_completed(transaction_hash);
 ```
 
 ### Deploy a contract
@@ -188,7 +188,7 @@ transaction = relayed_controller.create_relayed_transaction({
 });
 
 transaction_hash = entrypoint.send_transaction(transaction);
-outcome = entrypoint.await_completed_transaction(transaction_hash);
+outcome = entrypoint.await_transaction_completed(transaction_hash);
 ```
 
 ### Issue a fungible token, do a quick airdrop
