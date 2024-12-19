@@ -104,7 +104,7 @@ dto AccountStorageEntry:
 
 ```
 dto BlockCoordinates:
-    nonce: string;
+    nonce: uint64;
     hash: bytes;
     root_hash: bytes;
 ```
