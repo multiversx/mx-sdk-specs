@@ -15,8 +15,8 @@ class LedgerApp:
     // returns the app configuration
     get_version(): string;
 
-    // signs the trasnaction and returns the signature as a hex string
-    sign_transaction(tx_bytes: bytes, should_use_hash_signing: bool): string;
+    // signs the transaction and returns the signature as a hex string
+    sign_transaction(tx_bytes: bytes): string;
 
     // signs the message and returns the signature as a hex string
     sign_message(message_bytes: bytes): string;

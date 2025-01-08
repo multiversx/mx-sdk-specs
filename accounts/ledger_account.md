@@ -13,7 +13,8 @@ class LedgerAccount:
     nonce: uint64;
 
     // serializes the transaction, signs the transaction, returns the signature;
-    sign_transaction(transaction: Transaction, account_index: int = 0, address_index: int = 0, sign_using_hash: boolean = True): bytes;
+    // sets version and option for transaction signing by hash
+    sign_transaction(transaction: Transaction, account_index: int = 0, address_index: int = 0): bytes;
 
     // serializes the message, signs the message, returns the signature;
     sign_message(message: Message, account_index: int = 0, address_index: int = 0): bytes;
