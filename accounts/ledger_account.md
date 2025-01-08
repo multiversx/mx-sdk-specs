@@ -1,22 +1,17 @@
 ## LedgerAccount
 
 ```
-class LedgerAccount:
-    // The constructor is not captured by the specs; it's up to the implementing library to define it.
-    // Suggestions:
-    constructor(account_index: int = 0, address_index: int = 0);
+// should implement the `IAccount` interface
+class LedgerAccount(IAccount):
 
-    address: Address;
+    // sets the working address on the device
+    set_address(address_index: int = 0);
 
-    // Local copy of the account nonce.
-    // Must be explicitly managed by client code.
-    nonce: uint64;
-
-    // serializes the transaction, signs the transaction, returns the signature;
+    // serializes the transaction, computes the signature and returns it;
     // sets version and option for transaction signing by hash
     sign_transaction(transaction: Transaction, account_index: int = 0, address_index: int = 0): bytes;
 
-    // serializes the message, signs the message, returns the signature;
+    // serializes the message, computes the signature and returns it;
     sign_message(message: Message, account_index: int = 0, address_index: int = 0): bytes;
 
     // Gets the nonce (the one from the object's state) and increments it.
