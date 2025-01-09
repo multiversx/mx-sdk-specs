@@ -31,7 +31,7 @@ The transaction controllers are components built upon the lower-level transactio
 
 One controller is backed by **one transaction factory and one outcome parser** (paired).
 
-- All functions that create transactions receive as first parameter the `sender: IAccount`. They also receive an optional `guardian: IAccount`.
+- All functions that create transactions receive as first parameter the `sender: IAccount`. They also receive an optional `guardian: Address`.
 - All functions that create transactions receive a nonce, which is optional. If not provided, the nonce is fetched from the network.
 - All functions that create transactions return already-signed transactions.
 - All functions that parse transactions outcomes receive a `TransactionOnNetwork`.

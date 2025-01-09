@@ -18,11 +18,11 @@ class Account:
     // verifies the signature using the public key of the account
     verify(data: bytes, signature: bytes) : boolean;
 
-    // serializes the transaction, signs the transaction, applies the signature on the transaction
-    sign_transaction(transaction: Transaction);
+    // serializes the transaction, computes the signature and returns it;
+    sign_transaction(transaction: Transaction): bytes;
 
-    // serializes the message, signs the message, applies the signature on the message
-    sign_message(message: Message);
+    // serializes the message, computes the signature and returns it;
+    sign_message(message: Message): bytes;
 
     // Gets the nonce (the one from the object's state) and increments it.
     get_nonce_then_increment(): uint64;
