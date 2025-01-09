@@ -1,7 +1,8 @@
 ## LedgerAccount
 
+Should implement the [IAccount](../core/interfaces.md) interface.
+
 ```
-// should implement the `IAccount` interface
 class LedgerAccount(IAccount):
 
     // sets the working address on the device

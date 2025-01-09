@@ -38,9 +38,4 @@ class TransactionComputer:
 
     // should return true if transaction.relayer is set; returns false otherwise;
     is_relayed_v3_transaction(transaction: Transaction): boolean;
-
-    // Applies the relayer signature over the transaction
-    // if transaction.relayer is set, ensures the relayer address is the same as the one in IAccount
-    // if transaction.relayer is NOT set, also sets the relayer address
-    apply_relayer_signature(relayer: IAccount, transaction: Transaction)
 ```
