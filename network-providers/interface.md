@@ -8,12 +8,6 @@ interface INetworkProvider:
     // Fetches the current status of the network.
     get_network_status(shard: number): NetworkStatus;
 
-    // Fetches a block by nonce or by hash.
-    get_block(arguments: GetBlockArguments): BlockOnNetwork;
-
-    // Fetches the latest block of a shard.
-    get_latest_block(shard: number): BlockOnNetwork;
-
     // Fetches account information for a given address.
     // URL parameters can be used, for example, to provide block coordinates for deep-history lookups.
     get_account(address: Address): AccountOnNetwork;
@@ -50,6 +44,9 @@ interface INetworkProvider:
     // Fetches a transaction that was previously broadcasted (maybe already processed by the network).
     // Transaction status and outcome should be included in the response (if available).
     get_transaction(transaction_hash: bytes | string): TransactionOnNetwork;
+
+    // Fetches the status of a transaction that was previously broadcasted (maybe already processed by the network).
+    get_transaction_status(transaction_hash: bytes | string): TransactionStatus;
 
     // Waits until the transaction is completely processed.
     // Can throw:
