@@ -137,6 +137,7 @@ dto TokenAmountOnNetwork implements TokenAmount:
 
     token: Token;
     amount: Amount;
+    attributes: bytes;
 ```
 
 ## FungibleTokenMetadata
