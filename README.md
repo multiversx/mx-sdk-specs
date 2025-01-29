@@ -51,6 +51,7 @@ Generally speaking, it's recommended to return concrete types in the public API 
 
 - For JavaScript / TypeScript, `bytes` should be `Uint8Array`.
 - For JavaScript / TypeScript, use `bigint` when applicable (amounts, gas limit, nonces), instead of `number`.
+- For JavaScript / TypeScript, `all the hashes` should be `hex-encoded string`, instead of `bytes`.
 
 ### **`follow-language-conventions`**
 
