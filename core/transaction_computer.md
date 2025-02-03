@@ -9,7 +9,10 @@ class TransactionComputer:
     // this method should take care of "regular" transaction signing.
     // should also validate if the some of the transaction fields are set (sender, receiver, gasLimit); throws error otherwise
     // should ensure that if `options` is set, also `version` >= 2; throws error otherwise
-    compute_bytes_for_signing(transaction: Transaction): bytes;
+    // if `ignore_options == False`, the method computes the bytes for signing based on the `version` and `options` of the transaction
+    // if the least significant bit of the `options` is set, will serialize transaction for hash signing
+    // if `ignore_options == True`, the transaction is simply serialized
+    compute_bytes_for_signing(self, transaction: Transaction, ignore_options=False) -> bytes:
 
     // serializes the transaction then computes the hash; used for hash signing transactions.
     // should also validate if the some of the transaction fields are set (sender, receiver, gasLimit); throws error otherwise
