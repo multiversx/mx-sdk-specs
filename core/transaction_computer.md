@@ -6,7 +6,7 @@ This is an utility class created to work together with the `Transaction` class.
 class TransactionComputer:
     compute_transaction_fee(transaction: Transaction, network_config: INetworkConfig): Amount;
 
-    // should validate if the some of the transaction fields are set (sender, receiver, gasLimit); throws error otherwise
+    // should validate if some of the transaction fields are set (sender, receiver, gasLimit); throws error otherwise
     // should ensure that if `options` is set, also `version` >= 2; throws error otherwise
     // if `ignore_options == False`, the method computes the bytes for signing based on the `version` and `options` of the transaction
     // if the least significant bit of the `options` is set, will serialize transaction for hash signing
