@@ -5,14 +5,14 @@ dto NativeAuthDecoded:
     ttl: number;
     origin: string;
     address: Address;
-    signature: string;
+    signature: bytes;
     block_hash: string;
     body: string;
     extra_info?: Any;
 ```
 
 ```
-dto NativeAuthResult:
+dto NativeAuthValidateResult:
     issued: number;
     expires: number;
     address: Address;
@@ -25,12 +25,4 @@ dto NativeAuthResult:
 dto WilcardOrigin:
     protocol: string;
     domain: string;
-```
-
-```
-interface NativeAuthCache {
-  getValue(key: string): number | undefined;
-
-  setValue(key: string, value: number, ttl: number);
-}
 ```
