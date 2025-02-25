@@ -26,3 +26,10 @@ dto WilcardOrigin:
     protocol: string;
     domain: string;
 ```
+
+```
+class NativeAuthCache:
+    get(key: str): Optional[str];
+
+    set(key: str, value: int, ttl: int);
+```
