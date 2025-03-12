@@ -12,26 +12,38 @@ class AccountController:
 
     create_transaction_for_saving_key_value({
         sender: IAccount;
+        nonce: uint64;
         key_value_pairs: Dict[bytes, bytes];
         guardian: Optional[Address];
         relayer: Optional[Address];
+        gas_limit: Optional[uint32];
+        gas_price: Optional[uint32];
     }): Transaction;
 
     create_transaction_for_setting_guardian({
         sender: IAccount;
+        nonce: uint64;
         guardian_address: Address;
         service_id: string;
         relayer: Optional[Address];
+        gas_limit: Optional[uint32];
+        gas_price: Optional[uint32];
     }): Transaction;
 
     create_transaction_for_guarding_account({
         sender: IAccount;
+        nonce: uint64;
         relayer: Optional[Address];
+        gas_limit: Optional[uint32];
+        gas_price: Optional[uint32];
     }): Transaction;
 
     create_transaction_for_unguarding_account({
         sender: IAccount;
+        nonce: uint64;
         guardian: Optional[Address];
         relayer: Optional[Address];
+        gas_limit: Optional[uint32];
+        gas_price: Optional[uint32];
     }): Transaction;
 ```
