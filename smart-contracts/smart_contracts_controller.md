@@ -21,7 +21,7 @@ class SmartContractsController:
         gas_limit: uint32;
         guardian: Optional[Address];
         relayer: Optional[Address];
-        gasPrice: Optional[uint32];
+        gas_price: Optional[uint32];
     }): Transaction;
 
     parse_deploy(transaction_on_network: TransactionOnNetwork): {
@@ -59,7 +59,7 @@ class SmartContractsController:
         gas_limit: uint32;
         guardian: Optional[Address];
         relayer: Optional[Address];
-        gasPrice: Optional[uint32];
+        gas_price: Optional[uint32];
     }): Transaction;
 
     // This method is less important (supports an exotic flow).
@@ -95,7 +95,7 @@ class SmartContractsController:
         gas_limit: uint32;
         guardian: Optional[Address];
         relayer: Optional[Address];
-        gasPrice: Optional[uint32];
+        gas_price: Optional[uint32];
     }): Transaction;
 
     parse_execute({
