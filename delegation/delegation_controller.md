@@ -16,6 +16,8 @@ class DelegationController:
         amount: Amount;
         guardian: Optional[Address];
         relayer: Optional[Address];
+        gas_limit: Optional[uint32];
+        gas_price: Optional[uint32];
     }): Transaction;
 
     parse_create_new_delegation_contract(transaction_on_network: TransactionOnNetwork): {
