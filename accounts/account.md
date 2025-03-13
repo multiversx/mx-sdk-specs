@@ -33,6 +33,9 @@ class Account:
     // Gets the nonce (the one from the object's state) and increments it.
     get_nonce_then_increment(): uint64;
 
+    // Increments (locally) the nonce (the account sequence number).
+    increment_nonce(): uint64;
+
     // Named constructor
     // Loads a secret key from a PEM file. PEM files may contain multiple accounts - thus, an (optional) "index" is used to select the desired secret key.
     // Returns an Account object, initialized with the secret key.
