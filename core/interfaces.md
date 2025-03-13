@@ -6,7 +6,7 @@ interface IAccount:
     
     sign(data: bytes): bytes;
     sign_transaction(transaction: Transaction): bytes;
-    verify_transaction(transaction: Transaction): boolean;
+    verify_transactionSignature(transaction: Transaction): boolean;
     sign_message(transaction: Transaction): bytes;
-    verify_message(transaction: Transaction): booleam;
+    verify_messageSignature(transaction: Transaction): booleam;
 ```
