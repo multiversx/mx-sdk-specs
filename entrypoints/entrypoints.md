@@ -24,7 +24,11 @@ The `NetworkEntrypoint` acts as a facade for interacting with the network. It sh
 class NetworkEntrypoint:
     // The constructor is not captured by the specs; it's up to the implementing library to define it.
     // For example, it can be parametrized with: a network provider URL and kind (proxy, API)
-    constructor(url: str, kind: Optional[str]);
+    constructor(url: Optional[str], kind: Optional[str], chain_id: Optional[str], network_provider: Optional[INetworkProvider]);
+
+    // named constructor
+    // createas a NetworkEntrypoint from a NetworkProvider (Api/Proxy)
+    new_from_network_provider(network_provider: INetworkProvider, chain_id: Optional[str]): NetworkEntrypoint;
 
     // verifies if the signature field is valid
     verify_transaction_signature(transaction: Transaction): bool;

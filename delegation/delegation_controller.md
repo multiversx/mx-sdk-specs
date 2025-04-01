@@ -28,5 +28,37 @@ class DelegationController:
         contract_address: Address;
     }[];
 
+    parse_delegate(transaction_on_network: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
+
+    await_completed_delegate(transaction_on_network: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
+
+    parse_undelegate(transaction_on_network: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
+
+    await_completed_undelegate(transaction_on_network: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
+
+    parse_claim_rewards(transaction_on_network: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
+
+    await_completed_claim_rewards(transaction_on_network: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
+
+    parse_redelegate_rewards(transaction_on_network: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
+
+    await_completed_redelegate_rewards(transaction_on_network: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
+
     // ...
 ```
