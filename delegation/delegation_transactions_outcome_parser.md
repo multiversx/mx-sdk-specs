@@ -21,4 +21,20 @@ class DelegationTransactionsOutcomeParser:
     parse_create_new_delegation_contract(transaction: TransactionOnNetwork): {
         contract_address: Address;
     }[];
+
+    parse_delegate(transaction: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
+
+    parse_undelegate(transaction: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
+
+    parse_claim_rewards(transaction: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
+
+    parse_redelegate_rewards(transaction: TransactionOnNetwork): {
+        amount: Amount;
+    }[];
 ```
