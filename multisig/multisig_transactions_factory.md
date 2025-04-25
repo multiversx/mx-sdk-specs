@@ -25,11 +25,23 @@ class MultisigTransactionsFactory:
         token_transfers: Optional[list[TokenTransfer]],
     ): Transaction;
 
-    create_transaction_for_discard_batch(
+    create_transaction_for_propose_add_board_member(
         sender: Address,
         contract: Address,
-        action_ids: list[int],
+        board_member: Address,
         gas_limit: int,
+    ): Transaction;
+
+    create_transaction_for_propose_transfer_execute(
+        sender: Address,
+        contract: Address,
+        receiver: Address,
+        native_token_amount: int,
+        gas_limit: int,
+        opt_gas_limit: Optional[int],
+        abi: Optional[Abi],
+        function: Optional[str],
+        arguments: Optional[list[Any]],
     ): Transaction;
 
     // implements all the methods of the multisig contract
