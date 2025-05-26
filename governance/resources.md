@@ -8,68 +8,66 @@ enum VoteType:
     ABSTAIN = "abstain"
 ```
 
-The bellow classes can be implemented as classes or types(JS). e.g in Python, they are dataclasses.
-
-Depending on the language these are implemented in, some properties that are of type `int` might need to be changed to type that support larger values.
+The classes below can be implemented as either classes or types (in JavaScript). For example, in Python, they are implemented as dataclasses.
 
 ```
 class GovernanceConfig:
-    proposal_fee: int
+    proposal_fee: uint64
     min_quorum: float
     min_pass_threshold: float
     min_veto_threshold: float
-    last_proposal_nonce: int
+    last_proposal_nonce: uint32
 ```
 
 
 ```
 class DelegatedVoteInfo:
-    used_stake: int
-    used_power: int
-    total_stake: int
-    total_power: int
+    used_stake: uint64
+    used_power: uint64
+    total_stake: uint64
+    total_power: uint64
 ```
 
 ```
 class ProposalInfo:
-    cost: int
+    cost: uint64
     commit_hash: string
-    nonce: int
+    nonce: uint32
     issuer: Address
-    start_vote_epoch: int
-    end_vote_epoch: int
-    quorum_stake: int
-    num_yes_votes: int
-    num_no_votes: int
-    num_veto_votes: int
-    num_abstain_votes: int
+    start_vote_epoch: uint32
+    end_vote_epoch: uint32
+    quorum_stake: uint64
+    num_yes_votes: uint64
+    num_no_votes: uint64
+    num_veto_votes: uint64
+    num_abstain_votes: uint64
     is_closed: bool
     is_passed: bool
 ```
 
 ```
 class NewProposalOutcome:
-    proposal_nonce: int
+    proposal_nonce: uint32
     commit_hash: string
-    start_vote_epoch: int
-    end_vote_epoch: int
+    start_vote_epoch: uint32
+    end_vote_epoch: uint32
 ```
 
 ```
 class VoteOutcome:
-    proposal_nonce: int
+    proposal_nonce: uint32
     vote: str
-    total_stake: int
-    total_voting_power: int
+    total_stake: uint64
+    total_voting_power: uint64
 ```
 
 ```
 class DelegateVoteOutcome:
-    proposal_nonce: int
+    proposal_nonce: uint32
     vote: string
     voter: Address
-    user_stake: int
-    voting_power: int
+    user_stake: uint64
+    voting_power: uint64
 ```
 
 ```
