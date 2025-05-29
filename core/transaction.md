@@ -4,14 +4,14 @@
 dto Transaction:
     sender: Address;
     receiver: Address;
-    gasLimit: uint32;
+    gasLimit: uint64;
     chainID: string;
 
     nonce?: uint64;
     value?: Amount;
     senderUsername?: string;
     receiverUsername?: string;
-    gasPrice?: uint32;
+    gasPrice?: uint64;
 
     data?: bytes;
     version?: uint32;
