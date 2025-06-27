@@ -9,7 +9,6 @@ interface INetworkProvider:
     get_network_status(shard: number): NetworkStatus;
 
     // Fetches account information for a given address.
-    // URL parameters can be used, for example, to provide block coordinates for deep-history lookups.
     get_account(address: Address): AccountOnNetwork;
 
     // Fetches the storage (key-value pairs) of an account.
@@ -84,7 +83,6 @@ interface INetworkProvider:
     get_definition_of_tokens_collection(collection_name: string): TokensCollectionMetadata;
 
     // Queries a smart contract.
-    // URL parameters can be used, for example, to provide block coordinates for deep-history lookups.
     query_contract(query: SmartContractQuery): SmartContractQueryResponse;
 
     // Does a generic GET request against the network (handles API enveloping).
