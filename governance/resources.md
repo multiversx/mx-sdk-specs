@@ -13,6 +13,7 @@ The classes below can be implemented as either classes or types (in JavaScript).
 ```
 class GovernanceConfig:
     proposal_fee: uint64
+    lost_proposal_fee: uint64
     min_quorum: float
     min_pass_threshold: float
     min_veto_threshold: float

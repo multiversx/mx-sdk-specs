@@ -85,6 +85,9 @@ interface INetworkProvider:
     // Queries a smart contract.
     query_contract(query: SmartContractQuery): SmartContractQueryResponse;
 
+    // Calls the /cost endpoint
+    estimate_gas_limit(transaction: Transaction): uint64;
+
     // Does a generic GET request against the network (handles API enveloping).
     do_get_generic(url: string, url_parameters?: Any): any;
 
